@@ -1,0 +1,117 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "API Gateway - microservices with moleculerjs 💪",
+  "scripts": {
+    "dev": "moleculer-runner --repl --hot --config moleculer.dev.config.js services/**/services/*.service.js",
+    "start": "moleculer-runner --config moleculer.config.js services",
+    "ci": "jest --watch",
+    "test": "jest --coverage",
+    "test:ci": "echo 'All test passed 💪'",
+    "build": "echo 'No build!? ... ok'",
+    "lint": "eslint . --ext .js,.jsx --fix",
+    "format": "prettier --ignore-path .gitignore -w .",
+    "format:check": "prettier --ignore-path .gitignore --check .",
+    "prepare": "husky install",
+    "prettier-c": "prettier --ignore-path .gitignore --check .",
+    "cli": "moleculer connect TCP",
+    "clean": "sudo rm -rf node_modules && rm -rf yarn.lock && rm -rf package-lock.json && rm -rf coverage && rm -rf .husky",
+    "test:unit": "jest \"unit/.*\\.test\\.js\" --coverage",
+    "test:int": "jest \"integral/.*\\.test\\.js\" --coverage"
+  },
+  "keywords": [
+    "microservices",
+    "moleculer"
+  ],
+  "author": "Antonio Orozco <orozco6453@gmail.com>",
+  "devDependencies": {
+    "@babel/preset-env": "^7.15.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-prettier": "^3.4.1",
+    "husky": "^7.0.2",
+    "jest": "^27.2.4",
+    "jest-cli": "^27.1.0",
+    "moleculer-repl": "^0.6.6",
+    "prettier": "^2.3.2"
+  },
+  "dependencies": {
+    "amqplib": "^0.8.0",
+    "aws-sdk": "^2.976.0",
+    "axios": "^0.21.1",
+    "bluebird": "^3.7.2",
+    "bwip-js": "^3.0.4",
+    "compression": "^1.7.4",
+    "cron": "^1.8.2",
+    "csvtojson": "^2.0.10",
+    "dayjs": "^1.11.5",
+    "dotenv": "^10.0.0",
+    "faker": "5.5.3",
+    "html-pdf": "^3.0.1",
+    "json2xls": "^0.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "md5": "^2.3.0",
+    "moleculer": "^0.14.16",
+    "moleculer-auto-openapi": "^1.0.7",
+    "moleculer-db": "^0.8.15",
+    "moleculer-db-adapter-mongo": "^0.4.13",
+    "moleculer-db-adapter-sequelize": "^0.2.11",
+    "moleculer-io": "^1.1.3",
+    "moleculer-mail": "^1.2.5",
+    "moleculer-prometheus": "^0.2.5",
+    "moleculer-socketio": "^0.0.5",
+    "moleculer-web": "^0.10.0",
+    "moment-timezone": "^0.5.33",
+    "mongodb": "^4.1.3",
+    "mongoose": "^6.0.0",
+    "multer": "^1.4.3",
+    "multer-s3": "^2.9.0",
+    "mustache": "^4.2.0",
+    "mysql2": "^2.2.5",
+    "nats": "^2.1.0",
+    "node-fetch": "^2.6.1",
+    "node-res": "^5.0.1",
+    "node-xlsx": "^0.17.1",
+    "oauth2-server": "^3.1.1",
+    "qrcode": "^1.4.4",
+    "react-qr-code": "^2.0.2",
+    "redis": "^4.0.0",
+    "sequelize": "^6.6.2",
+    "stream": "^0.0.2",
+    "superagent": "^6.1.0",
+    "util": "^0.12.4",
+    "xml2js": "^0.4.23",
+    "socket.io": "4.3.1"
+  },
+  "engines": {
+    "node": ">= 6.x.x"
+  },
+  "eslintIgnore": [
+    "*.test.js"
+  ],
+  "license": "MIT",
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run lint",
+      "pre-push": "yarn run lint && yarn run test"
+    }
+  },
+  "email": "antonio.orozco@g-global.com",
+  "resolutions": {
+    "socket.io": "2.2.0"
+  },
+  "jest": {
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "rootDir": "./services",
+    "roots": [
+      "../test"
+    ]
+  },
+  "main": "main.js"
+}
