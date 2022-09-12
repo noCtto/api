@@ -1,7 +1,6 @@
 /* eslint-disable consistent-return */
 const compression = require('compression');
 const ApiGateway = require('moleculer-web');
-const SocketIOService = require('moleculer-io');
 const OAuth2Server = require('../../../mixins/oauth2.mixin');
 const { checkIfValidMD5Hash } = require('../../../utils/func');
 
@@ -11,7 +10,7 @@ const {
 
 module.exports = {
   name: 'api',
-  mixins: [ApiGateway, OAuth2Server, SocketIOService],
+  mixins: [ApiGateway, OAuth2Server],
   use: [compression()],
   settings: {
     port: 4000,

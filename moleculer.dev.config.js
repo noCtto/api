@@ -17,14 +17,7 @@ module.exports = {
     },
   },
   cacher: false,
-  transporter: {
-    type: 'NATS',
-    options: {
-      url: process.env.TRANSPORTER,
-      maxPacketSize: 60 * 1024 * 1024,
-      maxConnections: process.env.MAX_CONNECTIONS || 40,
-    },
-  },
+  transporter: 'TCP',
   serializer: false,
   requestTimeout: 60 * 1000,
   requestRetry: 0,

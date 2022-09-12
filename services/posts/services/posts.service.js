@@ -319,66 +319,6 @@ module.exports = {
         });
       },
     },
-    after: {
-      update() {},
-      vote(ctx, response) {
-        try {
-          ctx
-            .call('io.emit', {
-              event: 'vote',
-              args: [
-                {
-                  _id: response._id,
-                  post: response._id,
-                  board: response.board._id,
-                  votes: {
-                    count: response.votes.count,
-                    total: response.votes.total,
-                    comments: response.comments,
-                  },
-                },
-              ],
-            })
-            .then((broadcast) => {
-              console.log('BroadCast Response', broadcast);
-            });
-        } catch (err) {
-          console.log('Error', err);
-        }
-        return response;
-      },
-      upvote(ctx, response) {
-        try {
-          console.log('Upvote Response', response);
-          ctx
-            .call('io.emit', {
-              event: 'itemCreation',
-              args: [response],
-            })
-            .then((broadcast) => {
-              console.log('BroadCast Response', broadcast);
-            });
-        } catch (err) {
-          console.log('Error', err);
-        }
-        return response;
-      },
-      downvote(ctx, response) {
-        try {
-          console.log('DownVote Response', response);
-          ctx
-            .call('io.emit', {
-              event: 'itemCreation',
-              args: [response],
-            })
-            .then((broadcast) => {
-              console.log('BroadCast Response', broadcast);
-            });
-        } catch (err) {
-          console.log('Error', err);
-        }
-        return response;
-      },
-    },
+    after: {},
   },
 };
