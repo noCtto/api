@@ -97,7 +97,6 @@ module.exports = {
                   fields: ['_id', 'username', 'photoUrl'],
                 })
                 .then((users) => {
-                  console.log('Followers', users);
                   board.followers = users;
                   return board;
                 });

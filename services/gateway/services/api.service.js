@@ -60,7 +60,6 @@ module.exports = {
             const jsonWebToken =
               req.headers.authorization && req.headers.authorization.split(' ')[1];
             if (!checkIfValidMD5Hash(jsonWebToken)) {
-              console.log('!checkIfValidMD5Hash', jsonWebToken);
               // Solo en estos casos no se valida la session, no es necesario
               if (req.url === '/sessions/fetch-session' || req.url === '/users/update-token')
                 return null;

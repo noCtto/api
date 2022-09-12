@@ -4,19 +4,9 @@ const { MoleculerClientError } = require('moleculer').Errors;
 const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
 const faker = require('faker');
+const { sha256, isObjectId } = require('../../../utils/func');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 require('dotenv').config();
-
-const {
-  NORMAL_MIN,
-  CLIENT_ROLE,
-  COUNTRY_PROCESS,
-  CLIENT_MIN,
-  FIELDS,
-  OPERATORS,
-} = require('../../../utils/constants');
-
-const { sha256, isObjectId } = require('../../../utils/func');
 
 const { JWT_SECRET } = process.env;
 
@@ -204,7 +194,6 @@ module.exports = {
         },
       },
       handler(ctx) {
-        console.log('Logging In', ctx.params);
         const { email, password, environment, fingerprint, username } = ctx.params;
         if (!password || (!username && !email))
           return this.Promise.reject(
@@ -218,7 +207,6 @@ module.exports = {
           .then((users) => {
             const user = users.length > 0 ? users[0] : null;
             if (user) {
-              console.log('Logging In user', user[0]);
               if (user.password === sha256(password)) {
                 return user;
               }
@@ -252,14 +240,9 @@ module.exports = {
     },
     me: {
       rest: 'GET /whoiam',
-      // cache: {
-      //     keys: ['#token'],
-      // },
       handler(ctx) {
-        console.log('THIS ME', ctx.meta.oauth.user.id);
         return this.getById(ctx.meta.oauth.user.id)
           .then((user) => {
-            console.log('USER', user);
             if (!user) return this.Promise.reject(new MoleculerClientError('User not found!', 400));
 
             return this.transformDocuments(ctx, { fields: ['_id', 'username'] }, user);
@@ -532,7 +515,6 @@ module.exports = {
         id: 'string',
       },
       handler(ctx) {
-        console.log('FOLLOWING THIS USER', this.extractUser(ctx), ctx.params.id);
         return 'Hello';
       },
     },
@@ -580,7 +562,7 @@ module.exports = {
                 this.logger.info('Sesion creada, se regresa a front.');
               })
               .catch((er) => {
-                console.log('THIS error', er);
+                console.log('error', er);
               });
             return token;
           }

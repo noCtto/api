@@ -1,11 +1,10 @@
 const { ObjectId } = require('mongodb');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
-const ModelMixin = require('../../../mixins/model.mixin');
 const { toDeepObjectId, toDeepDate } = require('../../../utils/func');
 
 module.exports = {
   name: 'sessions',
-  mixins: [MongoDbMixin('sessions', 'account'), ModelMixin],
+  mixins: [MongoDbMixin('sessions', 'account')],
   settings: {
     fields: ['_id', 'user', 'token', 'start', 'expires', 'createdAt', 'expired'],
     entityValidator: {
@@ -26,7 +25,6 @@ module.exports = {
         if (ctx.params.query.user) {
           ctx.params.query.user = ObjectId(ctx.params.query.user);
         }
-        // console.log(ctx.params);
       },
     },
   },

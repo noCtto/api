@@ -116,7 +116,6 @@ module.exports = {
           createdAt: dayjs().toDate(),
           author: user,
         });
-        console.log('New Comment created', comment);
 
         const votes = await ctx.call('votes.create', {
           type: 'comment',
@@ -126,7 +125,6 @@ module.exports = {
             [user]: true,
           },
         });
-        console.log('New Votes created', votes);
 
         return this._update(ctx, {
           _id: ObjectId(comment._id),

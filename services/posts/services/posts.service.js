@@ -1,26 +1,10 @@
-/* eslint-disable no-console */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-param-reassign */
-/* eslint-disable-next-line prettier/prettier */
-
 const { ObjectId } = require('mongodb');
-const _ = require('lodash');
 const dayjs = require('dayjs');
 const fs = require('fs');
 const path = require('path');
 const faker = require('faker');
-const mkdir = require('mkdirp').sync;
-const mime = require('mime-types');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 
-/**
- * Local Upload Service
- */
-const uploadDir = path.join(__dirname, '../public/__uploads');
-mkdir(uploadDir, { recursive: true });
 module.exports = {
   mixins: [MongoDbMixin('posts', 'nocheto')],
   settings: {
@@ -127,25 +111,21 @@ module.exports = {
                     cid: { $exists: false },
                   },
                 })
-                .then((resp) => {
-                  item.comments = resp;
-                  return item;
-                })
+                .then((resp) => ({
+                  ...item,
+                  comments: resp,
+                }))
             )
           );
         },
       },
     },
-    // defaultPopulates: ["author", "votes", "threads"],
   },
   actions: {
     fake: {
       rest: 'POST /fake',
       params: {},
       async handler(ctx) {
-        const user = ObjectId(ctx.params.user) || this.extractUser(ctx);
-        console.log('User', user);
-
         const boards = await ctx.call('boards.find', {});
         return this.actions.create(
           {
@@ -210,9 +190,6 @@ module.exports = {
         labels: { type: 'string', optional: true },
       },
       async handler(ctx) {
-        console.log('params', ctx.params);
-        console.log('context.meta.$multipart', ctx.meta.$multipart);
-
         const author = ctx.params.author ? ObjectId(ctx.params.author) : this.extractUser(ctx);
         if (!author) return this.Promise.reject('User not found');
         const { title, body, image, board, tags, labels } = ctx.params;
@@ -346,7 +323,6 @@ module.exports = {
       update() {},
       vote(ctx, response) {
         try {
-          console.log('Vote Response', response);
           ctx
             .call('io.emit', {
               event: 'vote',

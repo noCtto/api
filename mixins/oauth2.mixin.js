@@ -29,7 +29,6 @@ module.exports = {
       return this.oauth
         .token(request, response)
         .then((token) => {
-          console.log('this token', token);
           resp(res, response.body, response.status, response.headers);
         })
         .catch((err) => {
@@ -37,7 +36,6 @@ module.exports = {
         });
     },
     authenticate(req, res) {
-      console.log('authenticate', req.body);
       const request = new Request(req);
       const response = new Response(res);
       return this.oauth
@@ -62,7 +60,6 @@ module.exports = {
             return this.oauth
               .authenticate(request, response)
               .then((token) => {
-                console.log('This token', token);
                 ctx.meta.oauth = token;
                 Object.assign(req, { oauth: token });
                 return token;
