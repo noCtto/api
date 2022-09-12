@@ -23,6 +23,9 @@
     "microservices",
     "moleculer"
   ],
+  "engines": {
+    "node": "16.x"
+  },
   "author": "Antonio Orozco <orozco6453@gmail.com>",
   "devDependencies": {
     "@babel/preset-env": "^7.15.0",
@@ -86,9 +89,6 @@
     "util": "^0.12.4",
     "xml2js": "^0.4.23",
     "socket.io": "4.3.1"
-  },
-  "engines": {
-    "node": ">= 6.x.x"
   },
   "eslintIgnore": [
     "*.test.js"
