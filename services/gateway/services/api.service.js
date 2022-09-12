@@ -252,6 +252,39 @@ module.exports = {
       },
       {
         path: '/p',
+        authorization: true,
+        bodyParsers: {
+          json: true,
+          urlencoded: true,
+        },
+        // busboyConfig: {
+        //   limits: {
+        //     files: 3,
+        //   },
+        // },
+        aliases: {
+          'GET /': 'posts.list',
+          'GET /:id': 'posts.get',
+          'POST /': 'posts.create',
+          // 'POST /multi': {
+          //   type: 'multipart',
+          //   // Action level busboy config
+          //   busboyConfig: {
+          //     limits: {
+          //       files: 3,
+          //     },
+          //   },
+          //   action: 'posts.create',
+          // },
+          // // File upload from HTML multipart form
+          // 'POST /': 'multipart:posts.create',
+
+          // // File upload from AJAX or cURL
+          // 'PUT /': 'stream:posts.create',
+        },
+      },
+      {
+        path: '/u',
         authorization: false,
         bodyParsers: {
           json: false,
@@ -263,8 +296,8 @@ module.exports = {
           },
         },
         aliases: {
-          'GET /': 'posts.list',
-          'GET /:id': 'posts.get',
+          'GET /': 'users.list',
+          'GET /:id': 'users.get',
         },
       },
       {

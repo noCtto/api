@@ -28,7 +28,7 @@ module.exports = {
     fields: [
       '_id',
       'title',
-      'text',
+      'body',
       'image',
       'createdAt',
       'author',
@@ -41,20 +41,20 @@ module.exports = {
       'label',
     ],
     entityValidator: {
-      text: {
+      body: {
         type: 'string',
-        min: 5,
-        trim: true,
-        required: true,
         optional: false,
-        convert: true,
+      },
+      title: {
+        type: 'string',
+        optional: true,
       },
       image: {
         type: 'string',
         min: 5,
         trim: true,
         required: true,
-        optional: false,
+        optional: true,
       },
       author: {
         type: 'objectID',
@@ -64,7 +64,7 @@ module.exports = {
       board: {
         type: 'objectID',
         ObjectID: ObjectId,
-        optional: false,
+        optional: true,
       },
       votes: {
         type: 'objectID',
@@ -93,7 +93,7 @@ module.exports = {
       author: {
         action: 'users.get',
         params: {
-          fields: ['_id', 'name', 'photoUrl'],
+          fields: ['_id', 'name', 'photoUrl', 'username', 'image'],
         },
       },
       board: {
@@ -150,7 +150,7 @@ module.exports = {
         return this.actions.create(
           {
             title: faker.lorem.sentence(),
-            text: faker.lorem.paragraph(),
+            body: faker.lorem.paragraph(),
             image: faker.image.imageUrl(),
             board: boards[1]._id,
           },
@@ -201,34 +201,38 @@ module.exports = {
       },
     },
     create: {
-      rest: 'POST /',
       params: {
-        title: { type: 'string' },
-        text: { type: 'string' },
+        title: { type: 'string', optional: true },
+        body: { type: 'string', optional: true },
         image: { type: 'string', optional: true },
-        board: { type: 'string' },
+        board: { type: 'string', optional: true },
+        tags: { type: 'string', optional: true },
+        labels: { type: 'string', optional: true },
       },
       async handler(ctx) {
-        const user = ctx.params.author ? ObjectId(ctx.params.author) : this.extractUser(ctx);
-        if (!user) return this.Promise.reject('User not found');
-        const { title, text, image, board } = ctx.params;
+        console.log('params', ctx.params);
+        console.log('context.meta.$multipart', ctx.meta.$multipart);
+
+        const author = ctx.params.author ? ObjectId(ctx.params.author) : this.extractUser(ctx);
+        if (!author) return this.Promise.reject('User not found');
+        const { title, body, image, board, tags, labels } = ctx.params;
 
         const post = await this._create(ctx, {
           title,
-          text,
+          body,
           image,
           createdAt: dayjs().toDate(),
           board: ObjectId(board),
-          author: user,
-          tags: ['tag1', 'test', 'cats'],
-          label: 'test',
+          author,
+          tags,
+          labels,
         });
 
         const votes = await ctx.call('votes.create', {
           post: post._id,
           board: ObjectId(board),
           voters: {
-            [user]: 1,
+            [author]: 1,
           },
         });
 

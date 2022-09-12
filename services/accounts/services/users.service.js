@@ -16,7 +16,7 @@ const {
   OPERATORS,
 } = require('../../../utils/constants');
 
-const { sha256 } = require('../../../utils/func');
+const { sha256, isObjectId } = require('../../../utils/func');
 
 const { JWT_SECRET } = process.env;
 
@@ -93,8 +93,22 @@ module.exports = {
       async update(ctx) {
         this.logger.info(`Actualizacion de usuario: ${ctx.params.id}`);
       },
-      get(ctx) {
-        // ctx.params.id = ctx.params.id || ctx.params.userId;
+      async get(ctx) {
+        if (ctx.params.id && !isObjectId(ctx.params.id) && typeof ctx.params.id === 'string') {
+          const query = {
+            username: ctx.params.id,
+          };
+          const exist = await ctx
+            .call('users.find', {
+              query,
+              fields: ['_id'],
+            })
+            .then(([user]) => user);
+
+          if (exist) {
+            ctx.params.id = exist._id;
+          }
+        }
       },
     },
     after: {},
