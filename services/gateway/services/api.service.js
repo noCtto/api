@@ -13,7 +13,7 @@ module.exports = {
   mixins: [ApiGateway, OAuth2Server],
   use: [compression()],
   settings: {
-    port: 4000,
+    port: process.env.PORT || 4000,
     cors: {
       origin: '*',
       methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE'],
