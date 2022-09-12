@@ -4,12 +4,11 @@ const faker = require('faker');
 const dayjs = require('dayjs');
 
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
-const ModelMixin = require('../../../mixins/model.mixin');
 const { toDeepObjectId } = require('../../../utils/func');
 
 module.exports = {
   name: 'boards',
-  mixins: [MongoDbMixin('boards'), ModelMixin],
+  mixins: [MongoDbMixin('boards', 'nocheto')],
   settings: {
     fields: [
       '_id',

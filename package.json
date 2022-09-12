@@ -4,7 +4,7 @@
   "description": "API Gateway - microservices with moleculerjs 💪",
   "scripts": {
     "dev": "moleculer-runner --repl --hot --config moleculer.dev.config.js services/**/services/*.service.js",
-    "start": "moleculer-runner --config moleculer.config.js services",
+    "start": "moleculer-runner --config moleculer.config.js services/**/services/*.service.js",
     "ci": "jest --watch",
     "test": "jest --coverage",
     "test:ci": "echo 'All test passed 💪'",

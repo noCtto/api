@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 const compression = require('compression');
 const ApiGateway = require('moleculer-web');
+const SocketIOService = require('moleculer-io');
 const OAuth2Server = require('../../../mixins/oauth2.mixin');
 const { checkIfValidMD5Hash } = require('../../../utils/func');
 
@@ -10,10 +11,10 @@ const {
 
 module.exports = {
   name: 'api',
-  mixins: [ApiGateway, OAuth2Server],
+  mixins: [ApiGateway, OAuth2Server, SocketIOService],
   use: [compression()],
   settings: {
-    port: process.env.PORT || 4000,
+    port: 4000,
     cors: {
       origin: '*',
       methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE'],
@@ -228,9 +229,6 @@ module.exports = {
         aliases: {
           'GET /': 'boards.list',
           'GET /:board': 'boards.byName',
-          // onBeforeCall(ctx, route, req, res) {
-          //   console.log('CTX', ctx.meta);
-          // },
         },
       },
       {
@@ -257,30 +255,10 @@ module.exports = {
           json: true,
           urlencoded: true,
         },
-        // busboyConfig: {
-        //   limits: {
-        //     files: 3,
-        //   },
-        // },
         aliases: {
           'GET /': 'posts.list',
           'GET /:id': 'posts.get',
           'POST /': 'posts.create',
-          // 'POST /multi': {
-          //   type: 'multipart',
-          //   // Action level busboy config
-          //   busboyConfig: {
-          //     limits: {
-          //       files: 3,
-          //     },
-          //   },
-          //   action: 'posts.create',
-          // },
-          // // File upload from HTML multipart form
-          // 'POST /': 'multipart:posts.create',
-
-          // // File upload from AJAX or cURL
-          // 'PUT /': 'stream:posts.create',
         },
       },
       {
@@ -332,68 +310,6 @@ module.exports = {
           req.params = ctx.meta.$multipart;
         },
       },
-      // {
-      //   path: '/import',
-      //   authorization: true,
-      //   bodyParsers: {
-      //     json: false,
-      //     urlencoded: false,
-      //   },
-      //   aliases: {
-      //     'POST /': 'multipart:uploader.import',
-      //   },
-      //   mappingPolicy: 'restrict',
-      //   onBeforeCall(ctx, route, req) {
-      //     if (!ctx.meta) ctx.meta = {};
-
-      //     ctx.meta.params = req.$params;
-      //   },
-      // },
-      // {
-      //   path: '/massive',
-      //   authorization: true,
-      //   bodyParsers: {
-      //     json: true,
-      //     urlencoded: false,
-      //   },
-      //   aliases: {
-      //     'POST /': 'multipart:uploader.massive',
-      //   },
-      //   mappingPolicy: 'restrict',
-      //   onBeforeCall(ctx, route, req) {
-      //     if (!ctx.meta) ctx.meta = {};
-
-      //     ctx.meta.params = req.$params;
-      //   },
-      // },
-      // {
-      //   path: '/uploadS3',
-      //   authorization: false,
-      //   bodyParsers: {
-      //     json: false,
-      //     urlencoded: false,
-      //   },
-      //   aliases: {
-      //     'POST /': (req, res) => {
-      //       res.setHeader('Content-Type', 'application/json');
-      //       return singleUpload(req, res, (err) => {
-      //         if (err) {
-      //           res.writeHead(406);
-      //           res.end(`Error ${err.message}`);
-      //           return res;
-      //         }
-      //         res.writeHead(200);
-      //         res.end(JSON.stringify({ ...req.file }));
-      //       });
-      //     },
-      //   },
-      //   onError(req, res, err) {
-      //     res.setHeader('Content-Type', 'text/plain');
-      //     res.writeHead(406);
-      //     res.end(`Route error: ${err.message}`);
-      //   },
-      //   mappingPolicy: 'restrict',
-      // },
       {
         path: '/login',
         authorization: false,

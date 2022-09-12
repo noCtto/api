@@ -80,12 +80,10 @@ module.exports = {
               token: jsonWebToken,
             });
             // Aqui podria ir validacion de forzar a loguear
-            console.log('USR AUTH', userAuth);
             if (userAuth) {
               ctx.meta.oauth = userAuth; // _.pick(userAuth, ["_id", "username", "email", "image"])
               ctx.meta.token = jsonWebToken;
               Object.assign(req, { oauth: userAuth });
-              console.log('authorize', jsonWebToken);
               return jsonWebToken;
             }
           } catch (err) {
@@ -236,13 +234,9 @@ module.exports = {
     },
   },
   async created() {
-    const { CONN_USER, CONN_PASSWORD, CONN_HOST, CONN_PORT, CONN_DATABASE_OAUTH2 } = process.env;
+    const { MONGO_URI } = process.env;
 
-    const { connection, db } = await MongoOAuth2(
-      `mongodb://${
-        CONN_USER && CONN_PASSWORD ? `${CONN_USER}:${CONN_PASSWORD}@` : ''
-      }${CONN_HOST}:${CONN_PORT || '27017'}/${'oauth2'}?ssl=false&authSource=admin`
-    );
+    const { connection, db } = await MongoOAuth2(`${MONGO_URI}/oauth2`);
 
     this.connection = connection;
     this.db = db;

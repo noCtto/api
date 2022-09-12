@@ -4,7 +4,7 @@ const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 
 module.exports = {
   name: 'threads',
-  mixins: [MongoDbMixin('threads')],
+  mixins: [MongoDbMixin('threads', 'nocheto')],
   settings: {
     validator: true,
     fields: ['_id', 'post', 'comments'],

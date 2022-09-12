@@ -22,7 +22,7 @@ const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 const uploadDir = path.join(__dirname, '../public/__uploads');
 mkdir(uploadDir, { recursive: true });
 module.exports = {
-  mixins: [MongoDbMixin('posts')],
+  mixins: [MongoDbMixin('posts', 'nocheto')],
   settings: {
     validator: true,
     fields: [

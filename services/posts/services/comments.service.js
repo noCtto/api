@@ -7,7 +7,7 @@ const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 const { toDeepObjectId } = require('../../../utils/func');
 
 module.exports = {
-  mixins: [MongoDbMixin('comments')],
+  mixins: [MongoDbMixin('comments', 'nocheto')],
   settings: {
     validator: true,
     fields: ['_id', 'tid', 'text', 'cid', 'replies', 'createdAt', 'author', 'votes'],
