@@ -5,7 +5,7 @@ const dayjs = require('dayjs');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 
 module.exports = {
-  mixins: [MongoDbMixin('votes')],
+  mixins: [MongoDbMixin('votes', 'account')],
   settings: {
     validator: true,
     fields: ['_id', 'post', 'voters', 'count', 'voted', 'd', 'createdAt', 'total'],

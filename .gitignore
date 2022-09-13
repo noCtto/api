@@ -110,3 +110,4 @@ config.json
 nodes.json
 .vscode
 yarn.lock
+.vercel
