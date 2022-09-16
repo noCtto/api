@@ -4,6 +4,7 @@ const { MoleculerClientError } = require('moleculer').Errors;
 const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
 const faker = require('faker');
+const gravatar = require('gravatar');
 const { sha256, isObjectId } = require('../../../utils/func');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 require('dotenv').config();
@@ -42,6 +43,14 @@ module.exports = {
       },
     },
     populates: {
+      gravatar(ids, items) {
+        return this.Promise.all(
+          items.map((item) => {
+            item.imageUrl = gravatar.url(item.email, { s: '100', r: 'x', d: 'retro' }, true);
+            return item;
+          })
+        );
+      },
       posts(ids, users, rule, ctx) {
         return this.Promise.all(
           users.map((user) =>

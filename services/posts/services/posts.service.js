@@ -77,7 +77,8 @@ module.exports = {
       author: {
         action: 'users.get',
         params: {
-          fields: ['_id', 'name', 'photoUrl', 'username', 'image'],
+          fields: ['_id', 'name', 'imageUrl', 'username', 'image'],
+          populate: ['gravatar'],
         },
       },
       board: {
