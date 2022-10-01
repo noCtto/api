@@ -3,6 +3,7 @@ const os = require('os');
 const crypto = require('crypto');
 const { ObjectId } = require('mongodb');
 const dayjs = require('dayjs');
+const faker = require('faker');
 
 const sha256 = (str) => crypto.createHash('sha256').update(str, 'binary').digest('hex');
 
@@ -65,6 +66,14 @@ const toDeepDate = (json) => {
 
   return newJson;
 };
+const randomId = (m, u) => {
+  const r = faker.datatype.number({ min: 0, max: m });
+  try {
+    return u[r] !== undefined ? u[r] : randomId(m, u);
+  } catch (err) {
+    return randomId(m, u);
+  }
+};
 
 module.exports = {
   isObjectId,
@@ -73,6 +82,7 @@ module.exports = {
   toDeepObjectId,
   sha256,
   getUniqId,
+  randomId,
   resp: (res, body, statusCode = 200, headers = {}) => {
     headers = {
       ...headers,

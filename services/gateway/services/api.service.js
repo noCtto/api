@@ -213,23 +213,6 @@ module.exports = {
         },
       },
       {
-        path: '/b',
-        authorization: false,
-        bodyParsers: {
-          json: false,
-          urlencoded: false,
-        },
-        busboyConfig: {
-          limits: {
-            files: 3,
-          },
-        },
-        aliases: {
-          'GET /': 'boards.list',
-          'GET /:board': 'boards.byName',
-        },
-      },
-      {
         path: '/t',
         authorization: false,
         bodyParsers: {
@@ -248,7 +231,7 @@ module.exports = {
       },
       {
         path: '/p',
-        authorization: true,
+        authorization: false,
         bodyParsers: {
           json: true,
           urlencoded: true,
@@ -256,7 +239,30 @@ module.exports = {
         aliases: {
           'GET /': 'posts.list',
           'GET /:id': 'posts.get',
+        },
+      },
+      {
+        path: '/p/create',
+        authorization: true,
+        bodyParsers: {
+          json: true,
+          urlencoded: true,
+        },
+        aliases: {
           'POST /': 'posts.create',
+        },
+      },
+      {
+        path: '/all',
+        authorization: false,
+        aliases: {
+          'GET /': 'posts.list',
+        },
+        bodyParsers: {
+          json: true,
+          urlencoded: {
+            extended: true,
+          },
         },
       },
       {
@@ -277,15 +283,7 @@ module.exports = {
         },
       },
       {
-        path: '/users/login',
-        authorization: true,
-        bodyParsers: {
-          json: false,
-          urlencoded: false,
-        },
-      },
-      {
-        path: '/create',
+        path: '/upload',
         authorization: true,
         bodyParsers: {
           json: false,
@@ -301,7 +299,6 @@ module.exports = {
         },
         mappingPolicy: 'restrict',
         onBeforeCall(ctx, route, req) {
-          // ctx.params = { ...ctx.meta.$multipart };
           if (!ctx.meta) ctx.meta = {};
           ctx.meta.params = ctx.meta.$multipart;
           ctx.params = ctx.meta.$multipart;
@@ -313,6 +310,19 @@ module.exports = {
         authorization: false,
         aliases: {
           'POST /': 'users.login',
+        },
+        bodyParsers: {
+          json: true,
+          urlencoded: {
+            extended: true,
+          },
+        },
+      },
+      {
+        path: '/register',
+        authorization: false,
+        aliases: {
+          'POST /': 'users.register',
         },
         bodyParsers: {
           json: true,
@@ -339,32 +349,6 @@ module.exports = {
         authorization: false,
         aliases: {
           'POST /': 'users.forceLogout',
-        },
-        bodyParsers: {
-          json: true,
-          urlencoded: {
-            extended: true,
-          },
-        },
-      },
-      {
-        path: '/all',
-        authorization: false,
-        aliases: {
-          'GET /': 'posts.list',
-        },
-        bodyParsers: {
-          json: true,
-          urlencoded: {
-            extended: true,
-          },
-        },
-      },
-      {
-        path: '/login-google',
-        authorization: false,
-        aliases: {
-          'POST /': 'users.loginWithGoogle',
         },
         bodyParsers: {
           json: true,

@@ -5,6 +5,7 @@ const dayjs = require('dayjs');
 const faker = require('faker');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 const { toDeepObjectId } = require('../../../utils/func');
+const { randomId } = require('../../../utils/func');
 
 module.exports = {
   mixins: [MongoDbMixin('comments', 'nocheto')],
@@ -26,10 +27,6 @@ module.exports = {
       text: {
         type: 'string',
         required: true,
-      },
-      replies: {
-        type: 'object',
-        optional: true,
       },
       createdAt: {
         type: 'date',
@@ -98,38 +95,40 @@ module.exports = {
       },
     },
     fake: {
-      rest: 'GET /fake/:tid',
+      rest: 'POST /fake',
       params: {
-        tid: 'string',
+        num: {
+          type: 'number',
+          optional: true,
+        },
       },
       async handler(ctx) {
-        const user = this.extractUser(ctx);
-        const paragraph = faker.fake('{{lorem.paragraph}}');
-        const thread = await ctx.call('threads.find', { tid: ctx.params.tid });
-        if (!thread) {
-          return 'thread not found';
+        const num = ctx.params.num || 1;
+
+        const data = [];
+        const users = await ctx
+          .call('users.find', { fields: ['_id'], limit: 1000 })
+          .then((res) => res.map((u) => u._id));
+
+        const threads = await ctx
+          .call('threads.find', { fields: ['_id'], limit: 1000 })
+          .then((res) => res.map((u) => u._id));
+
+        const comments = await ctx
+          .call('comments.find', { fields: ['_id'], limit: 1000 })
+          .then((res) => res.map((u) => u._id));
+
+        while (data.length < num) {
+          data.push(
+            ctx.call('comments.create', {
+              author: randomId(users.length, users),
+              tid: randomId(threads.length, threads),
+              cid: randomId(comments.length, comments),
+              text: faker.lorem.lines(),
+            })
+          );
         }
-
-        const comment = await this._create(ctx, {
-          tid: ObjectId(thread[0]._id),
-          text: paragraph,
-          createdAt: dayjs().toDate(),
-          author: user,
-        });
-
-        const votes = await ctx.call('votes.create', {
-          type: 'comment',
-          parent: ObjectId(comment._id),
-          createdAt: dayjs().toDate(),
-          voters: {
-            [user]: true,
-          },
-        });
-
-        return this._update(ctx, {
-          _id: ObjectId(comment._id),
-          votes: ObjectId(votes._id),
-        });
+        return Promise.all(data);
       },
     },
     create: {
@@ -149,27 +148,31 @@ module.exports = {
         },
       },
       async handler(ctx) {
-        const user = this.extractUser(ctx);
-        if (!user) return this.Promise.reject(new ValidationError('no user'));
+        const author = ctx.params.author ? ObjectId(ctx.params.author) : this.extractUser(ctx);
+        if (!author) return this.Promise.reject('User not found');
+
         const params = {
           ...ctx.params,
-          author: user,
+          author,
         };
         if (!params.cid) {
           delete params.cid;
         }
 
-        const comment = await this._create(ctx, toDeepObjectId(params));
         const votes = await ctx.call(
           'votes.create',
           toDeepObjectId({
             voters: {
-              [user]: 1,
+              [author]: 1,
             },
           })
         );
 
-        return this._update(ctx, { id: comment._id, votes: ObjectId(votes._id) });
+        const comment = await this._create(
+          ctx,
+          toDeepObjectId({ ...params, votes: ObjectId(votes._id) })
+        );
+        return comment;
       },
     },
   },

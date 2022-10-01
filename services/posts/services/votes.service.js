@@ -5,7 +5,7 @@ const dayjs = require('dayjs');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 
 module.exports = {
-  mixins: [MongoDbMixin('votes', 'account')],
+  mixins: [MongoDbMixin('votes', 'nocheto')],
   settings: {
     validator: true,
     fields: ['_id', 'post', 'voters', 'count', 'voted', 'd', 'createdAt', 'total'],
@@ -42,7 +42,7 @@ module.exports = {
       },
       voted(ids, items, handler, ctx) {
         const user = this.extractUser(ctx);
-        this.logger.info('Checking if voted', ctx.params);
+        // this.logger.info('Checking if voted', ctx.params);
         return items.map((item) => {
           item.voted = item.voters[String(user)] !== undefined;
           if (item.voted) item.d = item.voters[String(user)];
@@ -65,10 +65,8 @@ module.exports = {
   },
   methods: {
     vote(ctx) {
-      console.log('Voting', ctx.params);
       const { id, d } = ctx.params;
       const user = this.extractUser(ctx);
-      console.log('Voting User', user);
       if (!user) return this.Promise.reject(new ValidationError('no user'));
       return this._get(ctx, { id }).then((card) => {
         let bool = d;
@@ -114,9 +112,7 @@ module.exports = {
       '*': () => {},
       create() {},
       list() {},
-      get(ctx) {
-        console.log('votes get', ctx.meta);
-      },
+      get() {},
       update() {},
       find() {},
       insert() {},

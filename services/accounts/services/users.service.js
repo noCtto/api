@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
 const faker = require('faker');
 const gravatar = require('gravatar');
+const dayjs = require('dayjs');
 const { sha256, isObjectId } = require('../../../utils/func');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 require('dotenv').config();
@@ -26,21 +27,16 @@ module.exports = {
       'lastLogin',
       'active',
       'posts',
+      'admin',
     ],
     entityValidator: {
       username: 'string|min:5',
-      name: 'string|min:3',
       email: 'email',
-      password: 'string|min:35',
+      password: 'string|min:8',
       imageUrl: { type: 'string', optional: true },
       createdAt: 'date',
       lastLogin: { type: 'date', optional: true },
       active: { type: 'boolean', default: true },
-      stuff: 'array',
-      post: {
-        type: 'array',
-        optional: true,
-      },
     },
     populates: {
       gravatar(ids, items) {
@@ -120,34 +116,57 @@ module.exports = {
     },
     register: {
       params: {
-        username: 'string|min:5',
-        name: 'string|min:3',
-        lastName: 'string|min:5',
+        username: 'string|min:4',
         email: 'email',
-        password: 'string|min:35',
-        photoUrl: { type: 'string', optional: true },
+        password: 'string|min:8',
       },
       handler(ctx) {
-        return 'YES';
+        const { username, email, password } = ctx.params;
+        return this._find(ctx, { query: { email } }).then(([registeredEmail]) => {
+          if (registeredEmail)
+            return this.Promise.reject(new MoleculerClientError('Email already registered', 400));
+
+          return this._find(ctx, { query: { username } }).then(([userNameTaken]) => {
+            if (userNameTaken)
+              return this.Promise.reject(new MoleculerClientError('Username already taken.', 400));
+            return this._create(ctx, {
+              username,
+              email,
+              password,
+              createdAt: dayjs().toDate(),
+            }).then((user) => {
+              if (!user)
+                return this.Promise.reject(new MoleculerClientError('User Creation Error'));
+              return this.Promise.resolve({ status: true, msg: 'welcome', user });
+            });
+          });
+        });
       },
     },
     fake: {
       rest: 'POST /fake',
+      params: {
+        num: {
+          type: 'number',
+          optional: true,
+        },
+      },
       async handler(ctx) {
-        for (let n = 0; n < 10; n++) {
-          const randomCard = faker.helpers.createCard();
-          this._create(ctx, {
-            ...randomCard,
-            username: faker.internet.userName(),
-            accountHistory: null,
-            photoUrl: faker.image.imageUrl(),
-            password: '123456',
-            active: true,
-          });
-        }
-        return {
-          done: true,
-        };
+        const { num } = ctx.params;
+        return this.Promise.all(
+          [...Array(num || 1)].map(() =>
+            this.actions
+              .register({
+                username: faker.internet.userName(),
+                email: faker.internet.email(),
+                password: '12345678',
+              })
+              .then((user) => ({
+                msg: 'welcome',
+                user,
+              }))
+          )
+        );
       },
     },
     forceLogout: {
@@ -340,83 +359,6 @@ module.exports = {
         );
       },
     },
-    setMainCompany: {
-      rest: 'PUT /set-company',
-      cache: false,
-      params: {
-        userId: 'string',
-        mainCompany: 'string',
-      },
-      handler(ctx) {
-        const { userId, mainCompany } = ctx.params;
-
-        return this._find(ctx, {
-          query: {
-            _id: ObjectId(userId),
-          },
-          populate: ['permissions', 'companies', 'role'],
-        }).then(([u]) => {
-          this.logger.info('Buscamos sesion activa del usuario en sessions.');
-          return ctx
-            .call('sessions.find', {
-              query: {
-                user: ObjectId(userId),
-              },
-              sort: '-createdAt',
-            })
-            .then(async ([session]) => {
-              // objeto extra para el jwt
-              const extra = {
-                env: u.environment,
-                cc: u.cc,
-                company: ObjectId(mainCompany), // se pone el company con el cual se va cambiar
-                fingerprint: session.fingerprint,
-              };
-              const addTime = 60 * 10; // 10 MIN
-              const today = new Date();
-
-              const exp = (Math.floor(today.getTime() / 1000) + addTime) * 1000;
-              const token = this.generateJWT(u._id, extra, exp);
-              await ctx
-                .call('sessions.update', {
-                  _id: session._id,
-                  company: ObjectId(mainCompany),
-                  expires: new Date(exp),
-                  token,
-                })
-                .then((json) => {
-                  this.entityChanged('updated', json, ctx);
-                  return json;
-                });
-              // const localTime = (exp / 1000 - 25200) * 1000;
-
-              return {
-                // session: this.transformEntity2(u, token),
-                s: { id: session._id },
-                expires: exp,
-                token,
-              };
-              // return { token };
-            })
-            .then((response) =>
-              this.Promise.resolve(
-                ctx.call('companies.get', {
-                  id: mainCompany,
-                  fields: ['_id', 'socialName', 'name', 'configurations', 'shipstore'],
-                  populate: ['shipstore'],
-                })
-              ).then((cmp) => {
-                if (!cmp) return response;
-
-                return {
-                  ...response,
-                  cmp,
-                };
-              })
-            );
-        });
-      },
-    },
     logout: {
       rest: 'POST /logout',
       cache: false,
@@ -450,53 +392,20 @@ module.exports = {
           });
       },
     },
-    fetchCatalogs: {
-      rest: 'GET /catalogs',
-      cache: false,
-      async handler(ctx) {
-        const query = {
-          active: true,
-          palette: { $exists: true },
-        };
-        const companies = await ctx.call('companies.find', {
-          query,
-          fields: ['_id', 'name'],
-        });
-        const roles = await ctx.call('roles.find', {
-          query: { active: true },
-          fields: ['_id', 'name', 'modules'],
-        });
-        const cc = COUNTRY_PROCESS;
-        const permissions = await ctx.call('modules.find', {
-          query: { active: true },
-          fields: ['_id', 'name', 'toolbox'],
-        });
-        const fields = FIELDS;
-        const operators = OPERATORS;
-        return {
-          roles,
-          companies,
-          cc,
-          permissions,
-          fields,
-          operators,
-        };
-      },
-    },
     changePassword: {
-      rest: 'PUT /change-password-by-admin',
+      rest: 'PUT /change-password',
       cache: false,
       params: {
         userId: 'string',
         password: 'string',
-        repeat: 'string',
+        confirm: 'string',
       },
       handler(ctx) {
         this.logger.info('Actualizar password.');
-        const { userId, password, repeat } = ctx.params;
+        const { userId, password, confirm } = ctx.params;
         this.logger.info(userId);
 
-        if (password !== repeat)
+        if (password !== confirm)
           return this.Promise.reject(
             new MoleculerClientError('The passwords is different!', 401, 'account')
           );

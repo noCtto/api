@@ -111,3 +111,6 @@ nodes.json
 .vscode
 yarn.lock
 .vercel
+_/*
+_
+.husky

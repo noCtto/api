@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const faker = require('faker');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
+const { randomId } = require('../../../utils/func');
 
 module.exports = {
   mixins: [MongoDbMixin('posts', 'nocheto')],
@@ -112,10 +113,11 @@ module.exports = {
                     cid: { $exists: false },
                   },
                 })
-                .then((resp) => ({
-                  ...item,
-                  comments: resp,
-                }))
+                .then((resp) => {
+                  const o = item;
+                  o.comments = resp;
+                  return o;
+                })
             )
           );
         },
@@ -124,46 +126,22 @@ module.exports = {
   },
   actions: {
     fake: {
-      rest: 'POST /fake',
-      params: {},
-      async handler(ctx) {
-        const boards = await ctx.call('boards.find', {});
-        return this.actions.create(
-          {
-            title: faker.lorem.sentence(),
-            body: faker.lorem.paragraph(),
-            image: faker.image.imageUrl(),
-            board: boards[1]._id,
-          },
-          ctx
-        );
+      rest: 'POST /fake/',
+      params: {
+        num: {
+          type: 'number',
+          optional: true,
+        },
       },
-    },
-    fakeBulk: {
-      rest: 'GET /fake/bulk',
       async handler(ctx) {
-        const num = 15;
+        const num = ctx.params.num || 1;
 
         const users = await ctx
           .call('users.find', { fields: ['_id'] })
           .then((res) => res.map((u) => u._id));
 
-        const boards = await ctx
-          .call('boards.find', { fields: ['_id'] })
-          .then((res) => res.map((b) => b._id));
-
         const ids = [];
         const max = users.length;
-        const maxb = boards.length;
-        // eslint-disable-next-line no-plusplus
-        const randomId = (m, u) => {
-          const r = faker.datatype.number({ min: 0, max: m });
-          try {
-            return u[r] !== undefined ? u[r] : randomId(m, u);
-          } catch (err) {
-            return randomId(m, u);
-          }
-        };
 
         while (ids.length < num) {
           ids.push(randomId(max, users));
@@ -172,9 +150,11 @@ module.exports = {
         const data = [];
         while (data.length < num) {
           data.push(
-            ctx.call('posts.fake', {
-              user: ids[data.length],
-              board: randomId(maxb, boards),
+            ctx.call('posts.create', {
+              author: ids[data.length],
+              // title: faker.lorem.sentence(),
+              body: faker.lorem.paragraph(),
+              // image: faker.image.imageUrl(),
             })
           );
         }
@@ -193,22 +173,16 @@ module.exports = {
       async handler(ctx) {
         const author = ctx.params.author ? ObjectId(ctx.params.author) : this.extractUser(ctx);
         if (!author) return this.Promise.reject('User not found');
-        const { title, body, image, board, tags, labels } = ctx.params;
+        const { body } = ctx.params;
 
         const post = await this._create(ctx, {
-          title,
           body,
-          image,
-          createdAt: dayjs().toDate(),
-          board: ObjectId(board),
           author,
-          tags,
-          labels,
+          createdAt: dayjs().toDate(),
         });
 
         const votes = await ctx.call('votes.create', {
-          post: post._id,
-          board: ObjectId(board),
+          post: ObjectId(post._id),
           voters: {
             [author]: 1,
           },
@@ -220,6 +194,25 @@ module.exports = {
           id: post._id,
           votes: ObjectId(votes._id),
           thread: ObjectId(thread._id),
+        }).then((json) =>
+          this.transformDocuments(
+            ctx,
+            {
+              populate: ['author', 'votes', 'voted', 'comments'],
+            },
+            json
+          )
+        );
+      },
+    },
+    push: {
+      async handler(ctx) {
+        const post = await ctx.call('posts.find', { limit: 1 });
+        console.log('post', post);
+        return ctx.call('io.broadcast', {
+          namespace: '/', // optional
+          event: 'push-posts',
+          args: [post], // optional
         });
       },
     },
@@ -288,15 +281,12 @@ module.exports = {
   hooks: {
     before: {
       // eslint-disable-next-line func-names
-      '*': (ctx) => {},
-      create(ctx) {
+      '*': () => {},
+      create() {
         // ctx.params.author = this.extractUser(ctx);
       },
-      get(ctx) {
-        const user = this.extractUser(ctx);
-        console.log('THIS user', ctx.meta);
-      },
-      vote(ctx) {
+      get() {},
+      vote() {
         // ctx.params.user = this.extractUser(ctx);
       },
       upvote(ctx) {
@@ -308,7 +298,7 @@ module.exports = {
         // ctx.params.user = this.extractUser(ctx);
       },
       list(ctx) {
-        ctx.params.sort = { _id: -1, comments: 1 };
+        ctx.params.sort = { _id: -1, comments: -1 };
       },
       update(ctx) {
         const { id } = ctx.params;
@@ -320,6 +310,19 @@ module.exports = {
         });
       },
     },
-    after: {},
+    after: {
+      // '*': () => {},
+      create: (ctx, response) => {
+        ctx.call('io.broadcast', {
+          namespace: '/', // optional
+          event: 'push-posts',
+          args: [response], // optional
+          // volatile: true, // optional
+          // local: true, // optional
+          // rooms: ['room1', 'room2'], // optional
+        });
+        return response;
+      },
+    },
   },
 };
