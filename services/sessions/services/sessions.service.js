@@ -1,20 +1,16 @@
 const { ObjectId } = require('mongodb');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 const { toDeepObjectId, toDeepDate } = require('../../../utils/func');
+const Session = require('../entities/session.entity');
+
+const { entity: entityValidator, fields } = Session;
 
 module.exports = {
   name: 'sessions',
   mixins: [MongoDbMixin('sessions', 'account')],
   settings: {
-    fields: ['_id', 'user', 'token', 'start', 'expires', 'createdAt', 'expired'],
-    entityValidator: {
-      user: { type: 'object', optional: false },
-      start: 'date',
-      token: 'string',
-      expires: 'date',
-      createdAt: 'date',
-      expired: { type: 'boolean', default: false },
-    },
+    fields,
+    entityValidator,
     populates: {
       userId: 'users.get',
     },

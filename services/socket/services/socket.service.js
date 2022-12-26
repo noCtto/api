@@ -38,13 +38,13 @@ module.exports = {
   },
   hooks: {
     after: {
-      // '*': () => {
-      // console.log('Socket after', ctx, response);
-      // },
-      // broadcast(ctx, resp) {
-      //   console.log('after broadcast');
-      //   return resp;
-      // },
+      '*': () => {
+        console.log('Socket after', ctx, response);
+      },
+      broadcast(ctx, resp) {
+        console.log('after broadcast');
+        return resp;
+      },
     },
   },
   methods: {

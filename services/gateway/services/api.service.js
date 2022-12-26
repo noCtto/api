@@ -256,7 +256,7 @@ module.exports = {
         path: '/all',
         authorization: false,
         aliases: {
-          'GET /': 'posts.list',
+          'GET /': 'posts.all',
         },
         bodyParsers: {
           json: true,

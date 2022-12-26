@@ -2,53 +2,27 @@
 const { ObjectId } = require('mongodb');
 const { ValidationError } = require('moleculer').Errors;
 const dayjs = require('dayjs');
+const faker = require('faker');
+const { randomId } = require('../../../utils/func');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
+
+const populates = require('../populates');
+
+const Entity = require('../entities/votes.entity');
+
+const { entity: entityValidator, fields } = Entity;
 
 module.exports = {
   mixins: [MongoDbMixin('votes', 'nocheto')],
   settings: {
     validator: true,
-    fields: ['_id', 'post', 'voters', 'count', 'voted', 'd', 'createdAt', 'total'],
-    entityValidator: {
-      voters: {
-        type: 'object',
-        optional: true,
-      },
-      count: {
-        type: 'number',
-        optional: true,
-      },
-      total: {
-        type: 'number',
-        optional: true,
-      },
-      voted: {
-        type: 'number',
-        optional: true,
-      },
-    },
+    fields,
+    entityValidator,
     populates: {
       post: {
         action: 'posts.get',
       },
-      async count(ids, items) {
-        return items.map((item) => {
-          const keys = Object.keys(item.voters);
-          const { length } = keys;
-          item.count = keys.map((key) => item.voters[key]).reduce((a, b) => a + b, 0);
-          item.total = length;
-          return item;
-        });
-      },
-      voted(ids, items, handler, ctx) {
-        const user = this.extractUser(ctx);
-        // this.logger.info('Checking if voted', ctx.params);
-        return items.map((item) => {
-          item.voted = item.voters[String(user)] !== undefined;
-          if (item.voted) item.d = item.voters[String(user)];
-          return item;
-        });
-      },
+      ...populates,
     },
   },
   actions: {
@@ -60,6 +34,81 @@ module.exports = {
       },
       handler(ctx) {
         return this.Promise.resolve(this.vote(ctx));
+      },
+    },
+    bulk: {
+      rest: 'POST /bulk',
+      params: {
+        num: {
+          type: 'number',
+          optional: true,
+        },
+      },
+      async handler(ctx) {
+        const num = ctx.params.num || 1;
+
+        const users = await ctx
+          .call('users.find', { fields: ['_id'] })
+          .then((res) => res.map((u) => u._id));
+
+        const votes = await ctx
+          .call('votes.find', { fields: ['_id'] })
+          .then((res) => res.map((u) => u._id));
+
+        const ids = [];
+
+        while (ids.length < num) {
+          ids.push({
+            id: randomId(votes.length, votes),
+            user: randomId(users.length, users),
+          });
+        }
+
+        const data = [];
+        while (data.length < num) {
+          const { id, user } = ids[data.length];
+
+          data.push(
+            ctx.call('votes.fake', {
+              id,
+              user,
+            })
+          );
+        }
+        return Promise.all(data);
+      },
+    },
+    fake: {
+      rest: 'POST /fake',
+      params: {
+        id: {
+          type: 'string',
+          optional: true,
+        },
+        user: {
+          type: 'string',
+          required: true,
+        },
+        d: {
+          type: 'boolean',
+          optional: true,
+        },
+      },
+      handler(ctx) {
+        const { id, user } = ctx.params;
+        return this.Promise.resolve(
+          this._get(ctx, { id }).then((res) => {
+            if (!res) return this.Promise.reject(new ValidationError('no vote'));
+            const { voters } = res;
+            return this._update(ctx, {
+              id,
+              voters: {
+                ...voters,
+                [`${ObjectId(user)}`]: Number(ctx.params.d || faker.datatype.boolean()),
+              },
+            });
+          })
+        );
       },
     },
   },

@@ -6,8 +6,13 @@ const { ObjectId } = require('mongodb');
 const faker = require('faker');
 const gravatar = require('gravatar');
 const dayjs = require('dayjs');
-const { sha256, isObjectId } = require('../../../utils/func');
+const { sha256, isObjectId, randomId } = require('../../../utils/func');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
+
+const User = require('../entities/user.enity');
+
+const { entity: entityValidator, fields } = User;
+
 require('dotenv').config();
 
 const { JWT_SECRET } = process.env;
@@ -17,27 +22,8 @@ module.exports = {
   mixins: [MongoDbMixin('users', 'account')],
   settings: {
     JWT_SECRET,
-    fields: [
-      '_id',
-      'username',
-      'email',
-      'password',
-      'imageUrl',
-      'createdAt',
-      'lastLogin',
-      'active',
-      'posts',
-      'admin',
-    ],
-    entityValidator: {
-      username: 'string|min:5',
-      email: 'email',
-      password: 'string|min:8',
-      imageUrl: { type: 'string', optional: true },
-      createdAt: 'date',
-      lastLogin: { type: 'date', optional: true },
-      active: { type: 'boolean', default: true },
-    },
+    fields,
+    entityValidator,
     populates: {
       gravatar(ids, items) {
         return this.Promise.all(
@@ -169,6 +155,28 @@ module.exports = {
         );
       },
     },
+    random: {
+      params: {
+        num: {
+          type: 'number',
+          optional: true,
+        },
+      },
+      async handler(ctx) {
+        const num = ctx.params.num || 1;
+        const users = await ctx
+          .call('users.find', { fields: ['_id'] })
+          .then((res) => res.map((u) => u._id));
+
+        const ids = [];
+        const max = users.length;
+
+        while (ids.length < num) {
+          ids.push(randomId(max, users));
+        }
+        return ids;
+      },
+    },
     forceLogout: {
       rest: 'POST /forceLogout',
       cache: false,
@@ -222,7 +230,7 @@ module.exports = {
         },
       },
       handler(ctx) {
-        const { email, password, environment, fingerprint, username } = ctx.params;
+        const { email, password, username } = ctx.params;
         if (!password || (!username && !email))
           return this.Promise.reject(
             new MoleculerClientError('Invalid credentials', 400, ctx.params)
@@ -239,7 +247,7 @@ module.exports = {
                 return user;
               }
             }
-
+            console.log('Logging In!', user);
             return this.Promise.reject(
               new MoleculerClientError('Email or password is invalid!', 422, 'account', [
                 // {

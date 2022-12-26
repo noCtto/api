@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const { ObjectId } = require('mongodb');
 const dayjs = require('dayjs');
 const fs = require('fs');
@@ -5,6 +6,29 @@ const path = require('path');
 const faker = require('faker');
 const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 const { randomId } = require('../../../utils/func');
+
+const aggretation = [
+  {
+    $project: {
+      as: {
+        $objectToArray: '$voters',
+      },
+    },
+  },
+  {
+    $project: {
+      _id: '$_id',
+      voters: {
+        $size: '$as',
+      },
+    },
+  },
+  {
+    $sort: {
+      voters: -1,
+    },
+  },
+];
 
 module.exports = {
   mixins: [MongoDbMixin('posts', 'nocheto')],
@@ -208,7 +232,6 @@ module.exports = {
     push: {
       async handler(ctx) {
         const post = await ctx.call('posts.find', { limit: 1 });
-        console.log('post', post);
         return ctx.call('io.broadcast', {
           namespace: '/', // optional
           event: 'push-posts',
@@ -254,6 +277,17 @@ module.exports = {
           // }
           // return Promise.all(arr);
           return ctx.call('posts.create', { ...ctx.meta.$multipart, image: name });
+        });
+      },
+    },
+    all: {
+      handler(ctx) {
+        return this._list(ctx, {
+          populate: ['comments', 'board', 'author', 'votes'],
+          fields: ['_id', 'votes', 'author', 'createdAt', 'comments', 'board', 'body'],
+          sort: '-createdAt',
+          page: 1,
+          pageSize: 10,
         });
       },
     },
