@@ -1,6 +1,8 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-param-reassign */
 const { ObjectId } = require('mongodb');
 
-module.exports = async function handler(ids, items, handler, ctx) {
+module.exports = async function comments(ids, items, handler, ctx) {
   return this.Promise.all(
     items.map((item) =>
       ctx

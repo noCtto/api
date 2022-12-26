@@ -1,7 +1,5 @@
 /* eslint-disable global-require, import/no-dynamic-require */
-
 const path = require('path');
-
 require('fs')
   .readdirSync(__dirname)
   .forEach((file) => {
