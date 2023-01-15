@@ -2,7 +2,6 @@
 const compression = require('compression');
 const ApiGateway = require('moleculer-web');
 const OAuth2Server = require('../../../mixins/oauth2.mixin');
-const { checkIfValidMD5Hash } = require('../../../utils/func');
 
 const {
   func: { resp },
@@ -23,7 +22,6 @@ module.exports = {
     routes: [
       {
         path: '/',
-        that: true,
         authorization: true, // ? Enable oauth2
         autoAliases: true,
         bodyParsers: {
@@ -34,74 +32,8 @@ module.exports = {
           'GET /': 'posts.list',
         },
         onBeforeCall(ctx, route, req, res) {
-          if (req.headers && req.headers.authorization) {
-            if (
-              req.headers.authorization.includes('Bearer') &&
-              req.headers.authorization.length <= 48
-            ) {
-              if (
-                req?.$action?.name &&
-                [
-                  // 'shipping-orders.create', Protect Routes in API
-                ].includes(req.$action.name)
-              ) {
-                return resp(
-                  res,
-                  {
-                    code: 401,
-                    message: 'This service is disabled, please read the developer documentation.',
-                    documentationLink: 'https://localhost:4000/wms/v2/docs',
-                  },
-                  401
-                );
-              }
-            }
-            const jsonWebToken =
-              req.headers.authorization && req.headers.authorization.split(' ')[1];
-            if (!checkIfValidMD5Hash(jsonWebToken)) {
-              // Solo en estos casos no se valida la session, no es necesario
-              if (req.url === '/sessions/fetch-session' || req.url === '/users/update-token')
-                return null;
-
-              ctx
-                .call('users.resolveToken', {
-                  token: jsonWebToken,
-                })
-                .then((response) => {
-                  this.logger.info('Se busca session, validar para actualizar el token');
-                  ctx
-                    .call('sessions.find', { query: { user: response.id }, sort: '-createdAt' })
-                    .then(([session]) => {
-                      this.logger.info('Se buscan sessiones', response.id);
-                      if (!session) return;
-                      this.logger.info('Se buscan sessiones');
-                      const now = new Date();
-                      const updateTime = new Date(Date.parse(session.expires) - 5 * 60 * 1000);
-                      const expires = new Date(session.expires);
-
-                      if (now >= updateTime && now <= expires) {
-                        this.logger.info('Se actualiza el token 5 min antes de que expire');
-                        ctx
-                          .call('users.updateToken', {
-                            userId: response.id,
-                          })
-                          .then(() => {
-                            this.logger.info('Se actualizo el token');
-                          });
-                      }
-                      this.logger.info('No Se actualizo el token');
-                    })
-                    .catch((err) => this.logger.error(err));
-                  // return response;
-                });
-            }
-          }
+          return this.authorize(ctx, route, req, res);
         },
-        // aliases: {
-        //   'GET /': function base(req, res) {
-        //     res.send('HEy Yo');
-        //   },
-        // },
       },
       {
         path: '/status',
@@ -165,7 +97,7 @@ module.exports = {
       },
       {
         path: '/me',
-        authorization: true,
+        authorization: false,
         bodyParsers: {
           json: false,
           urlencoded: false,
@@ -214,7 +146,7 @@ module.exports = {
       },
       {
         path: '/t',
-        authorization: false,
+        authorization: true,
         bodyParsers: {
           json: false,
           urlencoded: false,
@@ -240,6 +172,12 @@ module.exports = {
           'GET /': 'posts.list',
           'GET /:id': 'posts.get',
         },
+        onBeforeCall(ctx, route, req, res) {
+          const { authorization } = req.headers;
+          if (authorization) {
+            return this.authorize(ctx, route, req, res);
+          }
+        },
       },
       {
         path: '/p/create',
@@ -263,6 +201,12 @@ module.exports = {
           urlencoded: {
             extended: true,
           },
+        },
+        onBeforeCall(ctx, route, req, res) {
+          const { authorization } = req.headers;
+          if (authorization) {
+            return this.authorize(ctx, route, req, res);
+          }
         },
       },
       {

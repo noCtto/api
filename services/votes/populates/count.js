@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 module.exports = async function count(ids, items) {
   return items.map((item) => {
     const keys = Object.keys(item.voters);

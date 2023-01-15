@@ -14,6 +14,12 @@ module.exports = {
       default: null,
       optional: true,
     },
+    pid: {
+      type: 'objectID',
+      ObjectID: ObjectId,
+      default: null,
+      optional: true,
+    },
     text: {
       type: 'string',
       required: true,
@@ -36,5 +42,5 @@ module.exports = {
       optional: true,
     },
   },
-  fields: ['_id', 'tid', 'text', 'cid', 'replies', 'createdAt', 'author', 'votes'],
+  fields: ['_id', 'tid', 'text', 'cid', 'replies', 'createdAt', 'author', 'votes', 'pid'],
 };

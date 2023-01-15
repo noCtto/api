@@ -6,7 +6,11 @@ module.exports = {
   params: {
     tid: {
       type: 'string',
-      optional: true,
+      optional: false,
+    },
+    pid: {
+      type: 'string',
+      optional: false,
     },
     cid: {
       type: 'string',
@@ -25,7 +29,8 @@ module.exports = {
       ...ctx.params,
       author,
     };
-    if (!params.cid) {
+
+    if (!params.cid || params.cid === 'null') {
       delete params.cid;
     }
 

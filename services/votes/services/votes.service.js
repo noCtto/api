@@ -2,6 +2,7 @@ const MongoDbMixin = require('../../../mixins/mongodb.mixin');
 const populates = require('../populates');
 const actions = require('../actions');
 const methods = require('../methods');
+const hooks = require('../hooks');
 const Entity = require('../entities/votes.entity');
 const { extractUser } = require('../../../utils');
 
@@ -16,6 +17,7 @@ module.exports = {
     populates,
   },
   actions,
+  hooks,
   methods: {
     ...methods,
     extractUser,

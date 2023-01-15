@@ -6,11 +6,12 @@ module.exports = function comments(ids, items, handler, ctx) {
       ctx
         .call('comments.count', {
           query: {
-            tid: ObjectId(item.thread),
+            pid: ObjectId(item._id),
             cid: { $exists: false },
           },
         })
         .then((resp) => {
+          console.log('COUNT', resp);
           const o = item;
           o.comments = resp;
           return o;

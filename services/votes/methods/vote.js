@@ -5,6 +5,8 @@ module.exports = function vote(ctx) {
   const { id, d } = ctx.params;
   const user = this.extractUser(ctx);
   if (!user) return this.Promise.reject(new ValidationError('no user'));
+
+  const dateTime = dayjs().unix();
   return this._get(ctx, { id }).then((card) => {
     let bool = d;
     if (!card) this.Promise.reject(new ValidationError('error', 'number', 400));
@@ -20,15 +22,17 @@ module.exports = function vote(ctx) {
         [String(user)]: bool,
       },
       updatedAt: dayjs().toDate(),
-    }).then((json) =>
-      this.transformDocuments(
-        { ...ctx },
-        {
-          populate: ['votes', 'voted'],
-          fields: ['id', 'count', 'total', 'voted', 'd'],
-        },
-        json
+    })
+      .then((json) =>
+        this.transformDocuments(
+          ctx,
+          {
+            populate: ['votes', 'voted', 'count'],
+            fields: ['_id', 'count', 'post'],
+          },
+          { ...json }
+        )
       )
-    );
+      .then((v) => ({ ...v, key: `${card._id}-${card.post}-${dateTime}-${user}-vote` }));
   });
 };

@@ -44,51 +44,52 @@ module.exports = {
         .catch((err) => resp(res, err, 401));
     },
     async authorize(ctx, route, req, res) {
+      console.log('Authorizing...');
       const request = new Request(req);
       const response = new Response(res);
 
-      if (req.headers.authorization) {
-        let jsonWebToken = null;
+      const { headers } = req;
 
-        const type = req.headers.authorization.split(' ')[0];
-        if (type === 'Token' || type === 'Bearer')
-          jsonWebToken = req.headers.authorization.split(' ')[1];
+      if (headers.authorization) {
+        const { authorization } = headers;
 
-        if (jsonWebToken) {
-          // Verify JWT token la expiracion es de 5 min
-          if (checkIfValidMD5Hash(jsonWebToken)) {
-            return this.oauth
-              .authenticate(request, response)
-              .then((token) => {
-                ctx.meta.oauth = token;
-                Object.assign(req, { oauth: token });
-                return token;
-              })
-              .catch((err) => {
-                // console.log('error en este');
-                // ctx.meta.$statusCode = 401
-                throw err;
-                // throw new Error('Your session has expired');
-              });
+        // const type = authorization.split(' ')[0];
+        const token = authorization.split(' ')[1];
+
+        if (token) {
+          if (token === 'Stranger') {
+            return;
           }
 
+          if (checkIfValidMD5Hash(token)) {
+            return this.oauth
+              .authenticate(request, response)
+              .then((tok) => {
+                ctx.meta.oauth = tok;
+                Object.assign(req, { oauth: tok });
+                return tok;
+              })
+              .catch((err) => {
+                throw err;
+              });
+          }
           try {
             const userAuth = await ctx.call('users.resolveToken', {
-              token: jsonWebToken,
+              token,
             });
             // Aqui podria ir validacion de forzar a loguear
             if (userAuth) {
               ctx.meta.oauth = userAuth; // _.pick(userAuth, ["_id", "username", "email", "image"])
-              ctx.meta.token = jsonWebToken;
+              ctx.meta.token = token;
               Object.assign(req, { oauth: userAuth });
-              return jsonWebToken;
+              return token;
             }
           } catch (err) {
             throw Error('Token has expired, try login again');
           }
+          console.log('THIS IS NOT A VALID TOKEN', token);
         }
       }
-
       return this.oauth.authenticate(request, response);
     },
 
