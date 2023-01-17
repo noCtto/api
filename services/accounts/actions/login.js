@@ -25,7 +25,7 @@ module.exports = {
       return this.Promise.reject(new MoleculerClientError('Invalid credentials', 400, ctx.params));
     return this._find(ctx, {
       query: { $or: [{ email }, { username }] },
-      fields: ['_id', 'name', 'lastName', 'username', 'email', 'photoUrl', 'password'],
+      fields: ['_id', 'username', 'email', 'imageUrl', 'password'],
       // populate: ['permissions', 'companies', 'role'],
     })
       .then((users) => {
@@ -55,7 +55,13 @@ module.exports = {
 
         return this.adapter.updateById(user._id, update).then(() => user);
       })
-      .then((user) => this.transformDocuments(ctx, {}, user))
+      .then((user) =>
+        this.transformDocuments(
+          ctx,
+          { populate: ['gravatar'], fields: ['_id', 'username', 'imageUrl'] },
+          user
+        )
+      )
       .then(async (user) => {
         const token = await this.validateSession(user, ctx);
         return this.transformEntity2(user, token);

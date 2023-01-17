@@ -1,7 +1,7 @@
 const faker = require('faker');
 
 module.exports = {
-  rest: 'POST /fake',
+  rest: 'POST /fake/user',
   params: {
     num: {
       type: 'number',

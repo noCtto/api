@@ -10,7 +10,6 @@ module.exports = function vote(ctx) {
   return this._get(ctx, { id }).then((card) => {
     let bool = d;
     if (!card) this.Promise.reject(new ValidationError('error', 'number', 400));
-
     const { voters } = card;
     if (card.voters[String(user)] !== undefined && card.voters[String(user)] === d) {
       bool = null;
@@ -27,12 +26,12 @@ module.exports = function vote(ctx) {
         this.transformDocuments(
           ctx,
           {
-            populate: ['votes', 'voted', 'count'],
-            fields: ['_id', 'count', 'post'],
+            populate: ['votes', 'count'],
+            fields: ['_id', 'count', 'pid', 'tid', 'cid'],
           },
           { ...json }
         )
       )
-      .then((v) => ({ ...v, key: `${card._id}-${card.post}-${dateTime}-${user}-vote` }));
+      .then((v) => ({ ...v, key: `${card._id}-${card.pid}-${dateTime}-${user}-vote` }));
   });
 };

@@ -27,25 +27,28 @@ module.exports = {
 
     const params = {
       ...ctx.params,
-      author,
+      uid: author,
     };
 
     if (!params.cid || params.cid === 'null') {
       delete params.cid;
     }
 
-    const votes = await ctx.call(
-      'votes.create',
-      toDeepObjectId({
-        voters: {
-          [author]: 1,
-        },
-      })
-    );
+    const votes = await ctx.call('votes.create', {
+      voters: {
+        [author]: 1,
+      },
+      cid: params.cid,
+      pid: params.pid,
+      tid: params.tid,
+      uid: author,
+    });
 
     const comment = await this._create(
       ctx,
       toDeepObjectId({ ...params, votes: ObjectId(votes._id) })
+    ).then((json) =>
+      this.transformDocuments(ctx, { populate: ['votes', 'author', 'replies'] }, json)
     );
     return comment;
   },

@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb');
 
 module.exports = {
   entity: {
-    post: {
+    pid: {
       type: 'objectID',
       ObjectID: ObjectId,
     },
@@ -12,5 +12,5 @@ module.exports = {
       default: [],
     },
   },
-  fields: ['_id', 'post', 'comments'],
+  fields: ['_id', 'pid', 'comments'],
 };

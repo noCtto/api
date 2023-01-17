@@ -16,6 +16,35 @@ module.exports = {
       type: 'number',
       optional: true,
     },
+    tid: {
+      type: 'string',
+      optional: true,
+    },
+    pid: {
+      type: 'string',
+      optional: true,
+    },
+    cid: {
+      type: 'string',
+      optional: true,
+    },
+    createdAt: {
+      type: 'date',
+      optional: true,
+      default: () => new Date(),
+    },
   },
-  fields: ['_id', 'post', 'voters', 'count', 'voted', 'd', 'createdAt', 'total'],
+  fields: [
+    '_id',
+    'pid',
+    'cid',
+    'tid',
+    'vid',
+    'voters',
+    'count',
+    'voted',
+    'd',
+    'createdAt',
+    'total',
+  ],
 };

@@ -4,8 +4,9 @@ const { ObjectId } = require('mongodb');
 
 module.exports = async function comments(ids, items, handler, ctx) {
   return this.Promise.all(
-    items.map((item) =>
-      ctx
+    items.map((item) => {
+      console.log('Populating comments', item, 'for thread');
+      return ctx
         .call('comments.list', {
           query: {
             tid: ObjectId(item._id),
@@ -16,7 +17,7 @@ module.exports = async function comments(ids, items, handler, ctx) {
         .then((comments) => {
           item.comments = comments;
           return item;
-        })
-    )
+        });
+    })
   );
 };

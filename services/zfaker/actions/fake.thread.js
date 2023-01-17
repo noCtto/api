@@ -1,5 +1,5 @@
 module.exports = {
-  rest: 'GET /fake/:tid',
+  rest: 'GET /fake/thread/:tid',
   params: {
     tid: 'string',
   },

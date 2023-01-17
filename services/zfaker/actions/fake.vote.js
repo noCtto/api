@@ -3,7 +3,7 @@ const { ValidationError } = require('moleculer').Errors;
 const { ObjectId } = require('mongodb');
 
 module.exports = {
-  rest: 'POST /fake',
+  rest: 'POST /fake/vote',
   params: {
     id: {
       type: 'string',

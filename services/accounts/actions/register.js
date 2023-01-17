@@ -1,5 +1,7 @@
 const { MoleculerClientError } = require('moleculer').Errors;
 const dayjs = require('dayjs');
+// import sha256 from 'sha256';
+const sha256 = require('sha256');
 
 module.exports = {
   params: {
@@ -19,7 +21,7 @@ module.exports = {
         return this._create(ctx, {
           username,
           email,
-          password,
+          password: sha256(password),
           createdAt: dayjs().toDate(),
         }).then((user) => {
           if (!user) return this.Promise.reject(new MoleculerClientError('User Creation Error'));

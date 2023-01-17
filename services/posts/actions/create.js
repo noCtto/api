@@ -17,23 +17,26 @@ module.exports = {
 
     const post = await this._create(ctx, {
       body,
-      author,
+      uid: author,
       createdAt: dayjs().toDate(),
     });
+
+    const thread = await ctx.call('threads.create', { pid: ObjectId(post._id) });
 
     const votes = await ctx.call('votes.create', {
       post: ObjectId(post._id),
       voters: {
         [author]: 1,
       },
+      pid: post._id,
+      tid: thread._id,
+      uid: author,
     });
-
-    const thread = await ctx.call('threads.create', { post: ObjectId(post._id) });
 
     return this._update(ctx, {
       id: post._id,
-      votes: ObjectId(votes._id),
-      thread: ObjectId(thread._id),
+      vid: ObjectId(votes._id),
+      tid: ObjectId(thread._id),
     }).then((json) =>
       this.transformDocuments(
         ctx,

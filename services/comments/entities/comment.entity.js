@@ -20,6 +20,10 @@ module.exports = {
       default: null,
       optional: true,
     },
+    uid: {
+      type: 'objectID',
+      ObjectID: ObjectId,
+    },
     text: {
       type: 'string',
       required: true,
@@ -35,6 +39,11 @@ module.exports = {
       default: null,
       optional: true,
     },
+    replies: {
+      type: 'object',
+      default: {},
+      optional: true,
+    },
     votes: {
       type: 'objectID',
       ObjectID: ObjectId,
@@ -42,5 +51,5 @@ module.exports = {
       optional: true,
     },
   },
-  fields: ['_id', 'tid', 'text', 'cid', 'replies', 'createdAt', 'author', 'votes', 'pid'],
+  fields: ['_id', 'tid', 'cid', 'pid', 'uid', 'text', 'replies', 'createdAt', 'author', 'votes'],
 };

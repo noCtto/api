@@ -1,7 +1,7 @@
 const { randomId } = require('../../../utils');
 
 module.exports = {
-  rest: 'POST /bulk',
+  rest: 'POST /bulk/vote',
   params: {
     num: {
       type: 'number',

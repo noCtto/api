@@ -1,5 +1,5 @@
 module.exports = {
-  rest: 'POST /logout',
+  rest: 'POST /change/password',
   cache: false,
   params: {
     username: { type: 'string' },

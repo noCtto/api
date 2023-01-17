@@ -1,7 +1,16 @@
-module.exports = {
-  action: 'threads.get',
-  params: {
-    fields: ['_id', 'comments'],
-    populate: ['comments'],
-  },
+module.exports = function threads(ids, items, handler, ctxt) {
+  return Promise.all(
+    items.map((item) =>
+      ctxt
+        .call('threads.get', {
+          id: item.tid.toString(),
+          populate: ['comments'],
+        })
+        .then((data) => {
+          const o = item;
+          o.thread = data;
+          return o;
+        })
+    )
+  );
 };

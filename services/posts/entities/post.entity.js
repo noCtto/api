@@ -17,29 +17,45 @@ module.exports = {
       required: true,
       optional: true,
     },
-    author: {
+    tid: {
       type: 'objectID',
       ObjectID: ObjectId,
-      optional: false,
+      optional: true,
     },
-    board: {
+    vid: {
       type: 'objectID',
       ObjectID: ObjectId,
+      optional: true,
+    },
+    bid: {
+      type: 'objectID',
+      ObjectID: ObjectId,
+      optional: true,
+    },
+    uid: {
+      type: 'objectID',
+      ObjectID: ObjectId,
+      optional: true,
+    },
+    author: {
+      type: 'object',
       optional: true,
     },
     votes: {
-      type: 'objectID',
-      ObjectID: ObjectId,
+      type: 'object',
       optional: true,
     },
-    comments: {
+    board: {
       type: 'object',
       optional: true,
     },
     thread: {
       type: 'object',
       optional: true,
-      default: null,
+    },
+    comments: {
+      type: 'object',
+      optional: true,
     },
     tags: {
       type: 'array',
@@ -64,5 +80,9 @@ module.exports = {
     'votes',
     'tags',
     'label',
+    'tid',
+    'vid',
+    'bid',
+    'uid',
   ],
 };

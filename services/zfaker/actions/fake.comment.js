@@ -2,7 +2,7 @@ const faker = require('faker');
 const { randomId } = require('../../../utils/func');
 
 module.exports = {
-  rest: 'POST /fake',
+  rest: 'POST /fake/comment',
   params: {
     num: {
       type: 'number',
