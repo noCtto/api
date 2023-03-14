@@ -13,11 +13,6 @@ services:
     image: nats
     ports:
     - 4222:4222
-  # rabbitmq:
-  #   image: rabbitmq:management
-  #   ports:
-  #   - 15672:15672
-  #   - 5672:5672
   redis:
     image: redis:alpine
     ports:
