@@ -1,10 +1,13 @@
 
 import { ObjectId } from 'mongodb';
 
+import type { Context } from "moleculer";
+import { BoardThis } from '../boards.service';
+
 export default {
-  handler(ids, items, handler, ctx) {
+  handler(this:BoardThis, ids:any, items:any, handler:any, ctx: Context & { params: { board: string, populate: string } }) {
     return Promise.all(
-      items.map((board) =>
+      items.map((board:any) =>
         ctx
           .call('posts.list', {
             ...ctx.params,

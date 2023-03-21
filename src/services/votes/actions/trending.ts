@@ -1,5 +1,7 @@
 
 import { ObjectId } from 'mongodb';
+import type { Context } from "moleculer";
+import { VoteThis } from '../votes.service';
 
 export default {
   params: {
@@ -8,7 +10,7 @@ export default {
       optional: true,
     },
   },
-  async handler(ctx) {
+  async handler(this:VoteThis, ctx:Context & { params: any }):Promise<any> {
     const { page, limit } = ctx.params;
 
     const pipeline = [
@@ -38,6 +40,6 @@ export default {
 
     const aggregation = await this.adapter.collection.aggregate(pipeline);
     const result = await aggregation.toArray();
-    return result.map((item) => new ObjectId(item._id));
+    return result.map((item:any) => new ObjectId(item._id));
   },
 };

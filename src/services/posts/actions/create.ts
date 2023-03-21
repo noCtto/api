@@ -3,6 +3,10 @@
 import { ObjectId } from 'mongodb';
 import dayjs from 'dayjs';
 
+import type { Context } from "moleculer";
+import { PostThis } from '../posts.service';
+
+
 export default {
   params: {
     title: { type: 'string', optional: true },
@@ -13,13 +17,13 @@ export default {
     labels: { type: 'string', optional: true },
     bid: { type: 'string', optional: true },
   },
-  async handler(ctx) {
-    const author = ctx.params.author ? new ObjectId(ctx.params.author) : this.extractUser(ctx);
+  async handler(this:PostThis, ctx: Context & { params: any }) {
+    const author:any = ctx.params.author ? new ObjectId(ctx.params.author) : this.extractUser(ctx);
     const { body } = ctx.params;
 
-    if (!author) return this.Promise.reject('User not found');
+    if (!author) return Promise.reject('User not found');
 
-    const post = await this._create(ctx, {
+    const post:any = await this._create(ctx, {
       body,
       uid: author,
       bid: new ObjectId(ctx.params.bid),
@@ -30,9 +34,9 @@ export default {
       labels: ctx.params.labels || null,
     });
 
-    const thread = await ctx.call('threads.create', { pid: new ObjectId(post._id) });
+    const thread:any = await ctx.call('threads.create', { pid: new ObjectId(post._id) });
 
-    const votes = await ctx.call('votes.create', {
+    const votes:any = await ctx.call('votes.create', {
       voters: {
         [author]: 1,
       },
@@ -51,7 +55,7 @@ export default {
       id: post._id,
       vid: new ObjectId(votes._id),
       tid: new ObjectId(thread._id),
-    }).then((json) =>
+    }).then((json:any) =>
       this.transformDocuments(
         ctx,
         {

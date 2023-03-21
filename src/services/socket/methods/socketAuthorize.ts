@@ -1,4 +1,6 @@
-export default function socketAuthorize(socket) {
+import {SocketThis} from '../socket.service';
+
+export default function socketAuthorize(this:SocketThis, socket:any) {
   console.log('Login using token:', socket.handshake.query.token);
   const accessToken = socket.handshake.query.token;
   if (accessToken) {

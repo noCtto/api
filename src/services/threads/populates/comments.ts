@@ -1,9 +1,11 @@
 
 import { ObjectId } from 'mongodb';
+import type { Context } from "moleculer";
+import { ThreadThis } from '../threads.service';
 
-export default async function comments(ids, items, handler, ctx) {
-  return this.Promise.all(
-    items.map((item) => {
+export default async function comments(this:ThreadThis, ids:any, items:any, handler:any, ctx:Context & { params: any }) {
+  return Promise.all(
+    items.map((item:any) => {
       console.log('Populating comments', item, 'for thread');
       return ctx
         .call('comments.list', {

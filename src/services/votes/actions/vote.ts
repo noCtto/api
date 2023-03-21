@@ -1,4 +1,6 @@
 import { ObjectId } from 'mongodb';
+import type { Context } from "moleculer";
+import { VoteThis } from '../votes.service';
 
 export default {
   rest: 'POST /vote',
@@ -6,7 +8,7 @@ export default {
     id: { type: 'objectID', ObjectID: ObjectId, optional: false },
     d: 'boolean',
   },
-  handler(ctx) {
-    return this.Promise.resolve(this.vote(ctx));
+  async handler(this:VoteThis, ctx:Context & { params: any }):Promise<any> {
+    return Promise.resolve(this.vote(ctx));
   },
 };

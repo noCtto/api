@@ -1,4 +1,6 @@
 import { toDeepObjectId } from '../../../utils/func';
+import type { Context } from "moleculer";
+import { VoteThis } from '../votes.service';
 
 export default {
   params: {
@@ -24,7 +26,7 @@ export default {
       default: () => new Date(),
     },
   },
-  async handler(ctx) {
+  async handler(this:VoteThis, ctx:Context & { params: any }):Promise<any> {
     const votes = await this._create(
       ctx,
       toDeepObjectId({

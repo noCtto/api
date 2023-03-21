@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
+import type { AccountThis } from '../accounts.service';
 
-export default function validateSession(user, ctx) {
+export default function validateSession(this:AccountThis, user:any, ctx:any) {
   this.logger.info('Validating: ', user, ctx.params);
   this.logger.info('validateSession');
 
@@ -13,7 +14,7 @@ export default function validateSession(user, ctx) {
   };
   return ctx
     .call('sessions.find', { query, sort: '-createdAt' })
-    .then(async (sessions) => {
+    .then(async (sessions: any) => {
       this.logger.info('Buscamos sesiones ordenadas por creacion.');
       if (!sessions.length) {
         this.logger.info('No hay sesiones activas');
@@ -32,7 +33,7 @@ export default function validateSession(user, ctx) {
           .then(() => {
             this.logger.info('Sesion creada, se regresa a front.');
           })
-          .catch((er) => {
+          .catch((er:any) => {
             console.log('error', er);
           });
         return token;
@@ -57,7 +58,7 @@ export default function validateSession(user, ctx) {
           .call('sessions.remove', {
             id: sessions[0]._id,
           })
-          .then((json) => this.entityChanged('updated', json, ctx));
+          .then((json:any) => this.entityChanged('updated', json, ctx));
 
         // La session ya expiro, se debe crear una nueva y actualizar la session pasada como inactiva.
         this.logger.info('Se actualizo a expired la sesion vieja');
@@ -91,7 +92,7 @@ export default function validateSession(user, ctx) {
         return token;
       }
     })
-    .catch((e) => {
+    .catch((e:any) => {
       throw Error(e);
     });
 };

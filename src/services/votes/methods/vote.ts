@@ -1,10 +1,12 @@
 import MoleculerJs from 'moleculer';
 import dayjs from 'dayjs';
 import { ObjectId } from 'mongodb';
+import type { Context } from "moleculer";
+import { VoteThis } from '../votes.service';
 
 const { ValidationError } = MoleculerJs.Errors;
 
-const vl = (currentVote, newVote) => {
+const vl = (currentVote:any, newVote:any) => {
   let votedState = 0;
   if (newVote) {
     votedState = currentVote ? 0 : 1;
@@ -14,14 +16,14 @@ const vl = (currentVote, newVote) => {
   return votedState;
 };
 
-export default function vote(ctx) {
+export default function vote(this:VoteThis, ctx: Context & { params: any }) {
   const { id, d } = ctx.params;
   const user = ctx.params.uid ? new ObjectId(ctx.params.uid) : this.extractUser(ctx);
-  if (!user) return this.Promise.reject(new ValidationError('no user'));
+  if (!user) return Promise.reject(new ValidationError('no user'));
 
   const dateTime = dayjs().unix();
-  return this._get(ctx, { id }).then((card) => {
-    if (!card) this.Promise.reject(new ValidationError('error', 'number'));
+  return this._get(ctx, { id }).then((card:any) => {
+    if (!card) Promise.reject(new ValidationError('error', 'number'));
     const { voters } = card;
 
     const currentVote = voters[String(user)] || 0;
@@ -34,7 +36,7 @@ export default function vote(ctx) {
       },
       updatedAt: dayjs().toDate(),
     })
-      .then((json) =>
+      .then((json:any) =>
         this.transformDocuments(
           ctx,
           {
@@ -44,6 +46,6 @@ export default function vote(ctx) {
           { ...json }
         )
       )
-      .then((v) => ({ ...v, key: `${card._id}-${card.pid}-${dateTime}-${user}-vote` }));
+      .then((v:any) => ({ ...v, key: `${card._id}-${card.pid}-${dateTime}-${user}-vote` }));
   });
 };

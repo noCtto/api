@@ -1,3 +1,9 @@
+import { toDeepObjectId } from '../../../utils/func';
+import { randomId } from '../../../utils/func';
+import { faker } from '@faker-js/faker';
+import { FakeThis } from '../faker.service';
+import type { Context } from "moleculer";
+
 export default {
   rest: 'GET /fake/follow/',
   params: {
@@ -6,10 +12,10 @@ export default {
       optional: true,
     },
   },
-  async handler(ctx) {
+  async handler(this:FakeThis, ctx: Context & { params: any }):Promise<any> {
     const num = ctx.params.num || 1;
 
-    const users = await ctx.call('users.random', { num: num * 2 });
+    const users:any = await ctx.call('users.random', { num: num * 2 });
     const data: any = [];
     while (data.length < num) {
       const uid1 = users.shift();

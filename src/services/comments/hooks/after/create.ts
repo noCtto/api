@@ -1,5 +1,8 @@
-export default async function comment(ctx, response) {
-  const post = await ctx.call('posts.get', {
+import type { Context } from "moleculer";
+import { CommentThis } from '../../comments.service';
+
+export default async function comment(this:CommentThis, ctx:Context, response:any) {
+  const post:any = await ctx.call('posts.get', {
     id: response.pid.toString(),
     populate: ['comments'],
     fields: ['_id', 'comments'],

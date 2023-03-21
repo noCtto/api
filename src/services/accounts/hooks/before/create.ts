@@ -1,4 +1,12 @@
-export default async function create(ctx) {
+import type { AccountThis } from '../../accounts.service';
+import type { Context } from 'moleculer';
+
+interface Params {
+  username: string;
+  createdAt: Date;
+}
+
+export default async function create(this:AccountThis, ctx: Context<Params>) {
   const query = {
     username: ctx.params.username,
   };
@@ -7,7 +15,7 @@ export default async function create(ctx) {
       query,
       fields: ['_id', 'username'],
     })
-    .then(([user]) => user);
+    .then(([user]:any) => user);
 
   if (exist) throw new Error(`This user ${exist.email} already exist!.`);
 

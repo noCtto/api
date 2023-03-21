@@ -1,7 +1,10 @@
+import type { Context } from "moleculer";
+import { CommentThis } from '../comments.service';
 
-export default async function author(ids, items, handler, ctx) {
-  return this.Promise.all(
-    items.map((item) =>
+
+export default async function author(this:CommentThis, ids:any, items:any, handler:any, ctx:Context & { params: any }) {
+  return Promise.all(
+    items.map((item:any) =>
       ctx
         .call('users.get', {
           id: item.uid.toString(),

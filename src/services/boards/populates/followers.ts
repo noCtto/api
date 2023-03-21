@@ -1,10 +1,12 @@
 
 import { ObjectId } from 'mongodb';
+import type { Context } from "moleculer";
+import { BoardThis } from '../boards.service';
 
 export default {
-  handler(ids, items, handler, ctx) {
+  handler(this:BoardThis, ids:any, items:any, handler:any, ctx: Context & { params: { board: string, populate: string } }) {
     return Promise.all(
-      items.map((board) => {
+      items.map((board:any) => {
         if (!board.followers) return board;
 
         const ObjIds = Object.keys(board.followers).map((id) => new ObjectId(id));

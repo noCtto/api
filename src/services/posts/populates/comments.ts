@@ -1,9 +1,12 @@
 
 import {ObjectId } from 'mongodb';
 
-export default function comments(ids, items, handler, ctx) {
-  return this.Promise.all(
-    items.map((item) =>
+import type { Context } from "moleculer";
+import { PostThis } from '../posts.service';
+
+export default function comments(this:PostThis, ids:any, items:any, handler:any, ctx:Context & { params: any }) {
+  return Promise.all(
+    items.map((item:any) =>
       ctx
         .call('comments.count', {
           query: {

@@ -1,6 +1,8 @@
-
-import faker from 'faker';
-
+import { toDeepObjectId } from '../../../utils/func';
+import { randomId } from '../../../utils/func';
+import { faker } from '@faker-js/faker';
+import { FakeThis } from '../faker.service';
+import type { Context } from "moleculer";
 export default {
   rest: 'POST /fake/post',
   params: {
@@ -9,10 +11,11 @@ export default {
       optional: true,
     },
   },
-  async handler(ctx) {
+  async handler(this:FakeThis, ctx: Context & { params: any }):Promise<any> {
     const num = ctx.params.num || 1;
-    const users = await ctx.call('users.random', { num });
-    const boards = await ctx.call('boards.random', { num });
+    const users:any = await ctx.call('users.random', { num });
+    const boards:any = await ctx.call('boards.random', { num });
+    
     if (boards && users) {
       const data: any = [];
       while (data.length < num) {

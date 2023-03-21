@@ -3,9 +3,12 @@ import path from 'path';
 import fs from 'fs';
 import { sha256 } from '../../../utils/func';
 
+import type { Context } from "moleculer";
+import { PostThis } from '../posts.service';
+
 const uploadDir = './public/';
 
-export default async function handler(ctx) {
+export default async function handler(this:PostThis, ctx: Context & { params: any, meta: any }): Promise<string[]> {
   return new this.Promise((resolve, reject) => {
     const ext = mime.getExtension(ctx.meta.mimetype);
     const filename = sha256(`${ctx.meta.filename}${this.randomName()}`);
@@ -18,7 +21,7 @@ export default async function handler(ctx) {
       resolve({ file: { path: filePath, name }, meta: ctx.meta });
     });
 
-    ctx.params.on('error', (err) => {
+    ctx.params.on('error', (err:any) => {
       this.logger.info('File error received', err.message);
       reject(err);
 
@@ -32,7 +35,8 @@ export default async function handler(ctx) {
     });
 
     ctx.params.pipe(f);
-  }).then(({ file }) => {
+  }).then((data:any) => {
+    const { file } = data;
     const { name } = file;
     // const arr = [];
     // for (let i = 0; i < 100; i++) {

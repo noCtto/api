@@ -1,6 +1,10 @@
 import { ObjectId } from 'mongodb';
 import { toDeepObjectId } from '../../../utils/func';
 
+import type { Context } from "moleculer";
+import { CommentThis } from '../comments.service';
+
+
 export default {
   rest: 'POST /',
   params: {
@@ -30,9 +34,9 @@ export default {
       default: () => new Date(),
     },
   },
-  async handler(ctx) {
-    const author = ctx.params.author ? new ObjectId(ctx.params.author) : this.extractUser(ctx);
-    if (!author) return this.Promise.reject('User not found');
+  async handler(this:CommentThis, ctx: Context & { params: any }) {
+    const author:any = ctx.params.author ? new ObjectId(ctx.params.author) : this.extractUser(ctx);
+    if (!author) return Promise.reject('User not found');
 
     const params = {
       ...ctx.params,
@@ -43,7 +47,7 @@ export default {
       delete params.cid;
     }
 
-    const votes = await ctx.call('votes.create', {
+    const votes:any = await ctx.call('votes.create', {
       voters: {
         [author]: 1,
       },
@@ -54,7 +58,7 @@ export default {
     });
 
     const comment = await this._create(ctx, toDeepObjectId({ ...params, vid: votes._id })).then(
-      (json) => this.transformDocuments(ctx, { populate: ['votes', 'author', 'replies'] }, json)
+      (json:any) => this.transformDocuments(ctx, { populate: ['votes', 'author', 'replies'] }, json)
     );
     return comment;
   },

@@ -1,4 +1,6 @@
-export default function transformEntity2(user, token) {
+import type { AccountThis } from '../accounts.service';
+
+export default function transformEntity2(this:AccountThis, user:any, token:any) {
   if (user) {
     delete user.password;
     delete user.createdAt;

@@ -17,14 +17,18 @@ export interface Service {
   methods: any;
   afterConnected(): Promise<void>;
 }
+export interface Settings extends DbServiceSettings {
+  indexes?: Record<string, number>[];
+}
 
+export interface MicroServiceThis extends Service, DbServiceMethods {
+  extractCompany: (ctx: any) => Promise<any>;
+  extractUser: (ctx: any) => Promise<any>;
+}
 
 export default function(name:string, conf:any) {
   const { collection, fields, validator, actions, methods, hooks, populates } = conf;
 
-  interface Settings extends DbServiceSettings {
-    indexes?: Record<string, number>[];
-  }
   
   const MicroService: ServiceSchema<Settings> & { methods: DbServiceMethods } = {
     name,

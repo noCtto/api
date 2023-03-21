@@ -1,6 +1,5 @@
 import type { Context } from "moleculer";
 import { AccountThis } from '../accounts.service';
-
 export interface Params {
 	uid1?: string;
   uid2: string;

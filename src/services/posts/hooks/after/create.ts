@@ -1,4 +1,8 @@
-export default function create(ctx, response) {
+
+import type { Context } from "moleculer";
+import { PostThis } from '../../posts.service';
+
+export default function create(this:PostThis, ctx:Context, response:any) {
   ctx.call('io.broadcast', {
     namespace: '/', // optional
     event: 'push-posts',

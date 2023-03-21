@@ -20,6 +20,10 @@ interface AccountSettings extends DbServiceSettings {
 interface AccountMethods {
   extractUser(ctx: Context): string;
   getByUsername(username:string, ctx: Context): Promise<any>;
+  generateJWT: (user: any, expires:any) => Promise<string>;
+  transformEntity2: (user: any, withToken: boolean, token: string) => Promise<any>;
+  transformEntity: (user: any, withToken: boolean, token: string) => Promise<any>;
+  validateSession: (user:any, extra:any, ctx: Context) => Promise<any>;
 }
 
 interface AccountLocalVars {
@@ -36,7 +40,7 @@ const AccountService: ServiceSchema<AccountSettings> & { methods: DbServiceMetho
 	 */
 	settings: {
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
-		defaultName: "Moleculer",
+		defaultName: "Account",
     fields: fields,
     entityValidator: entityValidator,
 	},
@@ -66,7 +70,9 @@ const AccountService: ServiceSchema<AccountSettings> & { methods: DbServiceMetho
 	/**
 	 * Events
 	 */
-	events: {},
+	events: {
+    
+  },
 
 	/**
 	 * Methods
