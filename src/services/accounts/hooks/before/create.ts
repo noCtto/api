@@ -11,7 +11,7 @@ export default async function create(this:AccountThis, ctx: Context<Params>) {
     username: ctx.params.username,
   };
   const exist = await ctx
-    .call('users.find', {
+    .call('accounts.find', {
       query,
       fields: ['_id', 'username'],
     })

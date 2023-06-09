@@ -1,7 +1,7 @@
 import type { Context } from "moleculer";
 import { PostThis } from '../posts.service';
 
-export default function comments(this:PostThis, ids:any, items:any, handler:any, ctx:Context & { params: any }) {
+export default function comments(this:PostThis, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
   return Promise.all(
     items.map((item:any) =>
       ctx

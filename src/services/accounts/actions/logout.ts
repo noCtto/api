@@ -14,7 +14,7 @@ export default {
   async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
     const { username } = ctx.params;
     this.logger.info('Logout');
-    const user = await this.getByUsername(username, ctx);
+    const user = await this.getByUsername(ctx, username);
     if (!user) throw new Error('User not found');
 
     return ctx

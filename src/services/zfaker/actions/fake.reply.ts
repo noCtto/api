@@ -1,11 +1,9 @@
-import { toDeepObjectId } from '../../../utils/func';
-import { randomId } from '../../../utils/func';
-import { faker } from '@faker-js/faker';
+
 import { FakeThis } from '../faker.service';
 import type { Context } from "moleculer";
 
 export default {
-  rest: 'GET /fake/reply/:cid',
+  rest: 'GET /reply/:cid',
   params: {
     cid: 'string',
   },

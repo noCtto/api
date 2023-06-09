@@ -1,12 +1,19 @@
 import OAuth2Server from 'oauth2-server';
 import { ServiceSchema } from 'moleculer';
-
+import {Context} from 'moleculer';
 import MongoOAuth2 from '../lib/oauth2';
-
+import type {  
+  GatewayResponse, 
+  IncomingRequest,
+  Route,
+} from "moleculer-web";
 import { resp } from '../utils/func';
 
 const { Request, Response } = OAuth2Server;
-
+interface Meta {
+	userAgent?: string | null | undefined;
+	user?: object | null | undefined;
+}
 
 export type OAuth2Methods = {
   accessToken: (req: any, res: any, next: any) => Promise<any>;
@@ -35,18 +42,53 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
   },
   events: {},
   methods: {
-    async accessToken(req: any, res: any, next: any) {
+    accessToken(req: any, res: any, next: any) {
       const request = new Request(req);
       const response = new Response(res);
-
+      console.log('Access Token')
       try {
         return this.oauth
         .token(request, response)
         .then((token: any) => {
+          console.log('Access Tokenizer', token)
           resp(res, response.body, response.status, response.headers);
         });
       } catch (err) {
         next(err);
+      }
+    },
+    authenticate(_ctx: Context<null, Meta>, _route: Route, req: IncomingRequest, res: GatewayResponse, next: any) {
+      console.log('Authenticate')
+      const request = new Request(req);
+      const response = new Response(res);
+      try {
+        return this.oauth
+        .authenticate(request, response)
+        .then((token: any) => {
+          // console.log('Authenticating', token)
+          // resp(res, response.body, response.status, response.headers);
+          return token;
+        });
+      } catch (err) {
+        console.log('Authenticating error', err)
+        return next(err);
+      }
+    },
+    async authorize(_ctx: Context<null, Meta>, _route: Route, req: IncomingRequest, res: GatewayResponse, _next: any) {
+      console.log('AUTHORIZE')
+      const request = new Request(req);
+      const response = new Response(res);
+      try {
+        return this.oauth
+        .authorize(request, response)
+        .then((token: any) => {
+          console.log('Authorizing', token)
+          // resp(res, response.body, response.status, response.headers);
+          return token;
+        });
+      } catch (err) {
+        console.log('Authorizing error', err)
+        // resp(res, response.body, response.status, response.headers);
       }
     },
     async getAccessToken(accessToken: string) {
@@ -97,7 +139,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
           : Promise.resolve(),
       ])
         .then((promises) => {
-          const accessToken = promises[0];
+          // const accessToken = promises[0];
           const refreshToken = promises.length > 1 ? promises[1] : null;
 
           return { client, user, ...token, ...refreshToken };

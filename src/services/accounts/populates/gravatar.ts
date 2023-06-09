@@ -3,7 +3,7 @@ import grvtr from 'gravatar';
 
 import type { AccountThis } from '../accounts.service';
 
-export default function gravatar(this:AccountThis, ids:any, items:any) {
+export default function gravatar(this:AccountThis, _ids:any, items:any) {
   return Promise.all(
     items.map((item:any) => ({
       ...item,

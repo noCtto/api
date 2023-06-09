@@ -2,11 +2,11 @@ import { AccountThis } from '../accounts.service';
 
 export default async function transformEntity(
   this: AccountThis,
+  ctx: any,
   user: any,
   withToken: boolean,
   token: string,
   extra: any,
-  ctx: any,
 ) {
   if (user) {
     delete user.password;

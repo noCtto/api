@@ -36,7 +36,7 @@ export default {
           const addTime = 0;
           const now = new Date();
           const exp = (Math.floor(now.getTime() / 1000) + addTime) * 1000;
-          const token = this.generateJWT(user._id, exp);
+          const token = this.generateJWT(ctx, user._id, exp);
 
           const ss = await ctx
             .call('sessions.update', {

@@ -6,7 +6,7 @@ import { FakeThis } from '../faker.service';
 import type { Context } from "moleculer";
 
 export default {
-  rest: 'GET /fake/board',
+  rest: 'GET /board',
   params: {
     user: {
       type: 'string',
@@ -17,7 +17,7 @@ export default {
   async handler(this:FakeThis, ctx: Context & { params: any }):Promise<any> {
     const num = ctx.params.num || 1;
 
-    const users:any = await ctx.call('users.random', { num });
+    const users:any = await ctx.call('accounts.random', { num });
 
     const data: any = [];
     while (data.length < num) {

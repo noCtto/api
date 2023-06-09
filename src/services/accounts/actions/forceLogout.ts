@@ -38,7 +38,7 @@ export default {
     }
 
     return ctx
-      .call('users.logout', { id: user._id })
+      .call('accounts.logout', { id: user._id })
       .then(() => ({
         msg: 'Ok!',
       }))

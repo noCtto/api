@@ -20,7 +20,7 @@ export default {
   async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
     const userId = ctx.params.uid1 || this.extractUser(ctx);
     const targetId = ctx.params.uid2;
-    const user:any = await ctx.call('users.get', { id: targetId, fields: ['_id', 'followers'] });
+    const user:any = await ctx.call('accounts.get', { id: targetId, fields: ['_id', 'followers'] });
 
     let following = false;
     if (!user.followers) {

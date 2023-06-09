@@ -11,10 +11,12 @@ import {
 import type { Context, Service, ServiceSchema } from "moleculer";
 import type { DbServiceSettings } from 'moleculer-db';
 import type { DbServiceMethods } from '../../mixins/mongodb.mixin';
+import createDbServiceMixin from '../../mixins/mongodb.mixin';
 
 interface ThreadSettings extends DbServiceSettings {
 	defaultName: string;
   JWT_SECRET: string;
+  populates: any;
 }
 
 interface ThreadMethods {
@@ -37,13 +39,14 @@ const ThreadService: ServiceSchema<ThreadSettings> & { methods: DbServiceMethods
 		defaultName: "Thread",
     fields: fields,
     entityValidator: entityValidator,
+    /**
+     * Populates 
+     */
+    populates: {
+      ...populates,
+    },
 	},
-  /**
-   * Populates 
-   */
-  populates: {
-    ...populates,
-  },
+  mixins: [ createDbServiceMixin('nocheto','threads') ],
 	/**
 	 * Dependencies
 	 */

@@ -8,28 +8,22 @@ export default async function comment(this:CommentThis, ctx:Context, response:an
     fields: ['_id', 'comments'],
   });
 
-  const q = {
-    count: post.comments,
-    pid: post._id,
-    tid: response.tid,
-  };
+  
+  try {
+    // console.log('Broadcasting update-comment-count', q);
+    const io = await ctx.call('io.broadcast', {
+      namespace: '/',
+      event: `post_update_comment_count`,
+      args: [{
+        count: post.comments,
+        pid: post._id,
+        tid: response.tid,
+      }],
+    });
+    return io;
+  } catch (error) {
+    console.log('Error broadcasting update-comment-count', error);
+  }
 
-  // console.log('Broadcasting update-comment-count', q);
-  ctx.call('io.broadcast', {
-    namespace: '/',
-    event: `post_update_comment_count`,
-    args: [q],
-  });
-
-  // console.log('Broadcasting thread-push-comment', response);
-  ctx.call('io.broadcast', {
-    namespace: '/',
-    event: `thread-push-comment`,
-    args: [
-      {
-        ...response,
-      },
-    ],
-  });
   return response;
 };

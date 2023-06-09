@@ -1,11 +1,10 @@
-import { toDeepObjectId } from '../../../utils/func';
-import { randomId } from '../../../utils/func';
+
 import { faker } from '@faker-js/faker';
 import { FakeThis } from '../faker.service';
 import type { Context } from "moleculer";
 
 export default {
-  rest: 'POST /fake/vote',
+  rest: 'POST /vote',
   params: {
     num: {
       type: 'number',
@@ -16,7 +15,7 @@ export default {
     const num = ctx.params.num || 1;
 
     const votes:any = await ctx.call('votes.random', { num });
-    const users:any = await ctx.call('users.random', { num });
+    const users:any = await ctx.call('accounts.random', { num });
 
     const data: any = [];
     while (data.length < num) {

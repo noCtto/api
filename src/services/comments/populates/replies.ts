@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb';
 import type { Context } from "moleculer";
 import { CommentThis } from '../comments.service';
 
-export default async function replies(this:CommentThis, ids:any, items:any, handler:any, ctx:Context & { params: any }) {
+export default async function replies(this:CommentThis, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
   // console.log('Populating replies', ids);
   return Promise.all(
     items.map((item:any) =>

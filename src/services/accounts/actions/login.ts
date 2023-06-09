@@ -61,7 +61,8 @@ export default {
         { populate: ['gravatar'], fields: ['_id', 'username', 'imageUrl'] },
         user
       ).then((user:any) => {
-        const token = this.generateToken(user);
+        const token = this.generateJWT(ctx, user, 10);
+        console.log('Token', token);
         return {
           token,
           user,

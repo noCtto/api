@@ -1,8 +1,7 @@
 
-import type { Context } from "moleculer";
 import { VoteThis } from '../votes.service';
 
-export default async function count(this:VoteThis, ids:any, items:any) {
+export default async function count(this:VoteThis, _ids:any, items:any) {
   return items.map((item:any) => {
     const keys = Object.keys(item.voters);
     const { length } = keys;

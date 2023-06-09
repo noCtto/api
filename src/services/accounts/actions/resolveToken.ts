@@ -12,15 +12,19 @@ export default {
     token: 'string',
   },
   async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
-    const decoded = await new Promise((resolve) => {
-      jwt.verify(ctx.params.token, this.settings.JWT_SECRET, (err:any, tokenDecoded:any) => {
+    const decoded = await new Promise((resolve, reject) => {
+      console.log('Resolving token', ctx.params)
+      jwt.verify(ctx.params.token, 'secret', (err:any, tokenDecoded:any) => {
         if (err) {
+          console.log('Error resolving token')
           this.logger.error(err.message);
-          return resolve(tokenDecoded);
+          return reject(tokenDecoded);
         }
+        console.log('Error resolving token')
         return resolve(tokenDecoded);
       });
     });
+    console.log('Decoded', decoded)
     return decoded;
   },
 };

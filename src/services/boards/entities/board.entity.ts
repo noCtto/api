@@ -26,11 +26,10 @@ export interface Entity {
   createdAt?: Date;
   creator?: string;
   followers?: string[];
-  posts?: string[];
+  posts?: object[];
 }
 
 export const Validator = {
-  entity: {
     name: 'string',
     description: { type: 'string', optional: true },
     icon: { type: 'string', optional: true },
@@ -64,7 +63,7 @@ export const Validator = {
     },
     active: { type: 'boolean', default: true },
     creator: { type: 'object', optional: true },
-  },
+    posts: { type: 'array', optional: true },
 };
 
 export const Fields = [
@@ -78,9 +77,9 @@ export const Fields = [
   'configurations',
   'active',
   'followers',
-  'posts',
   'createdAt',
   'creator',
   'updatedAt',
   'active',
+  'posts',
 ];

@@ -19,7 +19,7 @@ export default function validateSession(this:AccountThis, user:any, ctx:any) {
       if (!sessions.length) {
         this.logger.info('No hay sesiones activas');
         this.logger.info('Crear Nueva sesion');
-        const token = this.generateJWT(user._id, exp);
+        const token = this.generateJWT(ctx, user._id, exp);
         const sessionData = {
           user: new ObjectId(user._id),
           start: today,
@@ -62,7 +62,7 @@ export default function validateSession(this:AccountThis, user:any, ctx:any) {
 
         // La session ya expiro, se debe crear una nueva y actualizar la session pasada como inactiva.
         this.logger.info('Se actualizo a expired la sesion vieja');
-        const token = this.generateJWT(user._id, exp);
+        const token = this.generateJWT(ctx, user._id, exp);
         const sessionData = {
           user: new ObjectId(user._id),
           start: today,
@@ -79,7 +79,7 @@ export default function validateSession(this:AccountThis, user:any, ctx:any) {
         return token;
       } else {
         this.logger.info('La session ya expiro se conecto en otro dispositivo o navegador');
-        const token = this.generateJWT(user._id, exp);
+        const token = this.generateJWT(ctx, user._id, exp);
         const sessionData = {
           user: new ObjectId(user._id),
           start: today,

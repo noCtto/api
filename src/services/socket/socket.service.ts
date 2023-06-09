@@ -1,9 +1,8 @@
 import { Server } from 'socket.io';
 import methods from './methods';
 
-import type { Context, Service, ServiceSchema } from "moleculer";
+import type { Service, ServiceSchema } from "moleculer";
 import type { DbServiceSettings } from 'moleculer-db';
-import type { DbServiceMethods } from '../../mixins/mongodb.mixin';
 
 interface SocketSettings extends DbServiceSettings {
 	defaultName: string;

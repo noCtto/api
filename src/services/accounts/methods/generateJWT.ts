@@ -2,7 +2,7 @@
 import jwt from 'jsonwebtoken';
 import { AccountThis } from '../accounts.service';
 
-export default function generateJWT(this:AccountThis, userId:any, expires:any) {
+export default function generateJWT(this:AccountThis, _ctx: any, userId:any, expires:any) {  
   return jwt.sign(
     {
       id: userId,

@@ -11,10 +11,12 @@ import {
 import type { Context, Service, ServiceSchema } from "moleculer";
 import type { DbServiceSettings } from 'moleculer-db';
 import type { DbServiceMethods } from '../../mixins/mongodb.mixin';
+import createDbServiceMixin from '../../mixins/mongodb.mixin';
 
 interface CommentSettings extends DbServiceSettings {
 	defaultName: string;
   JWT_SECRET: string;
+  populates: any;
 }
 
 interface CommentMethods {
@@ -32,18 +34,19 @@ const CommentService: ServiceSchema<CommentSettings> & { methods: DbServiceMetho
 	/**
 	 * Settings
 	 */
+  mixins: [ createDbServiceMixin('nocheto','comments') ],
 	settings: {
     JWT_SECRET: process.env.JWT_SECRET || 'secret',
 		defaultName: "Comment",
     fields: fields,
     entityValidator: entityValidator,
+    populates: {
+      ...populates,
+    },
 	},
   /**
    * Populates 
    */
-  populates: {
-    ...populates,
-  },
 	/**
 	 * Dependencies
 	 */

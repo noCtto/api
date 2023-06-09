@@ -1,19 +1,19 @@
 const { ObjectId } = require('mongodb');
 const dayjs = require('dayjs');
 
-interface CommentEntity {
-  _id: string;
-  tid: string;
-  cid: string;
-  pid: string;
-  uid: string;
-  vid: string;
-  text: string;
-  createdAt: Date;
-  author: any;
-  replies: any;
-  votes: any;
-}
+// interface CommentEntity {
+//   _id: string;
+//   tid: string;
+//   cid: string;
+//   pid: string;
+//   uid: string;
+//   vid: string;
+//   text: string;
+//   createdAt: Date;
+//   author: any;
+//   replies: any;
+//   votes: any;
+// }
 
 export const Validator = {
     tid: {

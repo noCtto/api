@@ -14,7 +14,7 @@ type DbServiceSchema = Partial<ServiceSchema> &
 
 export type DbServiceThis = Service & DbServiceMethods;
 
-export default function createDbServiceMixin(collection: string): DbServiceSchema {
+export default function createDbServiceMixin(dbName: string, collection: string): DbServiceSchema {
   
   const cacheCleanEventName = `cache.clean.${collection}`;
 
@@ -62,7 +62,7 @@ export default function createDbServiceMixin(collection: string): DbServiceSchem
           this.logger.info(
             `The '${collection}' collection is empty. Seeding the collection...`,
           );
-          await this.seedDB();
+          // await this.seedDB();
           this.logger.info(
             'Seeding is done. Number of records:',
             await this.adapter.count(),
@@ -74,7 +74,9 @@ export default function createDbServiceMixin(collection: string): DbServiceSchem
 
   if (process.env.MONGO_URI) {
     // Mongo adapter
-    schema.adapter = new MongoDbAdapter(process.env.MONGO_URI);
+    schema.adapter = new MongoDbAdapter(process.env.MONGO_URI, {}, dbName);
+    console.log('MongoDbAdapter', schema.adapter);
+    schema.dbName = dbName;
     schema.collection = collection;
   }
 

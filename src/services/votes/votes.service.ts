@@ -11,10 +11,12 @@ import {
 import type { Context, Service, ServiceSchema } from "moleculer";
 import type { DbServiceSettings } from 'moleculer-db';
 import type { DbServiceMethods } from '../../mixins/mongodb.mixin';
+import createDbServiceMixin from '../../mixins/mongodb.mixin';
 
 interface VoteSettings extends DbServiceSettings {
 	defaultName: string;
   JWT_SECRET: string;
+  populates: any;
 }
 
 interface VoteMethods {
@@ -37,13 +39,14 @@ const VoteService: ServiceSchema<VoteSettings> & { methods: DbServiceMethods } =
 		defaultName: "Vote",
     fields: fields,
     entityValidator: entityValidator,
+    /**
+     * Populates 
+     */
+    populates: {
+      ...populates,
+    },
 	},
-  /**
-   * Populates 
-   */
-  populates: {
-    ...populates,
-  },
+  mixins: [ createDbServiceMixin('nocheto','votes') ],
 	/**
 	 * Dependencies
 	 */

@@ -8,7 +8,7 @@ export default async function get(this:AccountThis, ctx:Context & { params: { id
       username: ctx.params.id,
     };
     const exist = await ctx
-      .call('users.find', {
+      .call('accounts.find', {
         query,
         fields: ['_id'],
       })

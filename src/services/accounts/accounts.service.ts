@@ -11,19 +11,22 @@ import {
 import type { Context, Service, ServiceSchema } from "moleculer";
 import type { DbServiceSettings } from 'moleculer-db';
 import type { DbServiceMethods } from '../../mixins/mongodb.mixin';
+import createDbServiceMixin from '../../mixins/mongodb.mixin';
+import { ObjectId } from 'mongodb';
 
 interface AccountSettings extends DbServiceSettings {
 	defaultName: string;
   JWT_SECRET: string;
+  populates: any;
 }
 
-interface AccountMethods {
-  extractUser(ctx: Context): string;
-  getByUsername(username:string, ctx: Context): Promise<any>;
-  generateJWT: (user: any, expires:any) => Promise<string>;
-  transformEntity2: (user: any, withToken: boolean, token: string) => Promise<any>;
-  transformEntity: (user: any, withToken: boolean, token: string) => Promise<any>;
-  validateSession: (user:any, extra:any, ctx: Context) => Promise<any>;
+interface AccountMethods extends DbServiceMethods {
+  extractUser(ctx: Context): ObjectId | null;
+  getByUsername(ctx: any, username:string): Promise<any>;
+  generateJWT(ctx: any, user: any, expires:any):string;
+  transformEntity2(ctx: any, user: any, withToken: boolean, token: string): Promise<any>;
+  transformEntity(ctx: any, user: any, withToken: boolean, token: string): Promise<any>;
+  validateSession(ctx: any,user:any, extra:any): Promise<any>;
 }
 
 interface AccountLocalVars {
@@ -34,22 +37,23 @@ export type AccountThis = Service<AccountSettings> & AccountMethods & AccountLoc
 
 
 const AccountService: ServiceSchema<AccountSettings> & { methods: DbServiceMethods } = {
-	name: "account",
+	name: "accounts",
+  mixins: [ createDbServiceMixin('account','users') ],
 	/**
 	 * Settings
 	 */
 	settings: {
-    JWT_SECRET: process.env.JWT_SECRET || 'secret',
+    JWT_SECRET: 'secret',
 		defaultName: "Account",
     fields: fields,
     entityValidator: entityValidator,
+    /**
+     * Populates 
+     */
+    populates: {
+      ...populates,
+    },
 	},
-  /**
-   * Populates 
-   */
-  populates: {
-    ...populates,
-  },
 	/**
 	 * Dependencies
 	 */

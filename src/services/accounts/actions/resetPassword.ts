@@ -16,7 +16,7 @@ export default {
     
     const { username } = ctx.params;
 
-    const user:any = await this.getByUsername(username, ctx);
+    const user:any = await this.getByUsername(ctx, username);
     
     if (!user) throw new Error('User not found');
 
