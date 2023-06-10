@@ -1,6 +1,6 @@
 import actions from './actions';
 import type { Service, ServiceSchema } from "moleculer";
-
+import fakePost from '../zfaker/methods/fakePost';
 interface FakeLocalVars {
 	myVar: string;
 }
@@ -12,6 +12,9 @@ const FakeService: ServiceSchema = {
 	actions: {
     ...actions,
   },
+  methods: {
+    fakePost,
+  }
 };
 
 export default FakeService;

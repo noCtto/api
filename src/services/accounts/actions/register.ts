@@ -2,10 +2,10 @@ import MoleculerJs from 'moleculer';
 const { MoleculerClientError } = MoleculerJs.Errors;
 
 import type { Context } from 'moleculer';
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
 import dayjs from 'dayjs';
-import { sha256 } from '../../../utils/func';
+import { sha256 } from '@utils/func';
 
 interface Params {
   username: string;
@@ -19,7 +19,7 @@ export default {
     email: 'email',
     password: 'string|min:8',
   },
-  async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
     const { username, email, password } = ctx.params;
     return this._find(ctx, { query: { email } }).then(([registeredEmail]:any) => {
       if (registeredEmail)

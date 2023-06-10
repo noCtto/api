@@ -4,7 +4,7 @@ import transformEntity from './transformEntity';
 import transformEntity2 from './transformEntity2';
 import validateSession from './validateSession';
 
-import { extractUser } from '../../../utils'
+import { extractUser } from '@utils'
 
 export default {
   extractUser,

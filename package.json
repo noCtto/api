@@ -10,7 +10,7 @@
     "ci": "jest --watch",
     "test": "jest --coverage",
     "test:ci": "echo 'All test passed 💪'",
-    "build": "echo 'No build!? ... ok'",
+    "build": "tsc -p tsconfig.json",
     "lint": "eslint . --ext .js,.jsx --fix",
     "format": "prettier --ignore-path .gitignore -w .",
     "format:check": "prettier --ignore-path .gitignore --check .",

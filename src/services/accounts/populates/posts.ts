@@ -1,9 +1,9 @@
 
 import { ObjectId } from 'mongodb';
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 import type { Context } from 'moleculer';
 
-export default function posts(this:AccountThis, _ids:any, users:any, _rule:any, ctx:Context & { params: { page: number; pageSize: number } }) {
+export default function posts(this:MicroService, _ids:any, users:any, _rule:any, ctx:Context & { params: { page: number; pageSize: number } }) {
   return Promise.all(
     users.map((user:any) =>
       ctx

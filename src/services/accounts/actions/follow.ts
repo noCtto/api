@@ -1,5 +1,5 @@
 import type { Context } from "moleculer";
-import { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 export interface Params {
 	uid1?: string;
   uid2: string;
@@ -17,24 +17,27 @@ export default {
       required: true,
     },
   },
-  async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
+    
     const userId = ctx.params.uid1 || this.extractUser(ctx);
     const targetId = ctx.params.uid2;
-    const user:any = await ctx.call('accounts.get', { id: targetId, fields: ['_id', 'followers'] });
+    
+    const user:any = await ctx.call('accounts.get', { id: userId, fields: ['_id'] });
+    const target:any = await ctx.call('accounts.get', { id: targetId, fields: ['_id', 'following'] });
 
     let following = false;
-    if (!user.followers) {
-      user.followers = {
-        [userId]: 1,
+    if (!target.followers) {
+      target.followers = {
+        [user._id]: 1,
       };
     } else {
-      following = user.followers[userId];
-      user.followers[userId] = following ? 0 : 1;
+      following = target.followers[user._id] === 1;
+      target.followers[user._id] = following ? 0 : 1;
     }
     return this._update(ctx, {
-      _id: user._id,
+      _id: target._id,
       followers: {
-        ...user.followers,
+        ...target.followers,
       },
     });
   },

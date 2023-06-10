@@ -1,9 +1,9 @@
 
 import grvtr from 'gravatar';
 
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
-export default function gravatar(this:AccountThis, _ids:any, items:any) {
+export default function gravatar(this:MicroService, _ids:any, items:any) {
   return Promise.all(
     items.map((item:any) => ({
       ...item,

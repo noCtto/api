@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import { toDeepObjectId } from '../../../utils/func';
+import { toDeepObjectId } from '@utils/func';
 
 import type { Context } from "moleculer";
 import { CommentThis } from '../comments.service';

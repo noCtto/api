@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
-export default function validateSession(this:AccountThis, user:any, ctx:any) {
+export default function validateSession(this:MicroService, user:any, ctx:any) {
   this.logger.info('Validating: ', user, ctx.params);
   this.logger.info('validateSession');
 

@@ -10,16 +10,16 @@ export default {
     }
     // check if name is a objectid
     if (ctx.params.board.match(/^[0-9a-fA-F]{24}$/)) {
-      console.log(
-        'THIS ById',
-        ctx.params,
-      )
       return this._get(ctx, {
         id: ctx.params.board,
-        populates: ['posts','post', 'followers'],
+        populate: ['posts', 'followers'],
         fields: [
           '_id',
           'name',
+          'posts',
+          'followers',
+          'createdAt',
+          'updatedAt',
         ]
       });
     }
@@ -35,6 +35,9 @@ export default {
         'name',
         'posts',
         'followers',
+        'name',
+        'createdAt',
+        'updatedAt',
       ]
     }).then(([board]:any) => board);
   },

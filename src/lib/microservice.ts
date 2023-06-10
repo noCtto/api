@@ -1,38 +1,34 @@
 import type { ServiceSchema } from 'moleculer';
-import type { DbServiceSettings } from 'moleculer-db';
 import type { DbServiceMethods } from '../mixins/mongodb.mixin';
 import DbMixin from '../mixins/mongodb.mixin';
 
 import { extractCompany, extractUser } from '../utils/index';
 
-export interface Service {
-  name: string;
-  mixins: any[];
-  _settings: any;
-  get settings(): any;
-  set settings(value: any);
-  hooks: any;
-  populates: any;
-  actions: any;
-  methods: any;
+export interface MicroService extends ServiceSchema {
   afterConnected(): Promise<void>;
 }
-export interface Settings extends DbServiceSettings {
-  indexes?: Record<string, number>[];
-}
 
-export interface MicroServiceThis extends Service, DbServiceMethods {
+export interface ServiceMethods extends DbServiceMethods {
   extractCompany: (ctx: any) => Promise<any>;
   extractUser: (ctx: any) => Promise<any>;
 }
+export interface MicroServiceConf {
+  database: string;
+  collection: string;
+  fields: string[];
+  validator: any;
+  actions: any;
+  methods: any;
+  hooks: any;
+  populates: any;
+}
 
 export default function(name:string, conf:any) {
-  const { collection, fields, validator, actions, methods, hooks, populates } = conf;
+  const { database, collection, fields, validator, actions, methods, hooks, populates } = conf;
 
-  
-  const MicroService: ServiceSchema<Settings> & { methods: DbServiceMethods } = {
+  const MicroService: MicroService & { methods: ServiceMethods } = {
     name,
-    mixins: [DbMixin(collection)],
+    mixins: [DbMixin(database, collection)],
     _settings: {
       fields: fields,
       entityValidator: validator,
@@ -52,7 +48,12 @@ export default function(name:string, conf:any) {
       extractCompany,
       extractUser,
     },
-    async afterConnected() {},
+    async afterConnected() {
+      this.logger.info(`Connected successfully to ${database}`);
+    },
+    onStarted() {
+      this.logger.info(`Service ${name} started`);
+    }
   };
   return MicroService;
 }

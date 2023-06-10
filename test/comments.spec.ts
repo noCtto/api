@@ -1,5 +1,5 @@
 import { ServiceBroker } from "moleculer";
-import Service from '../src/services/comments/comments.service';
+import Service from '../@/services/comments/comments.service';
 
 describe("Test 'health' actions", () => {
     let broker = new ServiceBroker({ logger: false });

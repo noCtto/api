@@ -38,11 +38,11 @@ export default function createDbServiceMixin(dbName: string, collection: string)
        * Send a cache clearing event when an entity changed.
        */
       async entityChanged(
-        type: string,
-        json: unknown,
+        _type: string,
+        _json: unknown,
         ctx: Context,
       ): Promise<void> {
-        console.log('entityChanged', type, json);
+        // console.log('entityChanged', type, json);
         await ctx.broadcast(cacheCleanEventName);
       },
     },
@@ -75,7 +75,6 @@ export default function createDbServiceMixin(dbName: string, collection: string)
   if (process.env.MONGO_URI) {
     // Mongo adapter
     schema.adapter = new MongoDbAdapter(process.env.MONGO_URI, {}, dbName);
-    console.log('MongoDbAdapter', schema.adapter);
     schema.dbName = dbName;
     schema.collection = collection;
   }

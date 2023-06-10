@@ -1,7 +1,7 @@
 import MoleculerJs from 'moleculer';
 import type { Context } from 'moleculer';
-import { sha256 } from '../../../utils/func';
-import type { AccountThis } from '../accounts.service';
+import { sha256 } from '@utils/func';
+import type { MicroService } from '@lib/microservice';
 
 const { MoleculerClientError } = MoleculerJs.Errors;
 
@@ -33,7 +33,7 @@ export default {
       optional: true,
     },
   },
-  async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
     
     const { email, password, username } = ctx.params;
     

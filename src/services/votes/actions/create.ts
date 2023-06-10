@@ -1,4 +1,4 @@
-import { toDeepObjectId } from '../../../utils/func';
+import { toDeepObjectId } from '@utils/func';
 import type { Context } from "moleculer";
 import { VoteThis } from '../votes.service';
 

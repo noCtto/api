@@ -2,7 +2,7 @@ import MoleculerJs from 'moleculer';
 const { MoleculerClientError } = MoleculerJs.Errors;
 
 import type { Context } from 'moleculer';
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
 interface Params {}
 
@@ -18,7 +18,7 @@ interface ContextMeta extends Context<Params> {
 }
 
 export default {
-  async handler(this: AccountThis, ctx: ContextMeta & {meta: any} ): Promise<any> {    
+  async handler(this: MicroService, ctx: ContextMeta & {meta: any} ): Promise<any> {    
     const oauth_user = JSON.parse(JSON.stringify(ctx.meta.user.user));
     const { userId } = oauth_user;
     if (!userId) {

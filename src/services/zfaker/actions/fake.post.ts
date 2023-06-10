@@ -1,5 +1,5 @@
 
-import { faker } from '@faker-js/faker';
+// import { faker } from '@faker-js/faker';
 import { FakeThis } from '../faker.service';
 import type { Context } from "moleculer";
 export default {
@@ -18,14 +18,9 @@ export default {
     if (boards && users) {
       const data: any = [];
       while (data.length < num) {
+        const post = this.fakePost(users[data.length], boards[data.length]);
         data.push(
-          ctx.call('posts.create', {
-            author: users[data.length],
-            title: faker.lorem.sentence(),
-            body: faker.lorem.paragraph(),
-            image: `https://source.unsplash.com/featured/300x200?random=${faker.internet.domainWord()}-${faker.internet.domainWord()}`,
-            bid: boards[data.length],
-          })
+          ctx.call('posts.create', post)
         );
       }
       return Promise.all(data);

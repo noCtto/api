@@ -1,5 +1,5 @@
 
-import { extractUser } from '../../../utils';
+import { extractUser } from '@utils';
 
 export default {
   extractUser

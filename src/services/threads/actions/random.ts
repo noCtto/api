@@ -1,5 +1,5 @@
 
-import { randomId } from '../../../utils/func';
+import { randomId } from '@utils/func';
 import type { Context } from "moleculer";
 import { ThreadThis } from '../threads.service';
 

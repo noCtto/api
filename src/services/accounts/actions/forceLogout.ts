@@ -1,6 +1,6 @@
 import Moleculerjs from 'moleculer';
 import type { Context } from 'moleculer';
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
 const { MoleculerClientError } = Moleculerjs.Errors;
 
@@ -24,7 +24,7 @@ export default {
       optional: true,
     },
   },
-  async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
     const { username } = ctx.params;
     
     const user = await this._find(ctx, {

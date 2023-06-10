@@ -1,4 +1,4 @@
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 import type { Context } from 'moleculer';
 
 
@@ -12,7 +12,7 @@ export default {
   params: {
     username: { type: 'string' },
   },
-  async handler(this: AccountThis, ctx: Context<ActionResetPasswordParams>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<ActionResetPasswordParams>): Promise<any> {
     
     const { username } = ctx.params;
 

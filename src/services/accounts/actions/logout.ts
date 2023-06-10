@@ -1,4 +1,4 @@
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 import type { Context } from 'moleculer';
 
 interface Params {
@@ -11,7 +11,7 @@ export default {
   params: {
     username: { type: 'string' },
   },
-  async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
     const { username } = ctx.params;
     this.logger.info('Logout');
     const user = await this.getByUsername(ctx, username);

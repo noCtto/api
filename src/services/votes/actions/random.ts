@@ -1,5 +1,5 @@
 
-import { randomId } from '../../../utils/func';
+import { randomId } from '@utils/func';
 import type { Context } from "moleculer";
 import { VoteThis } from '../votes.service';
 

@@ -1,2 +1,2 @@
-import health from '../../../utils/health';
+import health from '@utils/health';
 export default health

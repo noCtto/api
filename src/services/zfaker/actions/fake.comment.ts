@@ -1,5 +1,5 @@
-import { toDeepObjectId } from '../../../utils/func';
-import { randomId } from '../../../utils/func';
+import { toDeepObjectId } from '@utils/func';
+import { randomId } from '@utils/func';
 import { faker } from '@faker-js/faker';
 import { FakeThis } from '../faker.service';
 import type { Context } from "moleculer";

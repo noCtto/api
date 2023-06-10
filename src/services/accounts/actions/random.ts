@@ -1,7 +1,7 @@
-import { randomId } from '../../../utils/func';
+import { randomId } from '@utils/func';
 
 import type { Context } from 'moleculer';
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
 interface Params {
   num: number;
@@ -14,7 +14,7 @@ export default {
       optional: true,
     },
   },
-  async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
     const num = ctx.params.num || 10;
     return this._find(ctx, {
       query: {},

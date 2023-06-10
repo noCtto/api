@@ -1,4 +1,4 @@
-import { randomId } from '../../../utils/func';
+import { randomId } from '@utils/func';
 import type { Context } from "moleculer";
 import { BoardThis } from '../boards.service';
 

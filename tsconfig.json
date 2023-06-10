@@ -17,7 +17,7 @@
     "strict": true, 
     "strictPropertyInitialization": false,
     "target": "esnext",
-    "baseUrl": ".",
+    "baseUrl": "src/",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true 
 	},
@@ -27,5 +27,13 @@
 		"test/**/*",
     ".commitlintrc.ts"
 	],
+  "paths": {
+    "~/*": ["*"],
+    "@lib/*": ["lib/*"],
+    "@utils/*": ["utils/*"],
+    "@services/*": ["services/*"],
+    "@mixins/*": ["mixins/*"],
+    "@public/*": ["public/*"],
+  },
   "preset": "ts-jest"
 }

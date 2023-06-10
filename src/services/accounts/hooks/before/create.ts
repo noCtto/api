@@ -1,4 +1,4 @@
-import type { AccountThis } from '../../accounts.service';
+import type { MicroService } from '@lib/microservice';
 import type { Context } from 'moleculer';
 
 interface Params {
@@ -6,7 +6,7 @@ interface Params {
   createdAt: Date;
 }
 
-export default async function create(this:AccountThis, ctx: Context<Params>) {
+export default async function create(this:MicroService, ctx: Context<Params>) {
   const query = {
     username: ctx.params.username,
   };

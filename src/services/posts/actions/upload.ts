@@ -1,7 +1,7 @@
 import mime from 'mime';
 import path from 'path';
 import fs from 'fs';
-import { sha256 } from '../../../utils/func';
+import { sha256 } from '@utils/func';
 
 import type { Context } from "moleculer";
 import { PostThis } from '../posts.service';

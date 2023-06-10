@@ -1,8 +1,8 @@
-import { isObjectId } from '../../../../utils/func';
-import type { AccountThis } from '../../accounts.service';
+import { isObjectId } from '@utils/func';
+import type { MicroService } from '@lib/microservice';
 import type { Context } from 'moleculer';
 
-export default async function get(this:AccountThis, ctx:Context & { params: { id: string } }) {
+export default async function get(this:MicroService, ctx:Context & { params: { id: string } }) {
   if (ctx.params.id && !isObjectId(ctx.params.id) && typeof ctx.params.id === 'string') {
     const query = {
       username: ctx.params.id,

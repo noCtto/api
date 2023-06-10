@@ -2,8 +2,18 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@actions/*": ["actions/*"],
-      "@entities/*": ["entities/*"]
+      "@lib/*": ["lib/*"],
+      "@mixins/*": ["mixins/*"],
+      "@utils/*": ["utils/*"],
+      "@public/*": ["public/*"],
+      "@accounts/*": ["services/accounts/*"],
+      "@sessions/*": ["services/sessions/*"],
+      "@posts/*": ["services/posts/*"],
+      "@comments/*": ["services/comments/*"],
+      "@votes/*": ["services/votes/*"],
+      "@boards/*": ["services/boards/*"],
+      "@awards": ["services/awards/*"],
+      "@threads/*": ["services/threads/*"],
     }
   }
 }

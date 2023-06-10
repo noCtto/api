@@ -1,7 +1,7 @@
-import { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
 export default async function transformEntity(
-  this: AccountThis,
+  this: MicroService,
   ctx: any,
   user: any,
   withToken: boolean,

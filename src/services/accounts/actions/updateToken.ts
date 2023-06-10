@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 
 import { Context } from 'moleculer';
-import type { AccountThis } from '../accounts.service';
+import type { MicroService } from '@lib/microservice';
 
 interface Params {
   userId: string;
@@ -13,7 +13,7 @@ export default {
   params: {
     userId: 'string',
   },
-  async handler(this: AccountThis, ctx: Context<Params>): Promise<any> {
+  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
     this.logger.info('Update Session Token');
     const { userId } = ctx.params;
     this.logger.info(userId);
