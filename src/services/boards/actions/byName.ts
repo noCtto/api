@@ -1,10 +1,10 @@
 import type { Context } from "moleculer";
-import { BoardThis } from '../boards.service';
+import type { MicroService } from '@lib/microservice';
 
 
 export default {
   rest: 'GET /:board',
-  async handler(this:BoardThis, ctx: Context & { params: { board: string, populate: string } }) {
+  async handler(this:MicroService, ctx: Context & { params: { board: string, populate: string } }) {
     if (ctx.params.board === 'all') {
       return ctx.call('boards.all');
     }

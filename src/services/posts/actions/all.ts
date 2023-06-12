@@ -1,10 +1,9 @@
 import type { Context } from "moleculer";
-import { PostThis } from '../posts.service';
-
+import type { MicroService } from '@lib/microservice';
 
 export default {
   rest: 'GET /all',
-  async handler(this:PostThis, ctx:Context) {
+  async handler(this:MicroService, ctx:Context) {
     return this._list(ctx, {
       populate: ['comments', 'board', 'author', 'votes'],
       fields: ['_id', 'votes', 'author', 'createdAt', 'comments', 'board', 'body', 'image'],

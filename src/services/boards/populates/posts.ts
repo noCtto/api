@@ -1,12 +1,10 @@
 
 import { ObjectId } from 'mongodb';
-
 import type { Context } from "moleculer";
-import { BoardThis } from '../boards.service';
+import type { MicroService } from '@lib/microservice';
 
 
-
-export default async function posts(this:BoardThis, _ids:any, items:any, _handler:any, ctx: Context & { params: { board: string, populate: string } }) {
+export default async function posts(this:MicroService, _ids:any, items:any, _handler:any, ctx: Context & { params: { board: string, populate: string } }) {
 
   return Promise.all(
     items.map((board:any) =>

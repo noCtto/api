@@ -1,7 +1,7 @@
 
-import { VoteThis } from '../votes.service';
+import type { MicroService } from '@lib/microservice';
 
-export default async function count(this:VoteThis, _ids:any, items:any) {
+export default async function count(this:MicroService, _ids:any, items:any) {
   return items.map((item:any) => {
     const keys = Object.keys(item.voters);
     const { length } = keys;

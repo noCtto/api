@@ -1,7 +1,11 @@
 {
-  "extends": "./tsconfig.paths.json",
+  "ts-node": {
+      // Do not forget to `npm i -D tsconfig-paths`
+      "require": ["tsconfig-paths/register"]
+  },
 	"compilerOptions": {
-		"module": "commonjs",
+    "target": "es2021",
+    "module": "commonjs",
 		"esModuleInterop": true,
 		"noImplicitAny": true,
 		"removeComments": true,
@@ -16,10 +20,24 @@
     "noUnusedParameters": true,
     "strict": true, 
     "strictPropertyInitialization": false,
-    "target": "esnext",
-    "baseUrl": "src/",
+    "baseUrl": ".",
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true 
+    "forceConsistentCasingInFileNames": true ,
+    "paths": {
+      "~/*": ["*"],
+      "@lib/*": ["src/lib/*"],
+      "@mixins/*": ["src/mixins/*"],
+      "@utils/*": ["src/utils/*"],
+      "@public/*": ["src/public/*"],
+      "@accounts/*": ["src/services/accounts/*"],
+      "@sessions/*": ["src/services/sessions/*"],
+      "@posts/*": ["src/services/posts/*"],
+      "@comments/*": ["src/services/comments/*"],
+      "@votes/*": ["src/services/votes/*"],
+      "@boards/*": ["src/services/boards/*"],
+      "@awards": ["src/services/awards/*"],
+      "@threads/*": ["src/services/threads/*"],
+    },
 	},
 	"include": ["./**/*"],
 	"exclude": [
@@ -27,13 +45,5 @@
 		"test/**/*",
     ".commitlintrc.ts"
 	],
-  "paths": {
-    "~/*": ["*"],
-    "@lib/*": ["lib/*"],
-    "@utils/*": ["utils/*"],
-    "@services/*": ["services/*"],
-    "@mixins/*": ["mixins/*"],
-    "@public/*": ["public/*"],
-  },
   "preset": "ts-jest"
 }

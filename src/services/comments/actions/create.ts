@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 import { toDeepObjectId } from '@utils/func';
 
 import type { Context } from "moleculer";
-import { CommentThis } from '../comments.service';
+import type { MicroService } from '@lib/microservice';
 
 
 export default {
@@ -34,7 +34,7 @@ export default {
       default: () => new Date(),
     },
   },
-  async handler(this:CommentThis, ctx: Context & { params: any }) {
+  async handler(this:MicroService, ctx: Context & { params: any }) {
     const author:any = ctx.params.author ? new ObjectId(ctx.params.author) : this.extractUser(ctx);
     if (!author) return Promise.reject('User not found');
 

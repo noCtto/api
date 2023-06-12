@@ -1,10 +1,10 @@
 import type { Context } from "moleculer";
-import { PostThis } from '../posts.service';
+import type { MicroService } from '@lib/microservice';
 
 
 export default {
   rest: 'GET /:board/all',
-  async handler(this:PostThis, ctx:Context & { params: { board: string } }) {
+  async handler(this:MicroService, ctx:Context & { params: { board: string } }) {
     console.log('THIS', ctx.params);
   }
 }

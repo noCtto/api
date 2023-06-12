@@ -1,10 +1,10 @@
 
 import { ObjectId } from 'mongodb';
 import type { Context } from "moleculer";
-import { BoardThis } from '../boards.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
-  handler(this:BoardThis, _ids:any, items:any, _handler:any, ctx: Context & { params: { board: string, populate: string } }) {
+  handler(this:MicroService, _ids:any, items:any, _handler:any, ctx: Context & { params: { board: string, populate: string } }) {
     console.log('POPULATING Followers', ctx.params);
     return Promise.all(
       items.map((board:any) => {

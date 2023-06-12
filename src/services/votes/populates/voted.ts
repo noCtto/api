@@ -1,8 +1,8 @@
 import type { Context } from "moleculer";
-import { VoteThis } from '../votes.service';
+import type { MicroService } from '@lib/microservice';
 
 
-export default function voted(this:VoteThis, _ids:any, items:any, _handler:any, ctx: Context & { params: any }) {
+export default function voted(this:MicroService, _ids:any, items:any, _handler:any, ctx: Context & { params: any }) {
   const user = this.extractUser(ctx);
   return items.map((item:any) => {
     item.voted = item.voters[String(user)] !== undefined;

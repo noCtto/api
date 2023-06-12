@@ -1,8 +1,8 @@
 
 import type { Context } from "moleculer";
-import { PostThis } from '../posts.service';
+import type { MicroService } from '@lib/microservice';
 
-export default async function push(this:PostThis, ctx:Context & { params: any }) {
+export default async function push(this:MicroService, ctx:Context & { params: any }) {
   const post = await ctx.call('posts.find', { limit: 1 });
   return ctx.call('io.broadcast', {
     namespace: '/', // optional

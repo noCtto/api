@@ -1,7 +1,7 @@
 import type { Context } from "moleculer";
-import { PostThis } from '../posts.service';
+import type { MicroService } from '@lib/microservice';
 
-export default function author(this:PostThis, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
+export default function author(this:MicroService, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
   return Promise.all(
     items.map((item:any) =>
       ctx

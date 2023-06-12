@@ -7,9 +7,10 @@ export type DbServiceMethods = {
 	seedDb?(): Promise<void>;
 };
 
-type DbServiceSchema = Partial<ServiceSchema> &
+export type DbServiceSchema = Partial<ServiceSchema> &
 	Partial<MoleculerDB<DbAdapter>> & {
 		collection?: string;
+    adapter?: DbAdapter;
 	};
 
 export type DbServiceThis = Service & DbServiceMethods;
@@ -32,7 +33,6 @@ export default function createDbServiceMixin(dbName: string, collection: string)
         }
       },
     },
-
     _methods: {
       /**
        * Send a cache clearing event when an entity changed.
@@ -74,7 +74,7 @@ export default function createDbServiceMixin(dbName: string, collection: string)
 
   if (process.env.MONGO_URI) {
     // Mongo adapter
-    schema.adapter = new MongoDbAdapter(process.env.MONGO_URI, {}, dbName);
+    schema.adapter = new MongoDbAdapter(process.env.MONGO_URI, {}, dbName) as unknown as DbAdapter;
     schema.dbName = dbName;
     schema.collection = collection;
   }

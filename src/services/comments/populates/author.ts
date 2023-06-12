@@ -1,8 +1,8 @@
 import type { Context } from "moleculer";
-import { CommentThis } from '../comments.service';
+import type { MicroService } from '@lib/microservice';
 
 
-export default async function author(this:CommentThis, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
+export default async function author(this:MicroService, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
   return Promise.all(
     items.map((item:any) =>
       ctx

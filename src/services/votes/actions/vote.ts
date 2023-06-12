@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from "moleculer";
-import { VoteThis } from '../votes.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
   rest: 'POST /vote',
@@ -8,7 +8,7 @@ export default {
     id: { type: 'objectID', ObjectID: ObjectId, optional: false },
     d: 'boolean',
   },
-  async handler(this:VoteThis, ctx:Context & { params: any }):Promise<any> {
+  async handler(this:MicroService, ctx:Context & { params: any }):Promise<any> {
     return Promise.resolve(this.vote(ctx));
   },
 };

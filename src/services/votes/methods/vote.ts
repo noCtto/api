@@ -2,7 +2,7 @@ import MoleculerJs from 'moleculer';
 import dayjs from 'dayjs';
 import { ObjectId } from 'mongodb';
 import type { Context } from "moleculer";
-import { VoteThis } from '../votes.service';
+import type { MicroService } from '@lib/microservice';
 
 const { ValidationError } = MoleculerJs.Errors;
 
@@ -16,7 +16,7 @@ const vl = (currentVote:any, newVote:any) => {
   return votedState;
 };
 
-export default function vote(this:VoteThis, ctx: Context & { params: any }) {
+export default function vote(this:MicroService, ctx: Context & { params: any }) {
   const { id, d } = ctx.params;
   const user = ctx.params.uid ? new ObjectId(ctx.params.uid) : this.extractUser(ctx);
   if (!user) return Promise.reject(new ValidationError('no user'));

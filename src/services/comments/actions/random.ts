@@ -1,7 +1,7 @@
 
 import { randomId } from '@utils/func';
 import type { Context } from "moleculer";
-import { CommentThis } from '../comments.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
   params: {
@@ -10,7 +10,7 @@ export default {
       optional: true,
     },
   },
-  async handler(this:CommentThis, ctx: Context & { params: any }): Promise<string[]> {
+  async handler(this:MicroService, ctx: Context & { params: any }): Promise<string[]> {
     const num = ctx.params.num || 10;
     const tid = ctx.params.tid || null;
     const data = await ctx

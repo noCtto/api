@@ -1,41 +1,13 @@
 import MoleculerJs from 'moleculer';
 import type { Context } from 'moleculer';
-import { sha256 } from '@utils/func';
 import type { MicroService } from '@lib/microservice';
+import type { Params } from './params';
+import { sha256 } from '@utils/func';
 
 const { MoleculerClientError } = MoleculerJs.Errors;
 
-interface Params {
-  username: string;
-  password: string;
-  environment: string;
-  fingerprint?: string;
-  csrfToken?: string;
-  email?: string;
-}
-
-export default {
-  rest: 'POST /login',
-  cache: false,
-  authorization: false,
-  params: {
-    username: { type: 'string' },
-    password: { type: 'string', min: 4 },
-    environment: { type: 'string', optional: true },
-    email: { type: 'string', optional: true },
-    fingerprint: {
-      type: 'string',
-      default: 'localhost',
-      optional: true,
-    },
-    csrfToken: {
-      type: 'string',
-      optional: true,
-    },
-  },
-  async handler(this: MicroService, ctx: Context<Params>): Promise<any> {
-    
-    const { email, password, username } = ctx.params;
+export default async function handler(this: MicroService, ctx: Context<Params>): Promise<any> {
+  const { email, password, username } = ctx.params;
     
     if (!password || (!username && !email))
       return new MoleculerClientError('Invalid credentials', 400);
@@ -70,5 +42,4 @@ export default {
       });
     }
     return new MoleculerClientError('Email or password is invalid!', 422, 'account', [user])
-  }, 
-};
+}

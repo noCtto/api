@@ -1,17 +1,29 @@
-import type { ServiceSchema } from 'moleculer';
-import type { DbServiceMethods } from '../mixins/mongodb.mixin';
-import DbMixin from '../mixins/mongodb.mixin';
 
-import { extractCompany, extractUser } from '../utils/index';
+import type { DbServiceMethods } from '@mixins/mongodb.mixin';
 
-export interface MicroService extends ServiceSchema {
-  afterConnected(): Promise<void>;
-}
+import type { Context, ServiceSchema } from 'moleculer';
 
-export interface ServiceMethods extends DbServiceMethods {
-  extractCompany: (ctx: any) => Promise<any>;
-  extractUser: (ctx: any) => Promise<any>;
-}
+import DbMixin from '@mixins/mongodb.mixin';
+
+import { extractCompany, extractUser, health, random } from '@utils/index';
+
+export type MicroServiceMethods = DbServiceMethods & {
+  extractCompany(ctx: Context): Promise<any>;
+  extractUser(ctx: Context): Promise<any>;
+};
+
+export type MicroServiceActions = {
+  [key: string]: (ctx: Context) => Promise<any>;
+  health: (ctx: Context) => Promise<any>;
+  random: (ctx: Context) => Promise<any>;
+};
+
+export type MicroServiceSchema = Partial<ServiceSchema> & {
+  collection?: string;
+  methods?: MicroServiceMethods;
+  actions?: MicroServiceActions;
+};
+
 export interface MicroServiceConf {
   database: string;
   collection: string;
@@ -23,16 +35,18 @@ export interface MicroServiceConf {
   populates: any;
 }
 
+export type MicroService = MicroServiceSchema;
+
 export default function(name:string, conf:any) {
   const { database, collection, fields, validator, actions, methods, hooks, populates } = conf;
 
-  const MicroService: MicroService & { methods: ServiceMethods } = {
+  const MicroService: MicroService & { methods: MicroServiceMethods } = {
     name,
     mixins: [DbMixin(database, collection)],
     _settings: {
       fields: fields,
       entityValidator: validator,
-      indexes: [{ name: 1 }],
+      indexes: [{ name: 'name', value: 1, options: { unique: true }}],
     },
     get settings() {
       return this._settings;
@@ -42,7 +56,11 @@ export default function(name:string, conf:any) {
     },
     hooks,
     populates,
-    actions,
+    actions: {
+      ...actions,
+      random,
+      health,
+    },
     methods: {
       ...methods,
       extractCompany,

@@ -1,12 +1,12 @@
 
 import { ObjectId } from 'mongodb';
 import type { Context } from "moleculer";
-import { SessionThis } from '../sessions.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
   rest: 'GET /fetch-session',
   cache: false,
-  async handler(this:SessionThis, ctx:Context & { meta: any }) {
+  async handler(this:MicroService, ctx:Context & { meta: any }) {
     const query = {
       user: ctx.meta.oauth ? new ObjectId(ctx.meta.oauth.user.id) : '',
     };

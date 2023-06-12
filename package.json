@@ -72,7 +72,7 @@
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "mime": "^3.0.0",
-    "moleculer": "^0.14.16",
+    "moleculer": "^0.14.21",
     "moleculer-auto-openapi": "^1.0.7",
     "moleculer-db": "^0.8.15",
     "moleculer-db-adapter-mongo": "^0.4.17",

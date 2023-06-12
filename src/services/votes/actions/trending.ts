@@ -1,7 +1,7 @@
 
 import { ObjectId } from 'mongodb';
 import type { Context } from "moleculer";
-import { VoteThis } from '../votes.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
   params: {
@@ -10,7 +10,7 @@ export default {
       optional: true,
     },
   },
-  async handler(this:VoteThis, ctx:Context & { params: any }):Promise<any> {
+  async handler(this:MicroService, ctx:Context & { params: any }):Promise<any> {
     const { page, limit } = ctx.params;
 
     const pipeline = [

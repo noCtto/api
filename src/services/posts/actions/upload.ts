@@ -1,16 +1,17 @@
-import mime from 'mime';
 import path from 'path';
 import fs from 'fs';
 import { sha256 } from '@utils/func';
 
 import type { Context } from "moleculer";
-import { PostThis } from '../posts.service';
+import type { MicroService } from '@lib/microservice';
 
 const uploadDir = './public/';
 
-export default async function handler(this:PostThis, ctx: Context & { params: any, meta: any }): Promise<string[]> {
-  return new this.Promise((resolve, reject) => {
-    const ext = mime.getExtension(ctx.meta.mimetype);
+export default async function handler(this:MicroService, ctx: Context & { params: any, meta: any }): Promise<string[]> {
+  return new this.Promise((resolve:any, reject:any) => {
+    
+    const ext = ctx.meta.mimetype.split('/')[1] || 'jpg';
+    
     const filename = sha256(`${ctx.meta.filename}${this.randomName()}`);
     const name = `${filename}.${ext}`;
     const filePath = path.join(uploadDir, name);

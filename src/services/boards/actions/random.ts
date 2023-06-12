@@ -1,6 +1,6 @@
 import { randomId } from '@utils/func';
 import type { Context } from "moleculer";
-import { BoardThis } from '../boards.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
   params: {
@@ -9,7 +9,7 @@ export default {
       optional: true,
     },
   },
-  async handler(this:BoardThis, ctx: Context & { params: { num: number } }) {
+  async handler(this:MicroService, ctx: Context & { params: { num: number } }) {
     const num = ctx.params.num || 10;
     const data = await ctx
       .call('boards.find', { fields: ['_id'] })

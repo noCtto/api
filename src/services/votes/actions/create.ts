@@ -1,6 +1,6 @@
 import { toDeepObjectId } from '@utils/func';
 import type { Context } from "moleculer";
-import { VoteThis } from '../votes.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
   params: {
@@ -26,7 +26,7 @@ export default {
       default: () => new Date(),
     },
   },
-  async handler(this:VoteThis, ctx:Context & { params: any }):Promise<any> {
+  async handler(this:MicroService, ctx:Context & { params: any }):Promise<any> {
     const votes = await this._create(
       ctx,
       toDeepObjectId({

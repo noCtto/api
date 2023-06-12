@@ -1,7 +1,7 @@
 
 import type { Context } from "moleculer";
-import { PostThis } from '../../posts.service';
+import type { MicroService } from '@lib/microservice';
 
-export default function create(this:PostThis, _ctx:Context, response:any) {
+export default function create(this:MicroService, _ctx:Context, response:any) {
   return response;
 };

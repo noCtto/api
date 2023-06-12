@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb';
 import dayjs from 'dayjs';
 import {Errors as MoleculerErrors} from 'moleculer';
 import type { Context } from "moleculer";
-import { PostThis } from '../posts.service';
+import type { MicroService } from '@lib/microservice';
 
 const { MoleculerClientError } = MoleculerErrors;
 
@@ -17,9 +17,10 @@ export default {
     labels: { type: 'string', optional: true },
     bid: { type: 'string' },
   },
-  async handler(this:PostThis, ctx: Context & { params: any }) {
+  async handler(this:MicroService, ctx: Context & { params: any }) {
     const author:any = ctx.params.author ? new ObjectId(ctx.params.author) : this.extractUser(ctx);
         
+    console.log('this extract user', author);
     const { body } = ctx.params;
 
     if (!author) return Promise.reject('User not found');
@@ -30,7 +31,7 @@ export default {
 
     const post:any = await this._create(ctx, {
       body,
-      uid: author,
+      uid: new ObjectId(author),
       bid: new ObjectId(ctx.params.bid),
       createdAt: dayjs().toDate(),
       image: ctx.params.image || null,

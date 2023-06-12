@@ -1,7 +1,7 @@
 import type { Context } from "moleculer";
-import { CommentThis } from '../../comments.service';
+import type { MicroService } from '@lib/microservice';
 
-export default async function comment(this:CommentThis, ctx:Context, response:any) {
+export default async function comment(this:MicroService, ctx:Context, response:any) {
   const post:any = await ctx.call('posts.get', {
     id: response.pid.toString(),
     populate: ['comments'],

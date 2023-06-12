@@ -5,7 +5,6 @@ import push from './push';
 import random from './random';
 import upload from './upload';
 import trending from './trending';
-import health from './health';
 // import get from './get';
 
 export default {
@@ -16,5 +15,4 @@ export default {
   random,
   upload,
   trending,
-  health
 };

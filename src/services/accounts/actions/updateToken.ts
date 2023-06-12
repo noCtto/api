@@ -7,6 +7,8 @@ interface Params {
   userId: string;
 }
 
+
+
 export default {
   rest: 'PUT /update-token',
   cache: false,

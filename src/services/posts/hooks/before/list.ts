@@ -1,7 +1,7 @@
 
 import type { Context } from "moleculer";
-import { PostThis } from '../../posts.service';
+import type { MicroService } from '@lib/microservice';
 
-export default function list(this:PostThis, _ctx:Context & { params: any }) {
+export default function list(this:MicroService, _ctx:Context & { params: any }) {
   // ctx.params.sort = { _id: -1, comments: -1 };
 };

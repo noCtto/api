@@ -1,6 +1,6 @@
 
 import type { Context } from "moleculer";
-import { PostThis } from '../posts.service';
+import type { MicroService } from '@lib/microservice';
 
 export default {
   params: {
@@ -9,7 +9,7 @@ export default {
       optional: true,
     },
   },
-  async handler(this:PostThis, ctx: Context & { params: any }): Promise<string[]> {
+  async handler(this:MicroService, ctx: Context & { params: any }): Promise<string[]> {
     const { page, limit } = ctx.params;
     const trending = await ctx.call('votes.trending', { page, limit });
     const posts:any = await ctx.call('posts.find', {
