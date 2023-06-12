@@ -1,4 +1,6 @@
-export default function extractUser(ctx:any): string | null{
+import { ObjectId } from 'mongodb';
+
+export default function extractUser(ctx:any): ObjectId | null{
   console.log('Extracting user from context', ctx.meta.user.user);
   
   let usrId = null;
@@ -11,7 +13,7 @@ export default function extractUser(ctx:any): string | null{
       usrId = JSON.parse(JSON.stringify(ctx.meta.user.user))['userId'];
       console.log('Here is the user from context', usrId)
     }
-    return usrId;
+    return new ObjectId(usrId);
   }
 
   if (ctx.meta.oauth) {
@@ -21,5 +23,5 @@ export default function extractUser(ctx:any): string | null{
       usrId = ctx.meta.oauth.id;
     }
   }
-  return usrId && usrId;
+  return new ObjectId(usrId);
 };

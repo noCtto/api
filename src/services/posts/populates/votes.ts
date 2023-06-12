@@ -1,14 +1,15 @@
 import type { Context } from "moleculer";
 import type { MicroService } from '@lib/microservice';
 
-export default function comments(this:MicroService, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
+export default function votes(this:MicroService, _ids:object, items:any, _handler:any, ctx:Context & { params: any }) {
+  console.log('populates votes');
   return Promise.all(
     items.map((item:any) =>
       ctx
         .call('votes.get', {
           id: item?.vid?.toString(),
           populate: ['count', 'voted'],
-          fields: ['_id', 'pid', 'tid', 'count', 'voted'],
+          fields: ['_id', 'pid', 'count', 'voted'],
         })
         .then((data:any) => {
           const o = item;

@@ -47,6 +47,7 @@ export default function(name:string, conf:any) {
       fields: fields,
       entityValidator: validator,
       indexes: [{ name: 'name', value: 1, options: { unique: true }}],
+      populates,
     },
     get settings() {
       return this._settings;
@@ -55,7 +56,6 @@ export default function(name:string, conf:any) {
       this._settings = value;
     },
     hooks,
-    populates,
     actions: {
       ...actions,
       random,

@@ -1,6 +1,4 @@
-import vote from './vote';
-import extractUser  from '@utils/extractUser';
+import voteState from './voteState'
 export default {
-  vote,
-  extractUser,
+  voteState,
 };

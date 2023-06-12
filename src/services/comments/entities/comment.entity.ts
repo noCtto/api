@@ -1,5 +1,5 @@
-const { ObjectId } = require('mongodb');
-const dayjs = require('dayjs');
+import { ObjectId } from 'mongodb';
+import dayjs from 'dayjs';
 
 // interface CommentEntity {
 //   _id: string;
@@ -16,31 +16,15 @@ const dayjs = require('dayjs');
 // }
 
 export const Validator = {
-    tid: {
-      type: 'objectID',
-      ObjectID: ObjectId,
-      optional: true,
+    type: {
+      type: 'string',
+      enum: ['pid', 'cid'],
+      required: true,
     },
-    cid: {
+    target: {
       type: 'objectID',
       ObjectID: ObjectId,
-      default: null,
-      optional: true,
-    },
-    pid: {
-      type: 'objectID',
-      ObjectID: ObjectId,
-      default: null,
-      optional: true,
-    },
-    uid: {
-      type: 'objectID',
-      ObjectID: ObjectId,
-    },
-    vid: {
-      type: 'objectID',
-      ObjectID: ObjectId,
-      optional: true,
+      required: true,
     },
     text: {
       type: 'string',

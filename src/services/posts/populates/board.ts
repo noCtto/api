@@ -8,6 +8,7 @@ export default function board(this:MicroService, _ids:any, items:any, _handler:a
       ctx
         .call('boards.get', {
           id: item.bid.toString(),
+          fields: ['_id', 'name', 'slug', 'description', 'image', 'icon', 'banner'],
         })
         .then((data:any) => {
           const o = item;

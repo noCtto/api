@@ -8,6 +8,7 @@ export default function author(this:MicroService, _ids:any, items:any, _handler:
         .call('accounts.get', {
           id: item.uid.toString(),
           populate: ['gravatar'],
+          fields: ['_id', 'username', 'gravatar'],
         })
         .then((data:any) => {
           const o = item;

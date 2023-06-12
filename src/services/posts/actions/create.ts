@@ -18,25 +18,22 @@ export default {
     bid: { type: 'string' },
   },
   async handler(this:MicroService, ctx: Context & { params: any }) {
-    const author:any = ctx.params.author ? new ObjectId(ctx.params.author) : this.extractUser(ctx);
-        
-    console.log('this extract user', author);
+    const uid:any = this.extractUser(ctx);
     const { body } = ctx.params;
 
-    if (!author) return Promise.reject('User not found');
-    console.log('this params', ctx.params);
+    if (!uid) return Promise.reject('User not found');
     
     const board = await ctx.call('boards.get', { id: ctx.params.bid }).catch(() => null);
     if (!board) return Promise.reject(new MoleculerClientError('Board not found', 404));
 
     const post:any = await this._create(ctx, {
       body,
-      uid: new ObjectId(author),
+      uid: new ObjectId(uid),
       bid: new ObjectId(ctx.params.bid),
       createdAt: dayjs().toDate(),
       image: ctx.params.image || null,
       title: ctx.params.title || null,
-      tags: ctx.params.tags || null,
+      tags: ctx.params.tags.split(',') || null,
       labels: ctx.params.labels || null,
     });
 
@@ -44,11 +41,11 @@ export default {
 
     const votes:any = await ctx.call('votes.create', {
       voters: {
-        [author]: 1,
+        [uid]: 1,
       },
-      pid: post._id,
-      tid: thread._id,
-      uid: author.toString(),
+      type: 'pid',
+      target: new ObjectId(post._id),
+      uid: new ObjectId(uid),
     });
 
     await ctx.call('threads.update', {

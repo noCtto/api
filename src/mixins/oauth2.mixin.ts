@@ -49,8 +49,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
       try {
         return this.oauth
         .token(request, response)
-        .then((token: any) => {
-          console.log('Access Tokenizer', token)
+        .then((_token: any) => {
           resp(res, response.body, response.status, response.headers);
         });
       } catch (err) {
