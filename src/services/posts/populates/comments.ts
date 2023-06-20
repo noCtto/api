@@ -6,7 +6,6 @@ import type { MicroService } from '@lib/microservice';
 export default async function comments(this:MicroService, _ids:any, items:any, _handler:any, ctx:Context & { params: any }) {
   return Promise.all(
     items.map((item:any) => {
-      console.log('Populating comments', item, 'for thread');
       return ctx
         .call('comments.list', {
           query: {

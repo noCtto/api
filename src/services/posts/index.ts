@@ -17,4 +17,12 @@ export default {
   methods,
   hooks,
   populates,
+  // events: {
+  //   'posts.created': {
+  //     group: "other",
+  //     handler(ctx: any) {
+  //       console.log('Post created', ctx.params);
+  //     }
+  //   },
+  // },
 };

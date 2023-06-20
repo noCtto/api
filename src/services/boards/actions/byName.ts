@@ -24,9 +24,6 @@ export default {
       });
     }
     
-    console.log('This', this);
-    console.log('CTX', ctx);
-    
     return this._find(ctx, {
       query: { name: ctx.params.board },
       populate: ['posts', 'followers'],

@@ -7,6 +7,8 @@ import forceLogout from './forceLogout';
 import resetPassword from './resetPassword';
 import whoami from './whoami';
 import follow from './follow';
+import spend from './spend';
+import earn from './earn';
 
 export default {
   login,
@@ -18,4 +20,6 @@ export default {
   resetPassword,
   whoami,
   follow,
+  spend,
+  earn,
 };

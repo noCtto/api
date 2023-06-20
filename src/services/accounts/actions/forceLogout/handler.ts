@@ -6,7 +6,7 @@ import type { Params } from './params';
 const { MoleculerClientError } = Moleculerjs.Errors;
 
 export default async function handler(this: MicroService, ctx: Context<Params>) : Promise<any> {
-  const { username } = ctx.params;
+  const { username } = ctx.params; 
   
   const user = await this._find(ctx, {
     query: {

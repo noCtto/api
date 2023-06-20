@@ -1,11 +1,9 @@
 
-import type { DbServiceMethods } from '@mixins/mongodb.mixin';
-
 import type { Context, ServiceSchema } from 'moleculer';
-
+import type { DbServiceMethods } from '@mixins/mongodb.mixin';
 import DbMixin from '@mixins/mongodb.mixin';
-
 import { extractCompany, extractUser, health, random } from '@utils/index';
+
 
 export type MicroServiceMethods = DbServiceMethods & {
   extractCompany(ctx: Context): Promise<any>;
@@ -22,6 +20,8 @@ export type MicroServiceSchema = Partial<ServiceSchema> & {
   collection?: string;
   methods?: MicroServiceMethods;
   actions?: MicroServiceActions;
+  events?: any;
+  hooks?: any;
 };
 
 export interface MicroServiceConf {
@@ -32,13 +32,14 @@ export interface MicroServiceConf {
   actions: any;
   methods: any;
   hooks: any;
+  events: any;
   populates: any;
 }
 
 export type MicroService = MicroServiceSchema;
 
 export default function(name:string, conf:any) {
-  const { database, collection, fields, validator, actions, methods, hooks, populates } = conf;
+  const { database, collection, fields, validator, actions, methods, hooks, populates, events } = conf;
 
   const MicroService: MicroService & { methods: MicroServiceMethods } = {
     name,
@@ -60,6 +61,9 @@ export default function(name:string, conf:any) {
       ...actions,
       random,
       health,
+    },
+    events: {
+      ...events
     },
     methods: {
       ...methods,

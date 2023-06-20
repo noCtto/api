@@ -1,7 +1,7 @@
-import fetchSession from './fetchSession';
+import fetch from './fetch';
 import updateOne from './updateOne';
 
 export default {
-  fetchSession,
+  fetch,
   updateOne,
 };

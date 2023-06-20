@@ -53,7 +53,6 @@ export default {
       pid: new ObjectId(post._id),
       vid: new ObjectId(votes._id),
     });
-
     return this._update(ctx, {
       id: post._id,
       vid: new ObjectId(votes._id),
