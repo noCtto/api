@@ -7,8 +7,6 @@ interface Params {
   userId: string;
 }
 
-
-
 export default {
   rest: 'PUT /update-token',
   cache: false,
@@ -28,10 +26,10 @@ export default {
         _id: new ObjectId(userId),
       },
       populate: ['permissions', 'companies'],
-    }).then(([user]:any) =>
+    }).then(([user]: any) =>
       ctx
         .call('sessions.find', { query, sort: '-createdAt' })
-        .then(async (sessions:any) => {
+        .then(async (sessions: any) => {
           if (sessions && sessions.length === 0)
             throw Error('You are not logged, try login again.');
 

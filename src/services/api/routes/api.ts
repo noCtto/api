@@ -1,8 +1,7 @@
-
 export default [
   {
-    path: "/api",
-    whitelist: ["**"],
+    path: '/api',
+    whitelist: ['**'],
     use: [],
     mergeParams: true,
     authentication: true,
@@ -11,14 +10,14 @@ export default [
     bodyParsers: {
       json: {
         strict: false,
-        limit: "1MB",
+        limit: '1MB',
       },
       urlencoded: {
         extended: true,
-        limit: "1MB",
+        limit: '1MB',
       },
     },
-    mappingPolicy: "all",
+    mappingPolicy: 'all',
     logging: true,
-  }
-]
+  },
+];

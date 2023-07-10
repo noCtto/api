@@ -8,11 +8,11 @@ services:
     ports:
       - 27017:27017
     volumes:
-    - /Users/rfcku/Sites/nocheto/data/db:/data/db
+      - /Users/rfcku/Sites/nocheto/data/db:/data/db
   nats:
     image: nats
     ports:
-    - 4222:4222
+      - 4222:4222
   redis:
     image: redis:alpine
     ports:

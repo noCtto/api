@@ -1,10 +1,12 @@
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
-
 
 export default {
   rest: 'GET /:board',
-  async handler(this:MicroService, ctx: Context & { params: { board: string, populate: string } }) {
+  async handler(
+    this: MicroService,
+    ctx: Context & { params: { board: string; populate: string } }
+  ) {
     if (ctx.params.board === 'all') {
       return ctx.call('boards.all');
     }
@@ -13,17 +15,10 @@ export default {
       return this._get(ctx, {
         id: ctx.params.board,
         populate: ['posts', 'followers'],
-        fields: [
-          '_id',
-          'name',
-          'posts',
-          'followers',
-          'createdAt',
-          'updatedAt',
-        ]
+        fields: ['_id', 'name', 'posts', 'followers', 'createdAt', 'updatedAt'],
       });
     }
-    
+
     return this._find(ctx, {
       query: { name: ctx.params.board },
       populate: ['posts', 'followers'],
@@ -35,7 +30,13 @@ export default {
         'name',
         'createdAt',
         'updatedAt',
-      ]
-    }).then(([board]:any) => board);
+      ],
+    }).then((board: any) => {
+      console.log('BOARD', board);
+      if (!board) {
+        return null;
+      }
+      return board;
+    });
   },
 };

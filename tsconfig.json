@@ -1,28 +1,28 @@
 {
   "ts-node": {
-      // Do not forget to `npm i -D tsconfig-paths`
-      "require": ["tsconfig-paths/register"]
+    // Do not forget to `npm i -D tsconfig-paths`
+    "require": ["tsconfig-paths/register"]
   },
-	"compilerOptions": {
+  "compilerOptions": {
     "target": "es2021",
     "module": "commonjs",
-		"esModuleInterop": true,
-		"noImplicitAny": true,
-		"removeComments": true,
-		"preserveConstEnums": true,
-		"sourceMap": true,
-		"pretty": true,
-		"outDir": "dist",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "pretty": true,
+    "outDir": "dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strict": true, 
+    "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": ".",
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true ,
+    "forceConsistentCasingInFileNames": true,
     "paths": {
       "~/*": ["*"],
       "@lib/*": ["src/lib/*"],
@@ -36,14 +36,10 @@
       "@votes/*": ["src/services/votes/*"],
       "@boards/*": ["src/services/boards/*"],
       "@awards": ["src/services/awards/*"],
-      "@threads/*": ["src/services/threads/*"],
-    },
-	},
-	"include": ["./**/*"],
-	"exclude": [
-		"node_modules/**/*",
-		"test/**/*",
-    ".commitlintrc.ts"
-	],
+      "@threads/*": ["src/services/threads/*"]
+    }
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules/**/*", "test/**/*", ".commitlintrc.ts"],
   "preset": "ts-jest"
 }

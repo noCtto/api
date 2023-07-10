@@ -11,5 +11,5 @@ export default {
   push,
   upload,
   trending,
-  vote
+  vote,
 };

@@ -4,19 +4,21 @@ import DbService from 'moleculer-db';
 import MongoDbAdapter from 'moleculer-db-adapter-mongo';
 
 export type DbServiceMethods = {
-	seedDb?(): Promise<void>;
+  seedDb?(): Promise<void>;
 };
 
 export type DbServiceSchema = Partial<ServiceSchema> &
-	Partial<MoleculerDB<DbAdapter>> & {
-		collection?: string;
+  Partial<MoleculerDB<DbAdapter>> & {
+    collection?: string;
     adapter?: DbAdapter;
-	};
+  };
 
 export type DbServiceThis = Service & DbServiceMethods;
 
-export default function createDbServiceMixin(dbName: string, collection: string): DbServiceSchema {
-  
+export default function createDbServiceMixin(
+  dbName: string,
+  collection: string
+): DbServiceSchema {
   const cacheCleanEventName = `cache.clean.${collection}`;
 
   const schema: DbServiceSchema = {
@@ -24,9 +26,9 @@ export default function createDbServiceMixin(dbName: string, collection: string)
 
     events: {
       /**
-			 * Subscribe to the cache clean event. If it's triggered
-			 * clean the cache entries for this service.
-			 */
+       * Subscribe to the cache clean event. If it's triggered
+       * clean the cache entries for this service.
+       */
       async [cacheCleanEventName](this: DbServiceThis) {
         if (this.broker.cacher) {
           await this.broker.cacher.clean(`${this.fullName}.*`);
@@ -40,7 +42,7 @@ export default function createDbServiceMixin(dbName: string, collection: string)
       async entityChanged(
         _type: string,
         _json: unknown,
-        ctx: Context,
+        ctx: Context
       ): Promise<void> {
         // console.log('entityChanged', type, json);
         await ctx.broadcast(cacheCleanEventName);
@@ -60,12 +62,12 @@ export default function createDbServiceMixin(dbName: string, collection: string)
         const count = await this.adapter.count();
         if (count === 0) {
           this.logger.info(
-            `The '${collection}' collection is empty. Seeding the collection...`,
+            `The '${collection}' collection is empty. Seeding the collection...`
           );
           // await this.seedDB();
           this.logger.info(
             'Seeding is done. Number of records:',
-            await this.adapter.count(),
+            await this.adapter.count()
           );
         }
       }
@@ -74,7 +76,11 @@ export default function createDbServiceMixin(dbName: string, collection: string)
 
   if (process.env.MONGO_URI) {
     // Mongo adapter
-    schema.adapter = new MongoDbAdapter(process.env.MONGO_URI, {}, dbName) as unknown as DbAdapter;
+    schema.adapter = new MongoDbAdapter(
+      process.env.MONGO_URI,
+      {},
+      dbName
+    ) as unknown as DbAdapter;
     schema.dbName = dbName;
     schema.collection = collection;
   }

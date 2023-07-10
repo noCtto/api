@@ -1,7 +1,11 @@
 import { ObjectId } from 'mongodb';
 import type { MicroService } from '@lib/microservice';
 
-export default function validateSession(this:MicroService, user:any, ctx:any) {
+export default function validateSession(
+  this: MicroService,
+  user: any,
+  ctx: any
+) {
   this.logger.info('Validating: ', user, ctx.params);
   this.logger.info('validateSession');
 
@@ -33,7 +37,7 @@ export default function validateSession(this:MicroService, user:any, ctx:any) {
           .then(() => {
             this.logger.info('Sesion creada, se regresa a front.');
           })
-          .catch((er:any) => {
+          .catch((er: any) => {
             console.log('error', er);
           });
         return token;
@@ -52,13 +56,15 @@ export default function validateSession(this:MicroService, user:any, ctx:any) {
         this.logger.info('Session activa se regresa la misma session.');
         return sessions[0].token;
       } else if (expired) {
-        this.logger.info(`La sesion ya expiro en ${expired}, se procede a crear nueva session`);
+        this.logger.info(
+          `La sesion ya expiro en ${expired}, se procede a crear nueva session`
+        );
 
         await ctx
           .call('sessions.remove', {
             id: sessions[0]._id,
           })
-          .then((json:any) => this.entityChanged('updated', json, ctx));
+          .then((json: any) => this.entityChanged('updated', json, ctx));
 
         // La session ya expiro, se debe crear una nueva y actualizar la session pasada como inactiva.
         this.logger.info('Se actualizo a expired la sesion vieja');
@@ -78,7 +84,9 @@ export default function validateSession(this:MicroService, user:any, ctx:any) {
         });
         return token;
       } else {
-        this.logger.info('La session ya expiro se conecto en otro dispositivo o navegador');
+        this.logger.info(
+          'La session ya expiro se conecto en otro dispositivo o navegador'
+        );
         const token = this.generateJWT(ctx, user._id, exp);
         const sessionData = {
           user: new ObjectId(user._id),
@@ -92,7 +100,7 @@ export default function validateSession(this:MicroService, user:any, ctx:any) {
         return token;
       }
     })
-    .catch((e:any) => {
+    .catch((e: any) => {
       throw Error(e);
     });
-};
+}

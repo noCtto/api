@@ -6,14 +6,15 @@ export default async function transformEntity(
   user: any,
   withToken: boolean,
   token: string,
-  extra: any,
+  extra: any
 ) {
   if (user) {
     delete user.password;
     delete user.createdAt;
     delete user.active;
-    if (withToken) user.token = token || (await this.validateSession(user, extra, ctx));
+    if (withToken)
+      user.token = token || (await this.validateSession(user, extra, ctx));
   }
 
   return user;
-};
+}

@@ -15,5 +15,5 @@ export default {
   votes,
   reply,
   follow,
-  health
-}
+  health,
+};

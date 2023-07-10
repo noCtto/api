@@ -16,49 +16,49 @@ import dayjs from 'dayjs';
 // }
 
 export const Validator = {
-    type: {
-      type: 'string',
-      enum: ['pid', 'cid'],
-      required: true,
-    },
-    target: {
-      type: 'objectID',
-      ObjectID: ObjectId,
-      required: true,
-    },
-    text: {
-      type: 'string',
-      required: true,
-    },
-    createdAt: {
-      type: 'date',
-      default: dayjs().toDate(),
-      required: true,
-    },
-    author: {
-      type: 'object',
-      optional: true,
-    },
-    replies: {
-      type: 'object',
-      optional: true,
-    },
-    votes: {
-      type: 'object',
-      optional: true,
-    },
-  };
+  type: {
+    type: 'string',
+    enum: ['pid', 'cid'],
+    required: true,
+  },
+  target: {
+    type: 'objectID',
+    ObjectID: ObjectId,
+    required: true,
+  },
+  text: {
+    type: 'string',
+    required: true,
+  },
+  createdAt: {
+    type: 'date',
+    default: dayjs().toDate(),
+    required: true,
+  },
+  author: {
+    type: 'object',
+    optional: true,
+  },
+  replies: {
+    type: 'object',
+    optional: true,
+  },
+  votes: {
+    type: 'object',
+    optional: true,
+  },
+};
 
-  export const Fields = [
-    '_id',
-    'tid',
-    'cid',
-    'pid',
-    'uid',
-    'text',
-    'replies',
-    'createdAt',
-    'author',
-    'votes',
-    'vid',
-  ];
+export const Fields = [
+  '_id',
+  'tid',
+  'cid',
+  'pid',
+  'uid',
+  'text',
+  'replies',
+  'createdAt',
+  'author',
+  'votes',
+  'vid',
+];

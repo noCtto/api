@@ -1,12 +1,9 @@
-
 import type { Context, ServiceSchema } from 'moleculer';
 import type { DbServiceMethods } from '@mixins/mongodb.mixin';
 import DbMixin from '@mixins/mongodb.mixin';
-import { extractCompany, extractUser, health, random } from '@utils/index';
-
+import { extractUser, health, random } from '@utils/index';
 
 export type MicroServiceMethods = DbServiceMethods & {
-  extractCompany(ctx: Context): Promise<any>;
   extractUser(ctx: Context): Promise<any>;
 };
 
@@ -38,8 +35,18 @@ export interface MicroServiceConf {
 
 export type MicroService = MicroServiceSchema;
 
-export default function(name:string, conf:any) {
-  const { database, collection, fields, validator, actions, methods, hooks, populates, events } = conf;
+export default function (name: string, conf: any) {
+  const {
+    database,
+    collection,
+    fields,
+    validator,
+    actions,
+    methods,
+    hooks,
+    populates,
+    events,
+  } = conf;
 
   const MicroService: MicroService & { methods: MicroServiceMethods } = {
     name,
@@ -47,7 +54,7 @@ export default function(name:string, conf:any) {
     _settings: {
       fields: fields,
       entityValidator: validator,
-      indexes: [{ name: 'name', value: 1, options: { unique: true }}],
+      indexes: [{ name: 'name', value: 1, options: { unique: true } }],
       populates,
     },
     get settings() {
@@ -63,11 +70,10 @@ export default function(name:string, conf:any) {
       health,
     },
     events: {
-      ...events
+      ...events,
     },
     methods: {
       ...methods,
-      extractCompany,
       extractUser,
     },
     async afterConnected() {
@@ -75,7 +81,7 @@ export default function(name:string, conf:any) {
     },
     onStarted() {
       this.logger.info(`Service ${name} started`);
-    }
+    },
   };
   return MicroService;
 }

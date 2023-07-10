@@ -1,8 +1,7 @@
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
-
-export default function vote(this:MicroService, _ctx: Context, response:any) {
+export default function vote(this: MicroService, _ctx: Context, response: any) {
   console.log('Broadcasting vote count', response);
   // ctx.call('io.broadcast', {
   //   namespace: '/',
@@ -15,4 +14,4 @@ export default function vote(this:MicroService, _ctx: Context, response:any) {
   // });
   // return response;
   return response;
-};
+}

@@ -6,14 +6,15 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
 // eslint-disable-next-line no-prototype-builtins
-export const hasProperty = (source, property) => source.hasOwnProperty(property);
+export const hasProperty = (source: any, property: any) =>
+  source.hasOwnProperty(property);
 
-export const checkProperty = (source, prop) => {
+export const checkProperty = (source: any, prop: any) => {
   const properties = prop.split('.');
   let nested = source;
   let has = false;
 
-  properties.forEach((property) => {
+  properties.forEach((property: any) => {
     if (hasProperty(nested, property)) {
       nested = nested[property];
       has = true;

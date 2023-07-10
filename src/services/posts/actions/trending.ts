@@ -1,5 +1,4 @@
-
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
 export default {
@@ -9,10 +8,13 @@ export default {
       optional: true,
     },
   },
-  async handler(this:MicroService, ctx: Context & { params: any }): Promise<string[]> {
+  async handler(
+    this: MicroService,
+    ctx: Context & { params: any }
+  ): Promise<string[]> {
     const { page, limit } = ctx.params;
     const trending = await ctx.call('votes.trending', { page, limit });
-    const posts:any = await ctx.call('posts.find', {
+    const posts: any = await ctx.call('posts.find', {
       query: { vid: { $in: trending } },
       fields: [
         '_id',

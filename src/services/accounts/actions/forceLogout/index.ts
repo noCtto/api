@@ -5,5 +5,5 @@ export default {
   rest: 'POST /forceLogout',
   cache: false,
   params,
-  handler
+  handler,
 };

@@ -1,4 +1,3 @@
-
 export interface SessionEntity {
   _id: string;
   user: any;
@@ -9,7 +8,7 @@ export interface SessionEntity {
   expired: boolean;
 }
 
-export const Validator ={
+export const Validator = {
   user: { type: 'object', optional: false },
   start: 'date',
   token: 'string',
@@ -18,4 +17,12 @@ export const Validator ={
   expired: { type: 'boolean', default: false },
 };
 
-export const Fields = ['_id', 'user', 'token', 'start', 'expires', 'createdAt', 'expired'];
+export const Fields = [
+  '_id',
+  'user',
+  'token',
+  'start',
+  'expires',
+  'createdAt',
+  'expired',
+];

@@ -2,16 +2,18 @@ import path from 'path';
 import fs from 'fs';
 import { sha256 } from '@utils/func';
 
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
 const uploadDir = './public/';
 
-export default async function handler(this:MicroService, ctx: Context & { params: any, meta: any }): Promise<string[]> {
-  return new this.Promise((resolve:any, reject:any) => {
-    
+export default async function handler(
+  this: MicroService,
+  ctx: Context & { params: any; meta: any }
+): Promise<string[]> {
+  return new this.Promise((resolve: any, reject: any) => {
     const ext = ctx.meta.mimetype.split('/')[1] || 'jpg';
-    
+
     const filename = sha256(`${ctx.meta.filename}${this.randomName()}`);
     const name = `${filename}.${ext}`;
     const filePath = path.join(uploadDir, name);
@@ -22,7 +24,7 @@ export default async function handler(this:MicroService, ctx: Context & { params
       resolve({ file: { path: filePath, name }, meta: ctx.meta });
     });
 
-    ctx.params.on('error', (err:any) => {
+    ctx.params.on('error', (err: any) => {
       this.logger.info('File error received', err.message);
       reject(err);
 
@@ -36,7 +38,7 @@ export default async function handler(this:MicroService, ctx: Context & { params
     });
 
     ctx.params.pipe(f);
-  }).then((data:any) => {
+  }).then((data: any) => {
     const { file } = data;
     const { name } = file;
     // const arr = [];
@@ -48,4 +50,4 @@ export default async function handler(this:MicroService, ctx: Context & { params
     // return Promise.all(arr);
     return ctx.call('posts.create', { ...ctx.meta.$multipart, image: name });
   });
-};
+}

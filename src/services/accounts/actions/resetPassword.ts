@@ -1,7 +1,6 @@
 import type { MicroService } from '@lib/microservice';
 import type { Context } from 'moleculer';
 
-
 export interface ActionResetPasswordParams {
   username: string;
 }
@@ -12,12 +11,14 @@ export default {
   params: {
     username: { type: 'string' },
   },
-  async handler(this: MicroService, ctx: Context<ActionResetPasswordParams>): Promise<any> {
-    
+  async handler(
+    this: MicroService,
+    ctx: Context<ActionResetPasswordParams>
+  ): Promise<any> {
     const { username } = ctx.params;
 
-    const user:any = await this.getByUsername(ctx, username);
-    
+    const user: any = await this.getByUsername(ctx, username);
+
     if (!user) throw new Error('User not found');
 
     return ctx
@@ -26,7 +27,7 @@ export default {
           user: user._id,
         },
       })
-      .then((sessions:any) => {
+      .then((sessions: any) => {
         const session = sessions[0];
         if (!session) return this.resolve({ msg: 'Ok!' });
         return ctx

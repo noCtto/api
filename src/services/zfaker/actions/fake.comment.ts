@@ -2,7 +2,7 @@ import { toDeepObjectId } from '@utils/func';
 import { randomId } from '@utils/func';
 import { faker } from '@faker-js/faker';
 import { FakeThis } from '../faker.service';
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 
 export default {
   rest: 'POST /comment',
@@ -12,12 +12,12 @@ export default {
       optional: true,
     },
   },
-  async handler(this:FakeThis, ctx: Context & { params: any }):Promise<any> {
+  async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
     const num = ctx.params.num || 1;
 
-    const users:any = await ctx.call('accounts.random', { num });
+    const users: any = await ctx.call('accounts.random', { num });
     const postsIds = await ctx.call('posts.random', { num });
-    const posts:any = await ctx.call('posts.find', {
+    const posts: any = await ctx.call('posts.find', {
       query: { _id: { $in: toDeepObjectId(postsIds) } },
       fields: ['_id', 'tid'],
     });

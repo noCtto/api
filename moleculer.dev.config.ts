@@ -1,11 +1,8 @@
 /* eslint-disable global-require */
 import { BrokerOptions } from 'moleculer';
 
-import { getUniqId } from './src/utils/func';
-
 const brokerConfig: BrokerOptions = {
   namespace: process.env.NAMESPACE || 'microservices',
-  nodeID: getUniqId(),
   logger: true,
   logLevel: 'info',
   cacher: false,

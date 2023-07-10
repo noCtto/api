@@ -1,6 +1,6 @@
-import {SocketThis} from '../socket.service';
+import { SocketThis } from '../socket.service';
 
-export default function socketAuthorize(this:SocketThis, socket:any) {
+export default function socketAuthorize(this: SocketThis, socket: any) {
   console.log('Login using token:', socket.handshake.query.token);
   const accessToken = socket.handshake.query.token;
   if (accessToken) {
@@ -20,4 +20,4 @@ export default function socketAuthorize(this:SocketThis, socket:any) {
   }
   // anonymous user
   return Promise.resolve();
-};
+}

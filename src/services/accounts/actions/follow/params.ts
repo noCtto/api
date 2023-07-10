@@ -1,7 +1,7 @@
-export type Params ={
-	uid1?: string;
+export type Params = {
+  uid1?: string;
   uid2: string;
-}
+};
 
 export default {
   uid1: {

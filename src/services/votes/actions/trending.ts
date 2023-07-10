@@ -1,6 +1,5 @@
-
 import { ObjectId } from 'mongodb';
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
 export default {
@@ -10,7 +9,10 @@ export default {
       optional: true,
     },
   },
-  async handler(this:MicroService, ctx:Context & { params: any }):Promise<any> {
+  async handler(
+    this: MicroService,
+    ctx: Context & { params: any }
+  ): Promise<any> {
     const { page, limit } = ctx.params;
 
     const pipeline = [
@@ -40,6 +42,6 @@ export default {
 
     const aggregation = await this.adapter.collection.aggregate(pipeline);
     const result = await aggregation.toArray();
-    return result.map((item:any) => new ObjectId(item._id));
+    return result.map((item: any) => new ObjectId(item._id));
   },
 };

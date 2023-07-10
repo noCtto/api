@@ -23,7 +23,7 @@ export default {
           user: user._id,
         },
       })
-      .then((sessions:any) => {
+      .then((sessions: any) => {
         const session = sessions[0];
         if (!session) return this.resolve({ msg: 'Ok!' });
         return ctx

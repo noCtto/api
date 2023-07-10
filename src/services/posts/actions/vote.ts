@@ -1,5 +1,4 @@
-
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
 export default {
@@ -13,9 +12,12 @@ export default {
       type: 'boolean',
       optional: false,
       convert: true,
-    }
+    },
   },
-  async handler(this:MicroService, ctx: Context & { params: any }): Promise<string[]> {
+  async handler(
+    this: MicroService,
+    ctx: Context & { params: any }
+  ): Promise<string[]> {
     const { id, d } = ctx.params;
     const post = await this._get(ctx, { id });
     if (!post) return Promise.reject(new Error('no post'));

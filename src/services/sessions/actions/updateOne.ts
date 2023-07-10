@@ -1,5 +1,5 @@
 import { toDeepObjectId } from '@utils/func';
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
 export default {
@@ -7,7 +7,7 @@ export default {
     filter: 'object',
     project: 'object',
   },
-  async handler(this:MicroService, ctx:Context & { params: any, meta: any }) {
+  async handler(this: MicroService, ctx: Context & { params: any; meta: any }) {
     const { filter, project } = ctx.params;
     return this.adapter.collection.updateOne(
       toDeepObjectId(filter),

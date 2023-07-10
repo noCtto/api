@@ -6,7 +6,7 @@ interface Params {
   createdAt: Date;
 }
 
-export default async function create(this:MicroService, ctx: Context<Params>) {
+export default async function create(this: MicroService, ctx: Context<Params>) {
   const query = {
     username: ctx.params.username,
   };
@@ -15,7 +15,7 @@ export default async function create(this:MicroService, ctx: Context<Params>) {
       query,
       fields: ['_id', 'username'],
     })
-    .then(([user]:any) => user);
+    .then(([user]: any) => user);
 
   if (exist) throw new Error(`This user ${exist.email} already exist!.`);
 

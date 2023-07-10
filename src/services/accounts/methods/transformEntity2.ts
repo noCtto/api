@@ -1,6 +1,11 @@
 import type { MicroService } from '@lib/microservice';
 
-export default function transformEntity2(this:MicroService, _ctx:any,  user:any, token:any) {
+export default function transformEntity2(
+  this: MicroService,
+  _ctx: any,
+  user: any,
+  token: any
+) {
   if (user) {
     delete user.password;
     delete user.createdAt;
@@ -8,4 +13,4 @@ export default function transformEntity2(this:MicroService, _ctx:any,  user:any,
     user.token = token;
   }
   return user;
-};
+}

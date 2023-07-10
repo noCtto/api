@@ -3,11 +3,12 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 const { ObjectId } = Schema.Types;
 
-export default async function(connectionString: string){
-  
-  const connection:any = await mongoose.connect(connectionString, {}).catch((err) => {
-    console.log(`[oAuth2Server] ❌ Mongoose connection error`, err);
-  });
+export default async function (connectionString: string) {
+  const connection: any = await mongoose
+    .connect(connectionString, {})
+    .catch((err) => {
+      console.log(`[oAuth2Server] ❌ Mongoose connection error`, err);
+    });
   mongoose.Promise = global.Promise;
 
   if (Object.keys(mongoose.connection.models).length > 0)
@@ -44,7 +45,12 @@ export default async function(connectionString: string){
       redirectUris: [String],
       grants: {
         type: [String],
-        default: ['authorization_code', 'password', 'refresh_token', 'client_credentials'],
+        default: [
+          'authorization_code',
+          'password',
+          'refresh_token',
+          'client_credentials',
+        ],
       },
       scope: String,
       user: { type: ObjectId, ref: 'user' },
@@ -91,4 +97,4 @@ export default async function(connectionString: string){
       user,
     },
   };
-};
+}

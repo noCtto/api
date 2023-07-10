@@ -1,23 +1,19 @@
 import { ObjectId } from 'mongodb';
 
-export default function extractUser(ctx:any): ObjectId | null{  
-  let usrId = null;
-  if (ctx.params.uid) {
-    usrId = ctx.params.uid;
-  }
-  if (ctx.meta.user) {
-    if (ctx.meta.user.user) {
-      usrId = JSON.parse(JSON.stringify(ctx.meta.user.user))['userId'];
-    }
-    return new ObjectId(usrId);
+export default function extractUser(ctx: any): ObjectId | null {
+  const { meta, params } = ctx;
+
+  if (meta?.user?.user?.userId) {
+    return new ObjectId(meta.user.user.userId);
   }
 
-  if (ctx.meta.oauth) {
-    if (ctx.meta.oauth.user) {
-      usrId = ctx.meta.oauth.user.id;
-    } else {
-      usrId = ctx.meta.oauth.id;
-    }
+  if (meta?.oauth?.user?.id) {
+    return new ObjectId(meta.oauth.user.id);
   }
-  return new ObjectId(usrId);
-};
+
+  if (params?.uid) {
+    return new ObjectId(params.uid);
+  }
+
+  return null;
+}

@@ -21,11 +21,11 @@ export default {
       fields: ['_id'],
     }).then((res: any) => {
       const data = res.map((item: any) => item._id);
-      const ids:any = [];
+      const ids: any = [];
       if (data) {
         const ln = data.length;
         while (ids.length < num) {
-          ids.push( randomId( ln , data ) );
+          ids.push(randomId(ln, data));
         }
         return ids;
       }

@@ -1,14 +1,23 @@
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 import type { Params } from './params';
 
-export default async function handler(this: MicroService, ctx: Context<Params>) : Promise<any> {
+export default async function handler(
+  this: MicroService,
+  ctx: Context<Params>
+): Promise<any> {
   const userId = ctx.params.uid1 || this.extractUser(ctx);
   const targetId = ctx.params.uid2;
-  
-  const user:any = await ctx.call('accounts.get', { id: userId, fields: ['_id'] });
-  const target:any = await ctx.call('accounts.get', { id: targetId, fields: ['_id', 'following'] });
-  
+
+  const user: any = await ctx.call('accounts.get', {
+    id: userId,
+    fields: ['_id'],
+  });
+  const target: any = await ctx.call('accounts.get', {
+    id: targetId,
+    fields: ['_id', 'following'],
+  });
+
   let following = false;
   if (!target.followers) {
     target.followers = {
@@ -24,4 +33,4 @@ export default async function handler(this: MicroService, ctx: Context<Params>) 
       ...target.followers,
     },
   });
-};
+}

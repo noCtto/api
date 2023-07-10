@@ -1,4 +1,3 @@
-
 import { ObjectId } from 'mongodb';
 
 export interface VoteEntity {
@@ -56,7 +55,7 @@ export const Validator = {
   },
 };
 
-export const Fields =[
+export const Fields = [
   '_id',
   'pid',
   'cid',

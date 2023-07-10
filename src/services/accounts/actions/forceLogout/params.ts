@@ -1,4 +1,3 @@
-
 export interface Params {
   username: string;
   password: string;
@@ -6,7 +5,7 @@ export interface Params {
   fingerprint?: string;
 }
 
-export default  {
+export default {
   username: { type: 'string' },
   password: { type: 'string', min: 35 },
   environment: { type: 'string' },

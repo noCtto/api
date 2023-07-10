@@ -1,4 +1,4 @@
-import voteState from './voteState'
+import voteState from './voteState';
 export default {
   voteState,
 };

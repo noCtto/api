@@ -1,9 +1,8 @@
 import { ObjectId } from 'mongodb';
 import { toDeepObjectId } from '@utils/func';
 
-import type { Context } from "moleculer";
+import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
-
 
 export default {
   params: {
@@ -28,13 +27,13 @@ export default {
       default: () => new Date(),
     },
   },
-  async handler(this:MicroService, ctx: Context & { params: any }) {
-    const uid:ObjectId = this.extractUser(ctx);
+  async handler(this: MicroService, ctx: Context & { params: any }) {
+    const uid: ObjectId = this.extractUser(ctx);
     if (!uid) return Promise.reject('User not found');
 
     const { type, target } = ctx.params;
 
-    const votes:any = await ctx.call('votes.create', {
+    const votes: any = await ctx.call('votes.create', {
       voters: {
         [String(uid)]: 1,
       },
@@ -43,8 +42,15 @@ export default {
       uid,
     });
 
-    const comment = await this._create(ctx, toDeepObjectId({ ...ctx.params, vid: votes._id, uid })).then(
-      (json:any) => this.transformDocuments(ctx, { populate: ['votes', 'author', 'replies'] }, json)
+    const comment = await this._create(
+      ctx,
+      toDeepObjectId({ ...ctx.params, vid: votes._id, uid })
+    ).then((json: any) =>
+      this.transformDocuments(
+        ctx,
+        { populate: ['votes', 'author', 'replies'] },
+        json
+      )
     );
     return comment;
   },

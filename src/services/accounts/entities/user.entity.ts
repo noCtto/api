@@ -37,5 +37,5 @@ export const Fields = [
   'lastLogin',
   'active',
   'followers',
-  'posts'
-]
+  'posts',
+];

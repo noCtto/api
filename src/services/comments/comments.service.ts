@@ -1,4 +1,3 @@
-
-import config from '~/src/services/comments/index';
+import config from '@comments/index';
 import MicroService from '@lib/microservice';
-export default MicroService('comments', config );
+export default MicroService('comments', config);
