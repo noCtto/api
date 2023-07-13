@@ -114,3 +114,4 @@ yarn.lock
 _/*
 _
 .husky
+.DS_Store
