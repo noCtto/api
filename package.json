@@ -136,6 +136,9 @@
         "statements": 80
       }
     },
+    "setupFilesAfterEnv": [
+      "dotenv/config"
+    ],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/services/$1",
       "^@config/(.*)$": "<rootDir>/src/services/$1",
