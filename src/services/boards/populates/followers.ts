@@ -10,7 +10,6 @@ export default {
     _handler: any,
     ctx: Context & { params: { board: string; populate: string } }
   ) {
-    console.log('POPULATING Followers', ctx.params);
     return Promise.all(
       items.map((board: any) => {
         if (!board.followers) return board;
