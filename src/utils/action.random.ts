@@ -4,7 +4,7 @@ import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
 interface Params {
-  num: number;
+  num?: number;
 }
 
 export default {

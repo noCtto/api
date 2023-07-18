@@ -13,26 +13,27 @@ export function isObjectId(str: string): boolean {
 export const toDeepObjectId = (json: any): any => {
   if (typeof json === 'string')
     return isObjectId(json) ? new ObjectId(json) : json;
-  const newJson: any = json;
-  for (const key in newJson) {
-    if (typeof newJson[key] === 'string' && isObjectId(newJson[key]))
-      newJson[key] = new ObjectId(newJson[key]);
-    else if (typeof newJson[key] === 'object') {
-      newJson[key] = toDeepObjectId(newJson[key]);
-    } else if (Array.isArray(newJson[key])) {
-      newJson[key] = newJson[key].map((r: any) => toDeepObjectId(r));
-    }
+
+  if (Array.isArray(json)) {
+    return json.map((r: any) => toDeepObjectId(r));
   }
-  return newJson;
+
+  if (typeof json === 'object' && json !== null) {
+    const newJson: any = {};
+    for (const key in json) {
+      newJson[key] = toDeepObjectId(json[key]);
+    }
+    return newJson;
+  }
+  return json;
 };
 
+// Generates a random number between 0 and m, and checks if the number is in the array u. 
+// If it is, it recursively calls itself, passing in the same parameters. 
+// If it is not, it returns the number.
 export const randomId: any = (m: number, u: any) => {
   const r = faker.datatype.number({ min: 0, max: m });
-  try {
-    return u[r] !== undefined ? u[r] : randomId(m, u);
-  } catch (err) {
-    return randomId(m, u);
-  }
+  return u[r] !== undefined ? u[r] : randomId(m, u);
 };
 
 export const checkIfValidMD5Hash = (str: any) => {
