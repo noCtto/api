@@ -2,10 +2,10 @@ import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
 export default {
-  rest: 'GET /:board/all',
+  rest: 'GET /:community/all',
   async handler(
     this: MicroService,
-    ctx: Context & { params: { board: string } }
+    ctx: Context & { params: { community: string } }
   ) {
     console.log('THIS', ctx.params);
   },

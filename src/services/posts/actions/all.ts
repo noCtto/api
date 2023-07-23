@@ -5,14 +5,14 @@ export default {
   rest: 'GET /all',
   async handler(this: MicroService, ctx: Context) {
     return this._list(ctx, {
-      populate: ['comments', 'board', 'author', 'votes'],
+      populate: ['comments', 'community', 'author', 'votes'],
       fields: [
         '_id',
         'votes',
         'author',
         'createdAt',
         'comments',
-        'board',
+        'community',
         'body',
         'image',
       ],

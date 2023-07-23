@@ -20,7 +20,7 @@ export default function posts(
             'text',
             'createdAt',
             'image',
-            'board',
+            community,
             'votes',
             'author',
           ],

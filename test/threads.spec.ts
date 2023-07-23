@@ -21,22 +21,28 @@ describe("Test 'health' actions", () => {
 
   describe('Test get random thread', () => {
     it('should return random thread', async () => {
-      const res = await service.actions.random({ num: 1});
+      const res = await service.actions.random({ num: 1 });
       expect(res).toBeTruthy();
     });
   });
 
   describe('extract user from thread', () => {
     it('should return user from thread', async () => {
-      const res = await service.extractUser({ meta: { user: {  user: {userId: '5f9b2a3b9d3e4b1b3c9d9b1a' } } } });
+      const res = await service.extractUser({
+        meta: { user: { user: { userId: '5f9b2a3b9d3e4b1b3c9d9b1a' } } },
+      });
       expect(res).toBeTruthy();
     });
     it('should return user from thread', async () => {
-      const res = await service.extractUser({ params: { uid: '5f9b2a3b9d3e4b1b3c9d9b1a' } });
+      const res = await service.extractUser({
+        params: { uid: '5f9b2a3b9d3e4b1b3c9d9b1a' },
+      });
       expect(res).toBeTruthy();
     });
     it('should return user from thread', async () => {
-      const res = await service.extractUser({ meta: { oauth: { user: { id: '5f9b2a3b9d3e4b1b3c9d9b1a' } } }});
+      const res = await service.extractUser({
+        meta: { oauth: { user: { id: '5f9b2a3b9d3e4b1b3c9d9b1a' } } },
+      });
       expect(res).toBeTruthy();
     });
   });

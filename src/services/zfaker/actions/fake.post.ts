@@ -12,12 +12,12 @@ export default {
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
     const num = ctx.params.num || 1;
     const users: any = await ctx.call('accounts.random', { num });
-    const boards: any = await ctx.call('boards.random', { num });
+    const communities: any = await ctx.call('communities.random', { num });
 
-    if (boards && users) {
+    if (communities && users) {
       const data: any = [];
       while (data.length < num) {
-        const post = this.fakePost(users[data.length], boards[data.length]);
+        const post = this.fakePost(users[data.length], communities[data.length]);
         data.push(ctx.call('posts.create', post));
       }
       return Promise.all(data);

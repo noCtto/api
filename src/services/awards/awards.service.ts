@@ -3,15 +3,7 @@ import MicroService from '@lib/microservice';
 const AwardsService = MicroService('awards', {
   database: 'awards',
   collection: 'awards',
-  fields: [
-    '_id',
-    'name',
-    'description',
-    'image',
-    'company',
-    'createdAt',
-    'updatedAt',
-  ],
+  fields: ['_id', 'name', 'description', 'image', 'createdAt', 'updatedAt'],
   validator: {},
   actions: {},
   methods: {},

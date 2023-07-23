@@ -7,15 +7,15 @@ export default async function posts(
   _ids: any,
   items: any,
   _handler: any,
-  ctx: Context & { params: { board: string; populate: string } }
+  ctx: Context & { params: { community: string; populate: string } }
 ) {
   return Promise.all(
-    items.map((board: any) =>
+    items.map((community: any) =>
       ctx
         .call('posts.list', {
           ...ctx.params,
           query: {
-            bid: new ObjectId(board._id),
+            bid: new ObjectId(community._id),
           },
           populate: ['author', 'comments'],
           fields: [
@@ -29,8 +29,8 @@ export default async function posts(
           ],
         })
         .then((posts) => {
-          board.posts = posts;
-          return board;
+          community.posts = posts;
+          return community;
         })
     )
   );

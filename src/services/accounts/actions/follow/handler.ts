@@ -19,18 +19,18 @@ export default async function handler(
   });
 
   let following = false;
-  if (!target.followers) {
-    target.followers = {
+  if (!target.subscribers) {
+    target.subscribers = {
       [user._id]: 1,
     };
   } else {
-    following = target.followers[user._id] === 1;
-    target.followers[user._id] = following ? 0 : 1;
+    following = target.subscribers[user._id] === 1;
+    target.subscribers[user._id] = following ? 0 : 1;
   }
   return this._update(ctx, {
     _id: target._id,
-    followers: {
-      ...target.followers,
+    subscribers: {
+      ...target.subscribers,
     },
   });
 }

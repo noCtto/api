@@ -1,12 +1,12 @@
 import author from './author';
-import board from './board';
+import community from './community';
 import comments from './comments';
 import thread from './thread';
 import votes from './votes';
 
 export default {
   author,
-  board,
+  community,
   comments,
   thread,
   votes,

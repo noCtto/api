@@ -1,4 +1,4 @@
-import boards from './fake.board';
+import communities from './fake.community';
 import users from './fake.user';
 import posts from './fake.post';
 import comments from './fake.comment';
@@ -8,7 +8,7 @@ import follow from './fake.reply';
 import health from '@utils/health';
 
 export default {
-  boards,
+  communities,
   users,
   posts,
   comments,

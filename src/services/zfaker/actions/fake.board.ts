@@ -6,7 +6,7 @@ import { FakeThis } from '../faker.service';
 import type { Context } from 'moleculer';
 
 export default {
-  rest: 'GET /board',
+  rest: 'GET /community',
   params: {
     user: {
       type: 'string',
@@ -23,7 +23,7 @@ export default {
     while (data.length < num) {
       const user = randomId(users.length, users);
       data.push(
-        ctx.call('boards.create', {
+        ctx.call('communities.create', {
           name: `${faker.internet.domainWord()}-${faker.internet.domainWord()}`,
           description: faker.lorem.sentence(),
           banner: `https://source.unsplash.com/featured/300x200?random=${faker.internet.domainWord()}`,
@@ -46,7 +46,7 @@ export default {
           createdAt: dayjs().toDate(),
           active: true,
           uid: new ObjectId(user),
-          followers: {
+          subscribers: {
             [String(user)]: 1,
           },
         })

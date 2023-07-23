@@ -11,7 +11,7 @@ export interface PostEntity {
   uid: string;
   author: any;
   votes: any;
-  board: any;
+  community: any;
   thread: any;
   comments: any;
   tags: any;
@@ -64,7 +64,7 @@ export const Validator = {
     type: 'object',
     optional: true,
   },
-  board: {
+  community: {
     type: 'object',
     optional: true,
   },
@@ -93,7 +93,7 @@ export const Fields = [
   'image',
   'createdAt',
   'author',
-  'board',
+  community,
   'tags',
   'comments',
   'thread',

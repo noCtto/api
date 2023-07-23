@@ -34,7 +34,7 @@
       "@posts/*": ["src/services/posts/*"],
       "@comments/*": ["src/services/comments/*"],
       "@votes/*": ["src/services/votes/*"],
-      "@boards/*": ["src/services/boards/*"],
+      "@communities/*": ["src/services/communities/*"],
       "@awards": ["src/services/awards/*"],
       "@threads/*": ["src/services/threads/*"]
     }

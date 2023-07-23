@@ -21,11 +21,11 @@ export default {
 
     if (!uid) return Promise.reject('User not found');
 
-    const board = await ctx
-      .call('boards.get', { id: ctx.params.bid })
+    const community = await ctx
+      .call('communities.get', { id: ctx.params.bid })
       .catch(() => null);
-    if (!board)
-      return Promise.reject(new MoleculerClientError('Board not found', 404));
+    if (!community)
+      return Promise.reject(new MoleculerClientError('community not found', 404));
 
     const post: any = await this._create(ctx, {
       body,

@@ -50,7 +50,9 @@
     "superagent": "^6.1.0",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.5"
+    "type-fest": "^3.13.0",
+    "typescript": "^4.9.5",
+    "zod": "^3.21.4"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -144,7 +146,7 @@
       "^@config/(.*)$": "<rootDir>/src/services/$1",
       "^@accounts/(.*)$": "<rootDir>/src/services/$1",
       "^@lib/(.*)$": "<rootDir>/src/lib/$1",
-      "^@boards/(.*)$": "<rootDir>/src/services/boards/$1",
+      "^@communities/(.*)$": "<rootDir>/src/services/communities/$1",
       "^@comments/(.*)$": "<rootDir>/src/services/comments/$1",
       "^@threads/(.*)$": "<rootDir>/src/services/threads/$1",
       "^@posts/(.*)$": "<rootDir>/src/services/posts/$1",

@@ -1,18 +1,18 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 
-export default function board(
+export default function community(
   this: MicroService,
   _ids: any,
   items: any,
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  console.log('populating post board =>>> ', _ids, items, _handler, ctx.params);
+  console.log('populating post community =>>> ', _ids, items, _handler, ctx.params);
   return Promise.all(
     items.map((item: any) =>
       ctx
-        .call('boards.get', {
+        .call('communities.get', {
           id: item.bid.toString(),
           fields: [
             '_id',
@@ -26,7 +26,7 @@ export default function board(
         })
         .then((data: any) => {
           const o = item;
-          o.board = data;
+          o.community = data;
           return o;
         })
     )

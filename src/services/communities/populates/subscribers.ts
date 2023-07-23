@@ -8,13 +8,12 @@ export default {
     _ids: any,
     items: any,
     _handler: any,
-    ctx: Context & { params: { board: string; populate: string } }
+    ctx: Context & { params: { community: string; populate: string } }
   ) {
     return Promise.all(
-      items.map((board: any) => {
-        if (!board.followers) return board;
-
-        const ObjIds = Object.keys(board.followers).map(
+      items.map((community: any) => {
+        if (!community.subscribers) return community;
+        const ObjIds = Object.keys(community.subscribers).map(
           (id) => new ObjectId(id)
         );
         return ctx
@@ -23,13 +22,12 @@ export default {
               _id: {
                 $in: ObjIds,
               },
-              // _id: { $in: ObjIds },
             },
             fields: ['_id', 'username', 'photoUrl'],
           })
           .then((users) => {
-            board.followers = users;
-            return board;
+            community.subscribers = users;
+            return community;
           });
       })
     );

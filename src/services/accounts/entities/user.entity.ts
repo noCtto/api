@@ -7,7 +7,7 @@ export interface UserEntity {
   createdAt: Date;
   lastLogin?: Date;
   active: boolean;
-  followers?: { [key: string]: boolean };
+  subscribers?: { [key: string]: boolean };
   posts?: string[];
   admin?: boolean;
 }
@@ -20,7 +20,7 @@ export const Validator = {
   createdAt: 'date',
   lastLogin: { type: 'date', optional: true },
   active: { type: 'boolean', default: true },
-  followers: {
+  subscribers: {
     type: 'object',
     optional: true,
     default: {},
@@ -36,6 +36,6 @@ export const Fields = [
   'createdAt',
   'lastLogin',
   'active',
-  'followers',
+  'subscribers',
   'posts',
 ];

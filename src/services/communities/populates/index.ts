@@ -1,7 +1,7 @@
-import followers from './followers';
+import subscribers from './subscribers';
 import posts from './posts';
 
 export default {
-  followers,
+  subscribers,
   posts,
 };

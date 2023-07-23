@@ -25,7 +25,7 @@ export interface Entity {
   active?: boolean;
   createdAt?: Date;
   creator?: string;
-  followers?: string[];
+  subscribers?: string[];
   posts?: object[];
 }
 
@@ -76,7 +76,7 @@ export const Fields = [
   'palette',
   'configurations',
   'active',
-  'followers',
+  'subscribers',
   'createdAt',
   'creator',
   'updatedAt',

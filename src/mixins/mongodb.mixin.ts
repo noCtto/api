@@ -73,7 +73,15 @@ export default function createDbServiceMixin(
       }
     },
   };
-  console.log('Initiating MongoDbAdapter with', process.env.MONGO_URI, 'and', dbName, 'and', collection, '...')
+  console.log(
+    'Initiating MongoDbAdapter with',
+    process.env.MONGO_URI,
+    'and',
+    dbName,
+    'and',
+    collection,
+    '...'
+  );
   if (process.env.MONGO_URI) {
     // Mongo adapter
     schema.adapter = new MongoDbAdapter(
