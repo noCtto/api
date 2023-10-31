@@ -15,7 +15,7 @@ export default {
     const data: any = [];
     while (data.length < num) {
       data.push(
-        ctx.call('accounts.register', {
+        ctx.call('users.register', {
           username: faker.internet.userName(),
           email: faker.internet.email(),
           password: '12345678',

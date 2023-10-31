@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 export interface Entity {
   _id: string;
   name: string;
@@ -27,6 +28,7 @@ export interface Entity {
   creator?: string;
   subscribers?: string[];
   posts?: object[];
+  uid?: Object;
 }
 
 export const Validator = {
@@ -64,6 +66,12 @@ export const Validator = {
   active: { type: 'boolean', default: true },
   creator: { type: 'object', optional: true },
   posts: { type: 'array', optional: true },
+  uid: {
+    type: 'objectID',
+    ObjectID: ObjectId,
+    optional: true,
+    convert: true,
+   },
 };
 
 export const Fields = [

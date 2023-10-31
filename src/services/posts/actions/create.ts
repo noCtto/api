@@ -1,5 +1,4 @@
 import { ObjectId } from 'mongodb';
-import dayjs from 'dayjs';
 import { Errors as MoleculerErrors } from 'moleculer';
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
@@ -13,16 +12,16 @@ export default {
     image: { type: 'string', optional: true },
     tags: { type: 'string', optional: true },
     labels: { type: 'string', optional: true },
-    bid: { type: 'string' },
+    cid: { type: 'string' },
   },
   async handler(this: MicroService, ctx: Context & { params: any }) {
     const uid: any = this.extractUser(ctx);
     const { body } = ctx.params;
 
     if (!uid) return Promise.reject('User not found');
-
+    console.log('uid', uid);
     const community = await ctx
-      .call('communities.get', { id: ctx.params.bid })
+      .call('communities.get', { id: ctx.params.cid })
       .catch(() => null);
     if (!community)
       return Promise.reject(new MoleculerClientError('community not found', 404));
@@ -30,10 +29,9 @@ export default {
     const post: any = await this._create(ctx, {
       body,
       uid: new ObjectId(uid),
-      bid: new ObjectId(ctx.params.bid),
-      createdAt: dayjs().toDate(),
+      cid: new ObjectId(ctx.params.cid),
       image: ctx.params.image || null,
-      title: ctx.params.title || null,
+      title: ctx.params.title,
       tags: ctx.params.tags.split(',') || null,
       labels: ctx.params.labels || null,
     });

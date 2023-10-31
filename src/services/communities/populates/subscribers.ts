@@ -17,7 +17,7 @@ export default {
           (id) => new ObjectId(id)
         );
         return ctx
-          .call('accounts.list', {
+          .call('users.list', {
             query: {
               _id: {
                 $in: ObjIds,

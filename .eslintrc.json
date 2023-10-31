@@ -23,7 +23,23 @@
   "rules": {
     "no-underscore-dangle": "off",
     "import/prefer-default-export": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "quotes": ["error", "single"],
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "no-console": [
+      "warn",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["warning"]
   },
   "overrides": [
     {

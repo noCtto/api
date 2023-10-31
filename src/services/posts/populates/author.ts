@@ -11,7 +11,7 @@ export default function author(
   return Promise.all(
     items.map((item: any) =>
       ctx
-        .call('accounts.get', {
+        .call('users.get', {
           id: item.uid.toString(),
           populate: ['gravatar'],
           fields: ['_id', 'username', 'gravatar'],

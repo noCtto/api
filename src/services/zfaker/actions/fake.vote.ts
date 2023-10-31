@@ -14,7 +14,7 @@ export default {
     const num = ctx.params.num || 1;
 
     const votes: any = await ctx.call('votes.random', { num });
-    const users: any = await ctx.call('accounts.random', { num });
+    const users: any = await ctx.call('users.random', { num });
 
     const data: any = [];
     while (data.length < num) {

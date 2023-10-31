@@ -44,8 +44,6 @@ export default {
       });
     }
 
-
-    try {
       return this._find(ctx, {
         query: { name: { $regex: ctx.params.name } },
         populate: ctx.params.populate ? ctx.params.populate.split(',') : populate,
@@ -55,9 +53,10 @@ export default {
           return null;
         }
         return community;
+      }).catch((err: any) => {
+
+        return Promise.reject(new Errors.MoleculerError(err.message, 500, 'ERR_FATAL', { err }));
+
       });
-    } catch (e:any) {
-      return new Errors.MoleculerError(e.message, 500, 'SERVICE_NOT_AVAILABLE');
-    }
   },
 };

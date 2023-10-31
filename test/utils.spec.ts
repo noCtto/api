@@ -152,6 +152,9 @@ describe("Test 'utils' functions", () => {
   });
 
   describe('Test extractUser', () => {
+
+    const _id = new ObjectId('5f86d081884c7d659a2feaa0')
+
     it('should return a invalid user', async () => {
       const user = extractUser({
         _id: '5f86d081884c7d659a2feaa0',
@@ -163,16 +166,19 @@ describe("Test 'utils' functions", () => {
     });
 
     it('should return a valid user', async () => {
-      const user = extractUser({
+      const obj = {
         params: {
           uid: '5f86d081884c7d659a2feaa0',
           name: 'test',
         },
-      });
-      expect(user).toEqual(new ObjectId('5f86d081884c7d659a2feaa0'));
+      };
+      console.log('Obj', obj)
+      
+      const user = extractUser(obj);
+      expect(user).toEqual(_id);
     });
     it('should return a valid user', async () => {
-      const user = extractUser({
+      const obj = {
         meta: {
           user: {
             user: {
@@ -180,8 +186,10 @@ describe("Test 'utils' functions", () => {
             },
           },
         },
-      });
-      expect(user).toEqual(new ObjectId('5f86d081884c7d659a2feaa0'));
+      };
+      console.log('Object with meta.user.user.userId', obj)
+      const user = extractUser(obj);
+      expect(user).toEqual(_id);
     });
     it('should return a valid user', async () => {
       const user = extractUser({
@@ -193,13 +201,13 @@ describe("Test 'utils' functions", () => {
           },
         },
       });
-      expect(user).toEqual(new ObjectId('5f86d081884c7d659a2feaa0'));
+      expect(user).toEqual(_id);
     });
   });
 
   describe('Test get random element', () => {
     let broker = new ServiceBroker({ logger: false });
-    let testService = broker.createService({
+    let service = broker.createService({
       name: 'test',
       actions: {
         random: random,
@@ -212,13 +220,13 @@ describe("Test 'utils' functions", () => {
     afterAll(() => broker.stop());
 
     it('should return random find', async () => {
-      testService._find = mockFind;
-      const res = await testService.actions.random({ num: 1 });
+      service._find = mockFind;
+      const res = await service.actions.random({ num: 1 });
       expect(res).toBeTruthy();
     });
     it('should return random find', async () => {
-      testService._find = mockFind;
-      const res = await testService.actions.random({});
+      service._find = mockFind;
+      const res = await service.actions.random({});
       expect(res).toBeTruthy();
     });
 

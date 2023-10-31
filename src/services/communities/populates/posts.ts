@@ -15,7 +15,7 @@ export default async function posts(
         .call('posts.list', {
           ...ctx.params,
           query: {
-            bid: new ObjectId(community._id),
+            cid: new ObjectId(community._id),
           },
           populate: ['author', 'comments'],
           fields: [

@@ -7,7 +7,7 @@ export interface PostEntity {
   image: string;
   tid: string;
   vid: string;
-  bid: string;
+  cid: string;
   uid: string;
   author: any;
   votes: any;
@@ -27,7 +27,7 @@ export const Validator = {
   },
   title: {
     type: 'string',
-    optional: true,
+    optional: false,
   },
   image: {
     type: 'string',
@@ -46,7 +46,7 @@ export const Validator = {
     ObjectID: ObjectId,
     optional: true,
   },
-  bid: {
+  cid: {
     type: 'objectID',
     ObjectID: ObjectId,
     optional: true,
@@ -84,6 +84,11 @@ export const Validator = {
     type: 'array',
     optional: true,
   },
+  createdAt: {
+    type: 'date',
+    optional: true,
+    default: () => new Date(),
+  }
 };
 
 export const Fields = [
@@ -93,7 +98,7 @@ export const Fields = [
   'image',
   'createdAt',
   'author',
-  community,
+  'community',
   'tags',
   'comments',
   'thread',
@@ -102,6 +107,6 @@ export const Fields = [
   'label',
   'tid',
   'vid',
-  'bid',
+  'cid',
   'uid',
 ];

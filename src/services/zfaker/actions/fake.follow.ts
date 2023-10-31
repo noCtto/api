@@ -12,13 +12,13 @@ export default {
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
     const num = ctx.params.num || 1;
 
-    const users: any = await ctx.call('accounts.random', { num: num * 2 });
+    const users: any = await ctx.call('users.random', { num: num * 2 });
     const data: any = [];
     while (data.length < num) {
       const uid1 = users.shift();
       const uid2 = users.pop();
       data.push(
-        ctx.call('accounts.follow', {
+        ctx.call('users.follow', {
           uid1,
           uid2,
         })

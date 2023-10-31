@@ -1,12 +1,12 @@
-import actions from '~/src/services/communities/actions';
-import methods from '~/src/services/communities/methods';
-import hooks from '~/src/services/communities/hooks';
-import populates from '~/src/services/communities/populates';
+import actions from '@communities/actions';
+import methods from '@communities/methods';
+import hooks from '@communities/hooks';
+import populates from '@communities/populates';
 
 import {
   Validator as validator,
   Fields as fields,
-} from '~/src/services/communities/entities/community';
+} from '@communities/entities/community';
 
 export default {
   database: 'nocheto',
