@@ -40,7 +40,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
       accessToken(req: any, res: any, next: any) {
         const request = new Request(req);
         const response = new Response(res);
-        console.log('Access Token');
+        this.logger.info('Access Token');
         try {
           return this.oauth.token(request, response).then((_token: any) => {
             response.headers = {
@@ -63,7 +63,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
         res: GatewayResponse,
         next: any
       ) {
-        console.log('Authenticate');
+        this.logger.info('Authenticate');
         const request = new Request(req);
         const response = new Response(res);
         try {
@@ -75,7 +75,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
               return token;
             });
         } catch (err) {
-          console.log('Authenticating error', err);
+          this.logger.error('Authenticating error', err);
           return next(err);
         }
       },
@@ -86,17 +86,17 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
         res: GatewayResponse,
         _next: any
       ) {
-        console.log('AUTHORIZE');
+        this.logger.info('AUTHORIZE');
         const request = new Request(req);
         const response = new Response(res);
         try {
           return this.oauth.authorize(request, response).then((token: any) => {
-            console.log('Authorizing', token);
+            this.logger.info('Authorizing', token);
             // resp(res, response.body, response.status, response.headers);
             return token;
           });
         } catch (err) {
-          console.log('Authorizing error', err);
+          this.logger.error('Authorizing error', err);
           // resp(res, response.body, response.status, response.headers);
         }
       },
@@ -257,17 +257,21 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
         return token.scope === scope;
       },
     },
-    async created() {
-      console.log('Oauth2 service connected to db');
+    async created(){
+      
+      this.logger.debug('Oauth2 service connected to db');
+      
       const { connection, db } = await MongoOAuth2(
         `${process.env.MONGO_URI}/oauth2`
       );
       this.connection = connection;
       this.db = db;
       this.logger.info('[oAuth2Server] Server has created successfully.');
+
     },
+
     async started() {
-      console.log('Oauth2 service started');
+      this.logger.info('Oauth2 service started');
       this.oauth = new OAuth2Server({
         model: {
           getAccessToken: this.getAccessToken as any,
@@ -284,7 +288,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
           getUserFromClient: this.getUserFromClient as any,
         },
       });
-      console.log('Oauth2 server created');
+      this.logger.info('Oauth2 server created');
     },
   };
   return schema;

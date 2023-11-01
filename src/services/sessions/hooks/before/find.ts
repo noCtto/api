@@ -7,7 +7,7 @@ export default async function find(
   ctx: Context & { params: any },
   params: any
 ) {
-  console.log('sessions.hooks.before.find', ctx, params)
+  this.logger.debug('sessions.hooks.before.find', ctx, params)
   // if (ctx?.params?.query?.user) {
   //   try {
   //     ctx.params.query._id = new ObjectId(ctx.params.query.user);

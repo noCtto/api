@@ -6,5 +6,4 @@ export default function list(
   _ctx: Context & { params: any }
 ) {
   // ctx.params.sort = { _id: -1, comments: -1 };
-  console.log('list hook');
 }

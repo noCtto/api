@@ -1,9 +1,10 @@
 import { ObjectId } from 'mongodb';
 
-export interface ThreadEntity {
+export interface Entity {
   _id: ObjectId;
   pid: ObjectId;
   comments: ObjectId[];
+  createdAt: Date
 }
 
 export const Validator = {
@@ -15,6 +16,11 @@ export const Validator = {
     type: 'array',
     optional: true,
     default: [],
+  },
+  createdAt: {
+    type: 'date',
+    default: new Date(),
+    optional: true
   },
 };
 

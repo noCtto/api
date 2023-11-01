@@ -7,10 +7,10 @@ export default async function create(
   response: any
 ) {
   // TODO - Remunerar Usuário con tokens
-  console.log('Post created after hook => ', response);
+  this.logger.debug('Post created after hook => ', response );
   try {
     this.broker.broadcast('post.created', {
-      pid: response._id,
+      _id: response._id,
       uid: response.uid,
     });
   } catch (error) {

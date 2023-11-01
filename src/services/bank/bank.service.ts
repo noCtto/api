@@ -19,7 +19,7 @@ const AwardsService = MicroService('bank', {
         vid: { type: 'string', optional: true },
       },
       async handler(this: MicroServiceSchema, ctx: any) {
-        console.log('Creating bank note', ctx.params);
+        this.logger.debug('Creating bank note', ctx.params);
 
         const { _id } = await this._create(ctx, {
           createdAt: new Date(),
@@ -34,15 +34,16 @@ const AwardsService = MicroService('bank', {
   events: {
     'post.created': {
       group: 'other',
-      async handler(ctx: any) {
-        console.log('Bank Event Handler Post created', ctx.params);
+      async handler(this: MicroServiceSchema, ctx: any) {
+        this.logger.debug('bank.events.post.created' , ctx.params);
         const { uid } = ctx.params;
         return ctx.broker.call('bank.create', { uid });
       },
     },
     'post.voted': {
       group: 'other',
-      handler(ctx: any) {
+      handler(this: MicroServiceSchema, ctx: any) {
+        this.logger.debug('bank.events.post.voted', ctx.params )
         const { uid } = ctx.params;
         return ctx.broker.call('bank.create', { uid });
       },

@@ -154,7 +154,7 @@ describe("Test 'utils' functions", () => {
   describe('Test extractUser', () => {
 
     const _id = new ObjectId('5f86d081884c7d659a2feaa0')
-
+    
     it('should return a invalid user', async () => {
       const user = extractUser({
         _id: '5f86d081884c7d659a2feaa0',
@@ -171,9 +171,7 @@ describe("Test 'utils' functions", () => {
           uid: '5f86d081884c7d659a2feaa0',
           name: 'test',
         },
-      };
-      console.log('Obj', obj)
-      
+      };      
       const user = extractUser(obj);
       expect(user).toEqual(_id);
     });
@@ -187,7 +185,6 @@ describe("Test 'utils' functions", () => {
           },
         },
       };
-      console.log('Object with meta.user.user.userId', obj)
       const user = extractUser(obj);
       expect(user).toEqual(_id);
     });

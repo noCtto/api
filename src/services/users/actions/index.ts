@@ -7,6 +7,7 @@ import forceLogout from './forceLogout';
 import resetPassword from './resetPassword';
 import whoami from './whoami';
 import follow from './follow';
+import all from './all';
 
 export default {
   login,
@@ -18,4 +19,5 @@ export default {
   resetPassword,
   whoami,
   follow,
+  all,
 };

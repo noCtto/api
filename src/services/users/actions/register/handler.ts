@@ -11,7 +11,7 @@ import type { Params } from './params'
 
 export default  async function handler(this: MicroService, ctx: Context<Params>): Promise<any> {
     const { username, email, password } = ctx.params;
-    console.log('Registering User ', username, email, password)
+    this.logger.debug('Registering User ', username, email, password)
     return this._find(ctx, { query: { email } }).then(
       ([registeredEmail]: any) => {
         if (registeredEmail)

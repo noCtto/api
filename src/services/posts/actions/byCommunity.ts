@@ -7,6 +7,6 @@ export default {
     this: MicroService,
     ctx: Context & { params: { community: string } }
   ) {
-    console.log('THIS', ctx.params);
+    this.logger.debug('posts.actions.byCommunity', ctx.params );
   },
 };

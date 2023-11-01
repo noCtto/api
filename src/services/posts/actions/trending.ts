@@ -1,5 +1,7 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
+import type { Vote } from '@votes/entities'
+import type { Post } from '@posts/entities'
 
 export default {
   params: {
@@ -11,10 +13,14 @@ export default {
   async handler(
     this: MicroService,
     ctx: Context & { params: any }
-  ): Promise<string[]> {
+  ): Promise<Object[]> {
+    this.logger.debug('posts.actions.trending', ctx.params )
+
     const { page, limit } = ctx.params;
-    const trending = await ctx.call('votes.trending', { page, limit });
-    const posts: any = await ctx.call('posts.find', {
+    
+    const trending: [Vote] = await ctx.call('votes.trending', { page, limit });
+    
+    const posts: [Post] = await ctx.call('posts.find', {
       query: { vid: { $in: trending } },
       fields: [
         '_id',
@@ -32,7 +38,7 @@ export default {
       ],
       populate: ['votes', 'author', 'comments', 'votes'],
     });
-    console.log('This result is from the service', posts);
+    this.logger.debug('posts.actions.trending', posts );
     return posts;
   },
 };

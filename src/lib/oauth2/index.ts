@@ -7,7 +7,7 @@ export default async function (connectionString: string) {
   const connection: any = await mongoose
     .connect(connectionString, {})
     .catch((err) => {
-      console.log(`[oAuth2Server] ❌ Mongoose connection error`, err);
+      console.error(`[oAuth2Server] ❌ Mongoose connection error`, err);
     });
   mongoose.Promise = global.Promise;
 

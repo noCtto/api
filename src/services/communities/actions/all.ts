@@ -5,11 +5,8 @@ export default {
   rest: 'GET /:community',
   async handler(
     this: MicroService,
-    ctx: Context & { params: { community: string; populate: string } }
+    ctx: Context & { params: object }
   ) {
-    return this._list(ctx, {
-      // query: { name: ctx.params.community },
-      // populate: ctx.params.populate ? ctx.params.populate.split(',') : [],
-    });
+    return this._list(ctx, { ...ctx.params });
   },
 };

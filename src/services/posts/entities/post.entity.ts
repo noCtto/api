@@ -1,23 +1,20 @@
 import { ObjectId } from 'mongodb';
 
-export interface PostEntity {
+export type Entity = {
   _id: string;
   body: string;
   title: string;
-  image: string;
-  tid: string;
-  vid: string;
-  cid: string;
+  image?: string;
   uid: string;
-  author: any;
-  votes: any;
-  community: any;
-  thread: any;
-  comments: any;
-  tags: any;
-  labels: any;
+  cid: string;
+  votes?: any;
+  community?: any;
+  thread?: any;
+  comments?: any;
+  tags?: any;
+  labels?: any;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export const Validator = {
@@ -34,16 +31,6 @@ export const Validator = {
     min: 5,
     trim: true,
     required: true,
-    optional: true,
-  },
-  tid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    optional: true,
-  },
-  vid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
     optional: true,
   },
   cid: {
@@ -105,8 +92,6 @@ export const Fields = [
   'votes',
   'tags',
   'label',
-  'tid',
-  'vid',
   'cid',
   'uid',
 ];

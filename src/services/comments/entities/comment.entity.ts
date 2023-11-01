@@ -1,30 +1,33 @@
 import { ObjectId } from 'mongodb';
 import dayjs from 'dayjs';
 
-// interface CommentEntity {
-//   _id: string;
-//   tid: string;
-//   cid: string;
-//   pid: string;
-//   uid: string;
-//   vid: string;
-//   text: string;
-//   createdAt: Date;
-//   author: any;
-//   replies: any;
-//   votes: any;
-// }
+export type Entity = {
+  _id: string;
+  tid: string;
+  cid?: string;
+  uid: string;
+  text: string;
+  createdAt: Date;
+  author?: any;
+  replies?: any;
+  votes?: any;
+}
 
 export const Validator = {
-  type: {
-    type: 'string',
-    enum: ['pid', 'cid'],
-    required: true,
-  },
-  target: {
+  tid: {
     type: 'objectID',
     ObjectID: ObjectId,
     required: true,
+  },
+  uid: {
+    type: 'objectID',
+    ObjectID: ObjectId,
+    required: true
+  },
+  cid: {
+    type: 'objectID',
+    ObjectID: ObjectId,
+    optional: true
   },
   text: {
     type: 'string',
@@ -33,7 +36,7 @@ export const Validator = {
   createdAt: {
     type: 'date',
     default: dayjs().toDate(),
-    required: true,
+    optional: true
   },
   author: {
     type: 'object',

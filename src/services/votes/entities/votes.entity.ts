@@ -1,18 +1,16 @@
 import { ObjectId } from 'mongodb';
 
-export interface VoteEntity {
+export type Entity = {
   _id: ObjectId;
-  pid: ObjectId;
-  cid: ObjectId;
-  tid: ObjectId;
-  vid: ObjectId;
-  voters: {
-    [key: string]: number;
+  voters?: {
+    [key: string]: boolean;
   };
-  count: number;
-  voted: number;
-  d: boolean;
-  total: number;
+  type: string;
+  target: ObjectId,
+  count?: number;
+  voted?: number;
+  d?: boolean;
+  total?: number;
   createdAt: Date;
 }
 
@@ -20,25 +18,22 @@ export const Validator = {
   voters: {
     type: 'object',
     optional: true,
-  },
-  tid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    optional: true,
-  },
-  pid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    optional: true,
-  },
-  cid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    optional: true,
+    default: {}
   },
   count: {
     type: 'number',
     optional: true,
+  },
+  type: {
+    type: 'string',
+    optional: true,
+    enum: ['pid', 'cid'],
+  },
+  target: {
+    type: 'objectID',
+    ObjectID: ObjectId,
+    optional: true,
+    convert: true
   },
   total: {
     type: 'number',
@@ -57,10 +52,8 @@ export const Validator = {
 
 export const Fields = [
   '_id',
-  'pid',
-  'cid',
-  'tid',
-  'vid',
+  'target',
+  'type',
   'voters',
   'count',
   'voted',

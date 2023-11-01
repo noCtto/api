@@ -1,44 +1,38 @@
-import { toDeepObjectId } from '@utils/func';
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
-import { ObjectId } from 'mongodb';
-export default {
-  params: {
-    type: {
-      type: 'string',
-      optional: false,
-      enum: ['pid', 'cid'],
-    },
-    target: {
-      type: 'objectID',
-      ObjectID: ObjectId,
-      optional: false,
-    },
-    createdAt: {
-      type: 'date',
-      optional: true,
-      default: () => new Date(),
-    },
+import type { Vote} from '@votes/entities'
+
+type Params = {
+  type: string,
+  target: string,
+}
+
+const params = {
+  type: {
+    type: 'string',
+    optional: true,
+    enum: ['pid', 'cid'],
   },
+  target: {
+    type: 'string',
+    optional: true,
+  },
+}
+
+export default {
+  params,
   async handler(
     this: MicroService,
-    ctx: Context & { params: any }
+    ctx: Context<Params>
   ): Promise<any> {
-    const uid = this.extractUser(ctx);
-    const { type, target, createdAt } = ctx.params;
-
-    const votes = await this._create(
-      ctx,
-      toDeepObjectId({
-        type,
-        target,
-        createdAt,
-        uid,
-        voters: {
-          [ctx.params.uid]: 1,
-        },
-      })
-    );
+    this.logger.debug('votes.actions.create', ctx.params );
+    const { type, target } = ctx.params;
+    const votes: Vote = await this._create(ctx, {
+      type,
+      target
+    }).catch((err:any) => {
+      this.logger.error('votes.actions.create.error: ', err)
+    });
     return votes;
   },
 };

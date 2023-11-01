@@ -1,4 +1,4 @@
-export interface SessionEntity {
+export interface Entity {
   _id: string;
   user: any;
   token: string;

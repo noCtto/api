@@ -2,6 +2,7 @@ import type { Context, Service, ServiceSchema } from 'moleculer';
 import type { DbAdapter, MoleculerDB } from 'moleculer-db';
 import DbService from 'moleculer-db';
 import MongoDbAdapter from 'moleculer-db-adapter-mongo';
+import { exit } from 'process';
 
 export type DbServiceMethods = {
   seedDb?(): Promise<void>;
@@ -73,7 +74,7 @@ export default function createDbServiceMixin(
       }
     },
   };
-  console.log(
+  console.info(
     'Initiating MongoDbAdapter with',
     process.env.MONGO_URI,
     'and',
@@ -82,6 +83,10 @@ export default function createDbServiceMixin(
     collection,
     '...'
   );
+  if (!process.env.MONGO_URI) {
+    console.error('No Mongo Uri Detected')
+    exit()
+  }
   if (process.env.MONGO_URI) {
     // Mongo adapter
     schema.adapter = new MongoDbAdapter(

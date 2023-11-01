@@ -8,6 +8,7 @@ export default async function author(
   _handler: any,
   ctx: Context & { params: any }
 ) {
+  this.logger.debug('comments.populates.author', ctx.params)
   return Promise.all(
     items.map((item: any) =>
       ctx
@@ -21,7 +22,7 @@ export default async function author(
           return item;
         })
         .catch((err) => {
-          console.log('ERROR! => Populating author: ', err);
+          this.logger.error('comments.populates.author.error: ', err);
         })
     )
   );

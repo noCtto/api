@@ -9,7 +9,7 @@ export default async function replies(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  // console.log('Populating replies', ids);
+  this.logger.debug('comments.populates.replies', ctx.params )
   return Promise.all(
     items.map((item: any) =>
       ctx

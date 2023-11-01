@@ -7,6 +7,6 @@ export default {
     cid: 'string',
   },
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
-    console.log('Fake reply', ctx.params);
+    this.logger.debug('Fake reply', ctx.params);
   },
 };

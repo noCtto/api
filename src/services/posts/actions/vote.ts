@@ -1,5 +1,6 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
+import type { Post } from '@posts/entities';
 
 export default {
   rest: 'POST /vote/:id',
@@ -19,8 +20,8 @@ export default {
     ctx: Context & { params: any }
   ): Promise<string[]> {
     const { id, d } = ctx.params;
-    const post = await this._get(ctx, { id });
+    const post: Post = await this._get(ctx, { id });
     if (!post) return Promise.reject(new Error('no post'));
-    return ctx.call('votes.vote', { id: post.vid, d });
+    return ctx.call('votes.vote', { target: post, d });
   },
 };

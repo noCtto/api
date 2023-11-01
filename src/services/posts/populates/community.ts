@@ -1,19 +1,20 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
+import type { Post } from '@posts/entities'
 
 export default function community(
   this: MicroService,
   _ids: any,
-  items: any,
+  items: [Post],
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  console.log('populating post community =>>> ', _ids, items, _handler, ctx.params);
+  this.logger.debug('posts.populates.community', _ids, items, _handler, ctx.params);
   return Promise.all(
-    items.map((item: any) =>
+    items.map((item: Post) =>
       ctx
         .call('communities.get', {
-          id: item.bid.toString(),
+          id: item.cid.toString(),
           fields: [
             '_id',
             'name',

@@ -8,6 +8,7 @@ export default {
     project: 'object',
   },
   async handler(this: MicroService, ctx: Context & { params: any; meta: any }) {
+    this.logger.debug('sessions.actions.updateOne', ctx.params );
     const { filter, project } = ctx.params;
     return this.adapter.collection.updateOne(
       toDeepObjectId(filter),

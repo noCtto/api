@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 
 export default function fakePost(this: any, author: string, cid: string) {
+  
   return {
     author: author,
     title: faker.lorem.sentence(),

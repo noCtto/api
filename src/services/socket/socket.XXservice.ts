@@ -39,7 +39,7 @@ const SocketService: ServiceSchema<SocketSettings> = {
     });
     this.io.on('connection', (socket: any) => {
       socket.on('disconnect', (reason: any) => {
-        console.log('Client disconnected:', socket.id, reason);
+        this.logger.info('Client disconnected:', socket.id, reason);
       });
     });
   },
@@ -49,14 +49,14 @@ const SocketService: ServiceSchema<SocketSettings> = {
    */
   async started(this: SocketThis) {
     this.io.listen(4003);
-    console.log('Socket.io server started on port 4003');
+    this.logger.info('Socket.io server started on port 4003');
   },
 
   /**
    * Service stopped lifecycle event handler
    */
   async stopped(this: SocketThis) {
-    console.log('Socket.io server stopped');
+    this.logger.info('Socket.io server stopped');
     this.io.close();
   },
 };

@@ -10,7 +10,7 @@ const uploadDir = './public/';
 export default async function handler(
   this: MicroService,
   ctx: Context & { params: any; meta: any }
-): Promise<string[]> {
+): Promise<Object[]> {
   return new this.Promise((resolve: any, reject: any) => {
     const ext = ctx.meta.mimetype.split('/')[1] || 'jpg';
 
@@ -41,13 +41,6 @@ export default async function handler(
   }).then((data: any) => {
     const { file } = data;
     const { name } = file;
-    // const arr = [];
-    // for (let i = 0; i < 100; i++) {
-    //     arr.push(
-    //         ctx.call("posts.create", { ...ctx.meta.$multipart, image: name })
-    //     );
-    // }
-    // return Promise.all(arr);
     return ctx.call('posts.create', { ...ctx.meta.$multipart, image: name });
   });
 }

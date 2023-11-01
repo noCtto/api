@@ -1,7 +1,15 @@
-export interface Params {
-  user: string
+export type Params = {
+  username?: string,
+  _id?: string,
 }
 
 export default {
-  user: 'string'
+  username: {
+    type: 'string',
+    optional: true
+  },
+  _id: {
+    type: 'string',
+    optional: true,
+  }
 }
