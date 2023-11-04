@@ -55,11 +55,23 @@ describe(`${ServiceName}' Tests - Suite`, () => {
         });
   });
 
-let fakeUser = {
+  let fakeUser:any = {
     username: faker.internet.userName(),
     email: faker.internet.email(),
     password: "123456789"
   }
+
+// let _fakePost = {
+//   title: faker.lorem.sentence(),
+//   body: faker.lorem.paragraph(),
+//   image: faker.image.cats()
+// }
+
+// let _fakeCommunity = {
+//   name: faker.lorem.word(),
+//   description: faker.lorem.sentences()
+// } 
+
   it("test '/register'", () => {
     return request(apiService.server)
         .post("/register")
@@ -69,33 +81,143 @@ let fakeUser = {
           expect(res.statusCode).toBe(200);
         });
   });
+  
   it("test '/login'", () => {
     return request(apiService.server)
         .post("/login")
         .send(fakeUser)
         .then((res:any) => {
           console.log('login request response', res.body)
+
+          fakeUser = {
+            ...fakeUser,
+            ...res.body
+          }
+
           expect(res.statusCode).toBe(200);
         });
   });
+
+
+  // describe('test /all', () =>{
+  //   // With Auth
+  //   it("test '/all'", () => {
+  //     return request(apiService.server)
+  //         .get("/all")
+  //         .set({'Authorization': `Bearer ${fakeUser.token}`})
+  //         .then((res:any) => {
+  //           console.log('all posts response', res.body)
+  //           expect(res.statusCode).toBe(200);
+  //         });
+  //   });
+  //   // Without Auth
+  //   it("test '/all'", () => {
+  //     return request(apiService.server)
+  //         .get("/all")
+  //         .then((res:any) => {
+  //           console.log('all posts response', res.body)
+  //           expect(res.statusCode).toBe(200);
+  //         });
+  //   });
+  // });
+
+  // describe('Test - Posts /p/', () =>{ 
+  //   describe('GET', () => {
+  //     // With Auuth
+  //     it("test '/p/6545433bf9f0aa0812918f97'", () => {
+  //       return request(apiService.server)
+  //           .get("/all")
+  //           .set({'Authorization': `Bearer ${fakeUser.token}`})
+  //           .then((res:any) => {
+  //             console.log('GET posts response', res.body)
+  //             expect(res.statusCode).toBe(200);
+  //           });
+  //     });
+
+  //     // Without Auth
+  //     it("test '/p/6545433bf9f0aa0812918f97'", () => {
+  //       return request(apiService.server)
+  //           .get("/all")
+  //           .then((res:any) => {
+  //             console.log('GET posts response', res.body)
+  //             expect(res.statusCode).toBe(200);
+  //           });
+  //     });
+  //   })
+  //   describe('POST', () => {
+  //     // With Auuth
+  //     it("test '/p'", () => {
+  //       return request(apiService.server)
+  //           .get("/all")
+  //           .set({'Authorization': `Bearer ${fakeUser.token}`})
+  //           .then((res:any) => {
+  //             console.log('POST posts response', res.body)
+  //             expect(res.statusCode).toBe(200);
+  //           });
+  //     });
+
+  //     // Without Auth
+  //     it("test '/p'", () => {
+  //       return request(apiService.server)
+  //           .post("/p")
+  //           .then((res:any) => {
+  //             console.log('POST posts response', res.body)
+  //             expect(res.statusCode).toBe(401);
+  //           });
+  //     });
+  //   })
+
+
+  // })
+  // describe('Test - Communities /cs/', () =>{ 
+  //   describe('GET', () => {
+  //     // With Auuth
+  //     it("test '/cs/:id'", () => {
+  //       return request(apiService.server)
+  //           .get("/cs")
+  //           .then((res:any) => {
+  //             console.log('GET posts response', res.body)
+  //             expect(res.statusCode).toBe(200);
+  //           });
+  //     });
+  //   });
+
+  //   describe('POST', () => {
+  //     // Without Auth
+  //     it("test '/cs'", () => {
+  //       return request(apiService.server)
+  //           .post("/cs")
+  //           .send(_fakeCommunity)
+  //           .then((res:any) => {
+  //             console.log('POST posts response', res.body)
+  //             expect(res.statusCode).toBe(401);
+  //           });
+  //     });
+  //     // With Auuth
+  //     it("test '/cs'", () => {
+  //       return request(apiService.server)
+  //           .post("/cs")
+  //           .send(_fakeCommunity)
+  //           .set({'Authorization': `Bearer ${fakeUser.token}`})
+  //           .then((res:any) => {
+  //             console.log('POST posts response', res.body)
+  //             expect(res.statusCode).toBe(200);
+  //           });
+  //     });
+  //   })
+
+
+  // })
   
-  it("test '/all'", () => {
-    return request(apiService.server)
-        .get("/all")
-        .then((res:any) => {
-          console.log('all posts response', res.body)
-          expect(res.statusCode).toBe(200);
-        });
-  });
-  
-  it("test '/logout'", () => {
-    return request(apiService.server)
-        .post("/login")
-        .send({ email: fakeUser })
-        .then((res:any) => {
-          console.log('logout request response', res.body)
-          expect(res.statusCode).toBe(200);
-        });
-  });
-  
+  // it("test '/logout'", () => {
+  //   return request(apiService.server)
+  //       .post("/login")
+  //       .set({'Authorization': `Bearer ${fakeUser.token}`})
+  //       .send({ email: fakeUser })
+  //       .then((res:any) => {
+  //         console.log('logout request response', res.body)
+  //         expect(res.statusCode).toBe(200);
+  //       });
+  // });
+
 });

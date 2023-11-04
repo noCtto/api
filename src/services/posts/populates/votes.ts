@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 import type { Post } from '@posts/entities';
+// import type { Vote } from '@votes/entities';
 
 export default function votes(
   this: MicroService,
@@ -26,7 +27,7 @@ export default function votes(
         })
         .catch((err) => {
           this.logger.error('posts.populates.votes.error: ', err)
-          item.votes = null;
+          item.votes = {};
           return item;
         })
     )

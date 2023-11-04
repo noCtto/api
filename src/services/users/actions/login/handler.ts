@@ -36,22 +36,12 @@ export default async function handler(
   });
   
   const token = this.generateJWT(ctx, users[0], 1000);
-  
-  const resolvedToken = await ctx.call('users.resolveToken', { token }).then((data)=>{
-    console.log('Login resolved token data', data)
-    
-  }).catch((err)=> {
-    console.log('Login resolved token error', err)
-    
-  })
-  console.log('Login resolved token', resolvedToken)
 
   return this.transformDocuments(
     ctx,
     { populate: ['gravatar'], fields: ['_id', 'username', 'imageUrl'] },
     users[0]
   ).then((user: any) => {
-    console.log('Token', token);
     return {
       token,
       user,
