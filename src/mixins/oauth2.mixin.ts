@@ -63,7 +63,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
         res: GatewayResponse,
         next: any
       ) {
-        this.logger.info('Authenticate');
+        this.logger.info('mixins.oauth2.authenticate');
         const request = new Request(req);
         const response = new Response(res);
         try {

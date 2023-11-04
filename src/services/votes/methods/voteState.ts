@@ -1,9 +1,13 @@
-export default function voteState(currentVote: any, newVote: any): number {
-  let votedState = 0;
-  if (newVote) {
-    votedState = currentVote ? 0 : 1;
-  } else {
-    votedState = currentVote ? -1 : 0;
+export default function voteState(currentVote: number, newVote: any): number {
+  console.log('votes.methods.voteState', currentVote, newVote);
+
+  if(newVote && currentVote != 1) {
+    currentVote += 1
   }
-  return votedState;
+
+  if(!newVote && currentVote != -1) {
+    currentVote -= 1
+  }
+  
+  return currentVote;
 }

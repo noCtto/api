@@ -6,9 +6,10 @@ import type { Params } from './params'
 export default async function handler(this: MicroService, ctx: Context<Params>): Promise<any> {
   const decoded = await new Promise((resolve, reject) => {
     this.logger.debug('users.actions.resolveToken', ctx.params);
-    jwt.verify(ctx.params.token, 'secret', (err: any, tokenDecoded: any) => {
+    jwt.verify(ctx.params.token, "myLittleSecret", (err: any, tokenDecoded: any) => {
+      console.log('tokenDecoded', tokenDecoded)
       if (err) {
-        this.logger.error('Error resolving token', err.message);
+        this.logger.error('Error resolving token', err);
         return reject(tokenDecoded);
       }
       this.logger.error('Error resolving token');

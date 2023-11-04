@@ -6,6 +6,7 @@ import { sha256 } from '@utils/func';
 
 const { MoleculerClientError } = Errors;
 
+
 export default async function handler(
   this: MicroService,
   ctx: Context<Params>
@@ -13,46 +14,47 @@ export default async function handler(
   const { email, password, username } = ctx.params;
 
   if (!password || (!username && !email))
-    return new MoleculerClientError('Invalid credentials', 400);
+    return Promise.reject(new MoleculerClientError('Email/Username or password is invalid!', 422));
 
-  const user = await this._find(ctx, {
+  const users = await this._find(ctx, {
     query: { $or: [{ email }, { username }] },
     fields: ['_id', 'username', 'email', 'imageUrl', 'password'],
   });
 
-  if (user.length === 0) {
-    return new MoleculerClientError(
-      'Email or password is invalid!',
-      422,
-      'account',
-      [user]
-    );
+  if (!users || users.length === 0) {
+    return Promise.reject(new MoleculerClientError('Email/Username or password is invalid!', 422))
   }
-  const user2 = user[0];
-  if (user2.password === sha256(password)) {
-    const update = {
-      $set: {
-        lastLogin: new Date(),
-      },
+
+  if (users[0].password != sha256(password)) {
+    return Promise.reject(new MoleculerClientError('Email/Username or password is invalid!', 422))
+  }
+  
+  await this.adapter.updateById(users[0]._id, {
+    $set: {
+      lastLogin: new Date(),
+    },
+  });
+  
+  const token = this.generateJWT(ctx, users[0], 1000);
+  
+  const resolvedToken = await ctx.call('users.resolveToken', { token }).then((data)=>{
+    console.log('Login resolved token data', data)
+    
+  }).catch((err)=> {
+    console.log('Login resolved token error', err)
+    
+  })
+  console.log('Login resolved token', resolvedToken)
+
+  return this.transformDocuments(
+    ctx,
+    { populate: ['gravatar'], fields: ['_id', 'username', 'imageUrl'] },
+    users[0]
+  ).then((user: any) => {
+    console.log('Token', token);
+    return {
+      token,
+      user,
     };
-    await this.adapter.updateById(user2._id, update);
-    return this.transformDocuments(
-      ctx,
-      { populate: ['gravatar'], fields: ['_id', 'username', 'imageUrl'] },
-      user
-    ).then((user: any) => {
-      const token = this.generateJWT(ctx, user, 10);
-      console.log('Token', token);
-      return {
-        token,
-        user,
-      };
-    });
-  }
-  return new MoleculerClientError(
-    'Email or password is invalid!',
-    422,
-    'account',
-    [user]
-  );
+  });
 }

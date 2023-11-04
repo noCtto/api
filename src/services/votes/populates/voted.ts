@@ -9,6 +9,8 @@ export default function voted(
   ctx: Context & { params: any }
 ) {
   const user = this.extractUser(ctx);
+  console.log('votes.populates.voted', ctx )
+  console.log('votes.populates.voted.user', user )
   return items.map((item: any) => {
     item.voted = item.voters[String(user)] !== undefined;
     if (item.voted) item.d = item.voters[String(user)];

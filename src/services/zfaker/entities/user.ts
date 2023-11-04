@@ -5,3 +5,5 @@ export const Fake = {
   email: faker.internet.email(),
   password: '12345678',
 }
+
+export default Fake;

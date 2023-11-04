@@ -24,7 +24,7 @@ export default async function handler(this: MicroService, ctx: Context<Params>) 
     if (!community)
     return Promise.reject(new MoleculerClientError('community not found', 404));
 
-  const post: Post = await this._create(ctx, { ...ctx.params });
+  const post: Post = await this._create(ctx, { ...ctx.params, uid });
   
   this.logger.debug('posts.actions.create.post', post);
   if (!post) return Promise.reject(new MoleculerClientError('error creating post', 400 ,post))

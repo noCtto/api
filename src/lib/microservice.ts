@@ -31,6 +31,7 @@ export interface MicroServiceConf {
   hooks: any;
   events: any;
   populates: any;
+  secret: any;
 }
 
 export type MicroService = MicroServiceSchema;
@@ -56,6 +57,7 @@ export default function (name: string, conf: any) {
       entityValidator: validator,
       indexes: [{ name: 'name', value: 1, options: { unique: true } }],
       populates,
+      secret: 'secret',
     },
     get settings() {
       return this._settings;

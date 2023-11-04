@@ -3,8 +3,8 @@ import dayjs from 'dayjs';
 
 export type Entity = {
   _id: string;
-  tid: string;
-  cid?: string;
+  type: string;
+  target: string;
   uid: string;
   text: string;
   createdAt: Date;
@@ -14,10 +14,15 @@ export type Entity = {
 }
 
 export const Validator = {
-  tid: {
+  type: {
+    type: 'string',
+    required: true,
+  },
+  target: {
     type: 'objectID',
     ObjectID: ObjectId,
-    required: true,
+    convert:true,
+    required: true
   },
   uid: {
     type: 'objectID',
@@ -54,9 +59,8 @@ export const Validator = {
 
 export const Fields = [
   '_id',
-  'tid',
-  'cid',
-  'pid',
+  'target',
+  'type',
   'uid',
   'text',
   'replies',

@@ -73,6 +73,11 @@ export const Validator = {
     optional: true,
     convert: true,
    },
+   createdAt: {
+    type: 'date',
+    optional: true,
+    default: () => new Date(),
+  }
 };
 
 export const Fields = [

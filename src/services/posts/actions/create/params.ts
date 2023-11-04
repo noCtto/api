@@ -1,6 +1,22 @@
-import type { Post } from '@posts/entities'
-import params from '@posts/entities'
 
-export type Params = Post
+export type Params = {
+  title: string;
+  body: string;
+  image: string;
+  cid: string;
+}
  
-export default params.Validator
+export default {
+  title: {
+    type: "string"
+  },
+  body: {
+    type: "string"
+  },
+  image: {
+    type: "string"
+  },
+  cid: {
+    type: "string"
+  }
+}

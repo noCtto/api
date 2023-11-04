@@ -1,32 +1,19 @@
-import { ObjectId } from 'mongodb';
-
 export type Params = {
-  tid: string,
-  cid?: string,
-  uid: string,
-  text: string,
-  createdAt: Date
+  target: string;
+  type: string;
+  text: string;
+  createdAt: Date;
 }
 
-
 export default {
-  tid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    convert: true,
+  target: {
+    type: 'string',
     required: true
   },
-  uid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    convert: true,
-    required: true
-  },
-  cid: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    convert: true,
-    optional: true
+  type: {
+    type: 'string',
+    optional: true,
+    enum: ['pid', 'cid'],
   },
   text: {
     type: 'string',

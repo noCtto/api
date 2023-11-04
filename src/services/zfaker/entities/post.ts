@@ -5,3 +5,5 @@ export const Fake = {
   body: faker.lorem.paragraph(),
   image: `https://source.unsplash.com/featured/300x200?random=${faker.internet.domainWord()}-${faker.internet.domainWord()}`,
 }
+
+export default Fake

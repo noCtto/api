@@ -2,8 +2,8 @@ import { ObjectId } from 'mongodb';
 
 export type Entity = {
   _id: ObjectId;
-  voters?: {
-    [key: string]: boolean;
+  voters: {
+    [key: string]: number;
   };
   type: string;
   target: ObjectId,

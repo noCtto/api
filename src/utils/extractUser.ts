@@ -18,6 +18,11 @@ export default function extractUser(ctx: any): ObjectId | null {
     // this.logger.debug('Meta user', meta.user.user.userId);
     return new ObjectId(meta.user.user.userId);
   }
+  
+  if (meta?.user?.id) {
+    // this.logger.debug('Meta user', meta.user.user.userId);
+    return new ObjectId(meta.user.id);
+  }
 
   if (meta?.oauth?.user?.id) {
     // this.logger.debug('Meta oauth', meta.oauth.user.id);

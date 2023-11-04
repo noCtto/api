@@ -5,5 +5,8 @@ export default function list(
   this: MicroService,
   _ctx: Context & { params: any }
 ) {
-  // ctx.params.sort = { _id: -1, comments: -1 };
+
+  _ctx.params.sort = { _id: -1, comments: -1 };
+  _ctx.params.populate = ['votes'];
+
 }

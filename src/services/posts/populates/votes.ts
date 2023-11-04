@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 import type { Post } from '@posts/entities';
@@ -9,14 +10,14 @@ export default function votes(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  this.logger.debug('posts.populates.votes', ctx.params )
+  console.log('posts.populates.votes', ctx.params )
   return Promise.all(
     items.map((item: Post) =>
       ctx
         .call('votes.find', {
-          query: { target: item._id },
+          query: { target: new ObjectId(item._id) },
           populate: ['count', 'voted'],
-          fields: ['_id', 'pid', 'count', 'voted'],
+          fields: ['_id', 'pid', 'count', 'voted', 'votes'],
         })
         .then(([votes]: any) => {
           if (!votes) throw votes;

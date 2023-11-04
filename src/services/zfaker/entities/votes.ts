@@ -5,3 +5,5 @@ export const Fake = {
     [faker.random.alphaNumeric(12)]: true,
   },
 }
+
+export default Fake

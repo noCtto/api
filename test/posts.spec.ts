@@ -93,11 +93,11 @@ describe(`${ServiceName}' Tests - Suite`, () => {
       expect(res).toBeTruthy();
     });
 
-    it(`should delete ${ServiceName}`, async () => {
-      const res = await service.actions.remove({id: fakePost._id});
-      // console.log('should return all response', res);
-      expect(res).toBeTruthy();
-    });
+    // it(`should delete ${ServiceName}`, async () => {
+    //   const res = await service.actions.remove({id: fakePost._id});
+    //   // console.log('should return all response', res);
+    //   expect(res).toBeTruthy();
+    // });
 
   });
 

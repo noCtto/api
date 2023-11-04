@@ -26,9 +26,13 @@ export default function community(
           ],
         })
         .then((data: any) => {
-          const o = item;
-          o.community = data;
-          return o;
+          item.community = data;
+          return item;
+        })
+        .catch((err) => {
+          console.error('posts.populates.community', err)
+          item.community = {}
+          return item
         })
     )
   );

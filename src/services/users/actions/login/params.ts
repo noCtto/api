@@ -1,5 +1,5 @@
 export interface Params {
-  username: string;
+  username?: string;
   password: string;
   environment: string;
   fingerprint?: string;
@@ -8,7 +8,7 @@ export interface Params {
 }
 
 export default {
-  username: { type: 'string' },
+  username: { type: 'string', optional: true },
   password: { type: 'string', min: 4 },
   environment: { type: 'string', optional: true },
   email: { type: 'string', optional: true },

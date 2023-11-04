@@ -1,6 +1,7 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 import type { Comment } from '@comments/entities';
+import { ObjectId } from 'mongodb';
 
 export default async function votes(
   this: MicroService,
@@ -9,17 +10,16 @@ export default async function votes(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  this.logger.debug('comments.populates.votes', ctx.params)
-  
+  console.log('comments.populates.votes', ctx.params )
   return Promise.all(
     items.map((item: Comment) =>
       ctx
         .call('votes.find', {
           query: {
-            target: item._id
+            target: new ObjectId(item._id),
           },
           populate: ['voted', 'votes', 'count', 'total'],
-          fields: ['_id', 'votes', 'voted', 'count', 'total', 'd'],
+          fields: ['_id', 'target', 'type', 'votes', 'voted', 'count', 'total', 'd'],
         })
         .then(([votes]:any) => {
           if (!votes) throw votes;
@@ -27,7 +27,7 @@ export default async function votes(
           return item;
         })
         .catch((err:any) => {
-          this.logger.error('comments.populates.votes.error: ', err);
+          console.error('comments.populates.votes.error: ', err);
           item.votes = null;
           return item;
         })

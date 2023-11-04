@@ -14,7 +14,7 @@ export default async function handler(this: MicroService, ctx: Context<Params>) 
 
   const comment: Comment = await this._create(
     ctx,
-    { ...ctx.params }
+    { ...ctx.params, uid }
     ).then( async (comment: Comment) => {
       
       await ctx.call('votes.create', {

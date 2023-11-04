@@ -1,14 +1,18 @@
-import { ObjectId } from 'mongodb';
+
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
 import dayjs from 'dayjs';
 import MoleculerJs from 'moleculer';
+import type { Vote } from '@votes/entities';
+
 const { ValidationError } = MoleculerJs.Errors;
 
 export default {
   rest: 'POST /vote',
   params: {
-    id: { type: 'objectID', ObjectID: ObjectId, optional: false },
+    id: { 
+      type: 'string'
+    },
     d: {
       type: 'boolean',
       optional: false,
@@ -16,23 +20,25 @@ export default {
     },
   },
   async handler(this: MicroService, ctx: Context & { params: any }) {
+    console.log('votes.actions.vote', ctx.params )
     const { id, d } = ctx.params;
 
     const uid = this.extractUser(ctx);
     if (!uid) return Promise.reject(new ValidationError('no user'));
 
     const dateTime = dayjs().unix();
-    return this._get(ctx, { id }).then((card: any) => {
+    return this._get(ctx, { id }).then((card: Vote) => {
       if (!card) Promise.reject(new ValidationError('error', 'number'));
       const { voters } = card;
 
       const currentVote = voters[String(uid)] || 0;
-
+      const newVote = this.voteState(currentVote, d);
+      
       return this._update(ctx, {
         id: card._id,
         voters: {
           ...voters,
-          [String(uid)]: this.voteState(currentVote, d),
+          [String(uid)]: newVote,
         },
         updatedAt: dayjs().toDate(),
       })
@@ -48,7 +54,7 @@ export default {
         )
         .then((v: any) => ({
           ...v,
-          key: `${card._id}-${card.pid}-${dateTime}-${uid}-vote`,
+          key: `${card._id}-${card.target}-${dateTime}-${uid}-vote`,
         }));
     });
   },

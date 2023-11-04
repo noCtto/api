@@ -117,31 +117,4 @@ describe(`Test ${ServiceName} Suite`, () => {
     });
 
   });
-
-  // describe(`Test ${ServiceName} - extract User action`, () => {
-  //   it('should return user from community', async () => {
-  //     const res = await service.extractUser({
-  //       meta: { user: { user: { userId: '5f9b2a3b9d3e4b1b3c9d9b1a' } } },
-  //     });
-  //     expect(res).toBeTruthy();
-  //   });
-  //   it('should return user from community', async () => {
-  //     const res = await service.extractUser({
-  //       params: { uid: '5f9b2a3b9d3e4b1b3c9d9b1a' },
-  //     });
-  //     expect(res).toBeTruthy();
-  //   });
-  //   it('should return user from community', async () => {
-  //     const res = await service.extractUser({
-  //       meta: { oauth: { user: { id: '5f9b2a3b9d3e4b1b3c9d9b1a' } } },
-  //     });
-  //     expect(res).toBeTruthy();
-  //   });
-  // });
-
-  
-
-
-
-
 });

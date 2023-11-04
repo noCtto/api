@@ -36,12 +36,14 @@ export const Validator = {
   cid: {
     type: 'objectID',
     ObjectID: ObjectId,
-    optional: true,
+    optional: false,
+    convert: true,
   },
   uid: {
     type: 'objectID',
     ObjectID: ObjectId,
     optional: true,
+    convert: true,
   },
   author: {
     type: 'object',
