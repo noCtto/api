@@ -20,7 +20,7 @@ export default {
     },
   },
   async handler(this: MicroService, ctx: Context & { params: any }) {
-    console.log('votes.actions.vote', ctx.params )
+    this.logger.info('votes.actions.vote', ctx.params )
     const { id, d } = ctx.params;
 
     const uid = this.extractUser(ctx);
