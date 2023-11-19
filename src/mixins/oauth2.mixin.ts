@@ -70,7 +70,7 @@ export default function createOauth2ServiceMixin(): Oauth2ServiceSchema {
           return this.oauth
             .authenticate(request, response)
             .then((token: any) => {
-              // console.log('Authenticating', token)
+              // this.logger.info('Authenticating', token)
               // resp(res, response.body, response.status, response.headers);
               return token;
             });

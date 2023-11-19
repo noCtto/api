@@ -45,7 +45,7 @@ export default function createDbServiceMixin(
         _json: unknown,
         ctx: Context
       ): Promise<void> {
-        // console.log('entityChanged', type, json);
+        // this.logger.info('entityChanged', type, json);
         await ctx.broadcast(cacheCleanEventName);
       },
     },
