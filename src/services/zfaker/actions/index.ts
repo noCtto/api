@@ -3,8 +3,8 @@ import users from './fake.user';
 import posts from './fake.post';
 import comments from './fake.comment';
 import votes from './fake.vote';
-import reply from './fake.reply';
-import follow from './fake.reply';
+import replies from './fake.replies';
+import follow from './fake.replies';
 import health from '@utils/health';
 
 export default {
@@ -13,7 +13,7 @@ export default {
   posts,
   comments,
   votes,
-  reply,
+  replies,
   follow,
   health,
 };
