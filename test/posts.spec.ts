@@ -38,11 +38,11 @@ describe(`${ServiceName}' Tests - Suite`, () => {
     ...CommentsService,
   });
 
-  console.log('_usersService', _usersService != null)
-  console.log('_comunitiesService', _comunitiesService != null)
-  console.log('_votesService', _votesService != null)
-  console.log('_threadsService', _threadsService != null)
-  console.log('_commentsService', _commentsService != null)
+  this.logger.info('_usersService', _usersService != null)
+  this.logger.info('_comunitiesService', _comunitiesService != null)
+  this.logger.info('_votesService', _votesService != null)
+  this.logger.info('_threadsService', _threadsService != null)
+  this.logger.info('_commentsService', _commentsService != null)
 
   beforeAll(() => broker.start());
   afterAll(() => broker.stop());
@@ -53,12 +53,12 @@ describe(`${ServiceName}' Tests - Suite`, () => {
     });
     it('should return health message', async () => {
       const res = await service.actions.health();
-      // console.log(`should return health message resopnse`, res );
+      // this.logger.info(`should return health message resopnse`, res );
       expect(res).toBe('I am alive!');
     });
     it(`should return all ${ServiceName}`, async () => {
       const res = await service.actions.all();
-      // console.log('should return all response', res);
+      // this.logger.info('should return all response', res);
       expect(res).toBeTruthy();
     });
   });
@@ -73,13 +73,13 @@ describe(`${ServiceName}' Tests - Suite`, () => {
   describe(`Test ${ServiceName} - 'CRUD'`, () => {
     it(`should create ${ServiceName}`, async () => {
       fakePost = await service.actions.create(fakePost);
-      // console.log(`should create response`, fakePost );
+      // this.logger.info(`should create response`, fakePost );
       expect(fakePost).toBeTruthy();
     });
 
     it(`should read ${ServiceName}`, async () => {
       const res = await service.actions.get({id: fakePost._id})
-      // console.log('should return all response', res);
+      // this.logger.info('should return all response', res);
       expect(res).toBeTruthy();
     });
     
@@ -89,13 +89,13 @@ describe(`${ServiceName}' Tests - Suite`, () => {
         id: fakePost._id,
         description: `${fakePost.description} - EDITED`
       });
-      // console.log('should return all response', res);
+      // this.logger.info('should return all response', res);
       expect(res).toBeTruthy();
     });
 
     // it(`should delete ${ServiceName}`, async () => {
     //   const res = await service.actions.remove({id: fakePost._id});
-    //   // console.log('should return all response', res);
+    //   // this.logger.info('should return all response', res);
     //   expect(res).toBeTruthy();
     // });
 

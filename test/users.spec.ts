@@ -20,8 +20,8 @@ describe(`${ServiceName} Tests actions`, () => {
     ...SessionsService
   });
 
-  console.log(`${ServiceName} - service`, service !== null )
-  console.log(`Sessions - service`, _sessionsService !== null )
+  this.logger.info(`${ServiceName} - service`, service !== null )
+  this.logger.info(`Sessions - service`, _sessionsService !== null )
   
   beforeAll(() => broker.start());
   afterAll(() => broker.stop());
@@ -32,12 +32,12 @@ describe(`${ServiceName} Tests actions`, () => {
     });
     it('should return health message', async () => {
       const res = await service.actions.health();
-      // console.log(`should return health message resopnse`, res );
+      // this.logger.info(`should return health message resopnse`, res );
       expect(res).toBe('I am alive!');
     });
     it(`should return all ${ServiceName}`, async () => {
       const res = await service.actions.all();
-      // console.log('should return all response', res);
+      // this.logger.info('should return all response', res);
       expect(res).toBeTruthy();
     });
   });
@@ -46,14 +46,14 @@ describe(`${ServiceName} Tests actions`, () => {
   describe(`Test ${ServiceName} - 'CRUD'`, () => {
     it(`should create ${ServiceName}`, async () => {
       fake = await service.actions.create(fake);
-      // console.log(`should create response`, fake );
+      // this.logger.info(`should create response`, fake );
       expect(fake).toBeTruthy();
     });
 
     it(`should read ${ServiceName}`, async () => {
-      console.log('should get fake by ID', fake._id )
+      this.logger.info('should get fake by ID', fake._id )
       const res = await service.actions.get({id: fake._id})
-      // console.log('should read response', res);
+      // this.logger.info('should read response', res);
       expect(res).toBeTruthy();
     });
     
@@ -62,13 +62,13 @@ describe(`${ServiceName} Tests actions`, () => {
         id: fake._id,
         password: '987654321'
       });
-      // console.log('should update response', res);
+      // this.logger.info('should update response', res);
       expect(res).toBeTruthy();
     });
 
     it(`should delete ${ServiceName}`, async () => {
       const res = await service.actions.remove({ id: fake._id });
-      // console.log('should delete response', res);
+      // this.logger.info('should delete response', res);
       expect(res).toBeTruthy();
     });
 
@@ -80,7 +80,7 @@ describe(`${ServiceName} Tests actions`, () => {
     let fakeUser = Fake
     it(`${ServiceName} - Test Registering new User`, async () => {
       registered = await service.actions.register( fakeUser );
-      // console.log(`Registering ${fakeUser.username}`, registered)
+      // this.logger.info(`Registering ${fakeUser.username}`, registered)
       fakeUser = {
         ...fakeUser,
         ...registered,
@@ -90,18 +90,18 @@ describe(`${ServiceName} Tests actions`, () => {
     
     it(`${ServiceName} - Test Login new User`, async () => {
       const res = await service.actions.login( fakeUser );
-      // console.log('Login Test Result', res );
+      // this.logger.info('Login Test Result', res );
       expect(res).toHaveProperty("token");
     });
     it(`${ServiceName} - Test Logout User`, async () => {
       const res = await service.actions.logout( fakeUser );
-      // console.log('Logout Service Response', res );
+      // this.logger.info('Logout Service Response', res );
       expect(res).toBeTruthy();
     });
     
     it('ResetPassword', async () => {
       const res = await service.actions.resetPassword(fakeUser);
-      // console.log('ResetPassword', res );
+      // this.logger.info('ResetPassword', res );
       expect(res).toBeTruthy();
     });
   })
