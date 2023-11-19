@@ -6,6 +6,7 @@ export default async function get(
   this: MicroService,
   ctx: Context & { params: { id: string } }
 ) {
+  this.logger.debug('users.hooks.before', ctx.params)
   if (
     ctx.params.id &&
     !isObjectId(ctx.params.id) &&

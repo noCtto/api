@@ -6,9 +6,9 @@ import type { Params } from './params'
 
 
 export default async function handler(this: MicroService, ctx: Context<Params>): Promise<any> {
-  this.logger.info('Update Session Token');
+  this.logger.info('users.actions.updateToken', ctx.params );
   const { userId } = ctx.params;
-  this.logger.info(userId);
+  
   const query = {
     user: userId,
   };
@@ -42,9 +42,6 @@ export default async function handler(this: MicroService, ctx: Context<Params>):
           s: ss,
           token,
         };
-      })
-      .catch((e) => {
-        throw Error(e);
       })
   );
 }

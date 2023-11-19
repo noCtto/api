@@ -6,8 +6,7 @@ export default function validateSession(
   user: any,
   ctx: any
 ) {
-  this.logger.info('Validating: ', user, ctx.params);
-  this.logger.info('validateSession');
+  this.logger.debug('users.methods.validateSession', user , ctx.params);
 
   const addTime = 0;
   const today = new Date();
@@ -38,7 +37,7 @@ export default function validateSession(
             this.logger.info('Sesion creada, se regresa a front.');
           })
           .catch((er: any) => {
-            console.log('error', er);
+            this.logger.info('error', er);
           });
         return token;
       }

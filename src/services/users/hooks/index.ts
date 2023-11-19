@@ -1,2 +1,6 @@
 import before from './before';
-export default { before };
+import after from './after';
+export default { 
+  before,
+  after 
+};

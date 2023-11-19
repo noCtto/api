@@ -7,7 +7,7 @@ export default function generateJWT(
   user: any,
   expires: any
 ) {
-  console.log('Generating JWT', user, expires)
+  this.logger.info('Generating JWT', user, expires)
 
   const addTime = 60 * 10; // 10 MIN
   const today = new Date();

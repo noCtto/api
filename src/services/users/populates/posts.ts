@@ -13,7 +13,7 @@ export default function posts(
     users.map((user: any) =>
       ctx
         .call('posts.list', {
-          query: { author: new ObjectId(user._id) },
+          query: { uid: new ObjectId(user._id) },
           fields: [
             '_id',
             'title',
