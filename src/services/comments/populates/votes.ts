@@ -10,7 +10,7 @@ export default async function votes(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  console.log('comments.populates.votes', ctx.params )
+  this.logger.debug('comments.populates.votes', ctx.params )
   return Promise.all(
     items.map((item: Comment) =>
       ctx
@@ -27,7 +27,7 @@ export default async function votes(
           return item;
         })
         .catch((err:any) => {
-          console.error('comments.populates.votes.error: ', err);
+          this.logger.error('comments.populates.votes.error: ', err);
           item.votes = null;
           return item;
         })

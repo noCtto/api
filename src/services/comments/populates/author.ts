@@ -15,7 +15,7 @@ export default async function author(
         .call('users.get', {
           id: item.uid.toString(),
           populate: ['gravatar'],
-          fields: ['username', 'email', 'imageUrl', 'createdAt'],
+          fields: ['username', 'imageUrl', '_id'],
         })
         .then((user) => {
           item.author = user;

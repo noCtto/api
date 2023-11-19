@@ -5,9 +5,9 @@ export default function get(
   this: MicroService,
   ctx: Context & { params: any }
 ) {
-  console.log('comments.hooks.before.get', ctx.params)
-  ctx.params.populate = ['author', 'votes'];
-  
-  
-  console.log('comments.hooks.before.get', ctx.params)
+  this.logger.debug('comments.hooks.before.get', ctx.params)
+  ctx.params = {
+    ...ctx.params,
+    populate: ctx.params?.populate?.split(',') || []
+  }
 }
