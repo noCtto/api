@@ -17,8 +17,16 @@ const ApiService: ApiServiceSchema = {
     cors: {
       origin: '*',
       methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: [],
-      exposedHeaders: [],
+      allowedHeaders: [
+        'Access-Control-Allow-Origin',
+        'Authorization',
+        'Content-Type'
+      ],
+      exposedHeaders: [
+        'Access-Control-Allow-Origin',
+        'Authorization',
+        'Content-Type'
+      ],
       credentials: false,
       maxAge: 3600,
     },
