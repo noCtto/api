@@ -20,12 +20,12 @@ export default async function handler(
     const f = fs.createWriteStream(filePath);
     f.on('close', () => {
       // File written successfully
-      this.logger.info(`Uploaded file stored in '${filePath}'`);
+      this.logger.debug(`Uploaded file stored in '${filePath}'`);
       resolve({ file: { path: filePath, name }, meta: ctx.meta });
     });
 
     ctx.params.on('error', (err: any) => {
-      this.logger.info('File error received', err.message);
+      this.logger.debug('File error received', err.message);
       reject(err);
 
       // Destroy the local file

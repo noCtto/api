@@ -3,6 +3,7 @@ import community from './community';
 import comments from './comments';
 import thread from './thread';
 import votes from './votes';
+import commentCount from './comments.count';
 
 export default {
   author,
@@ -10,4 +11,5 @@ export default {
   comments,
   thread,
   votes,
+  commentCount
 };

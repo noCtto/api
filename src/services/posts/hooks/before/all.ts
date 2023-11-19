@@ -5,8 +5,9 @@ export default function all(
   this: MicroService,
   ctx: Context & { params: any }
 ) {
-  console.log('posts.hooks.before.all', ctx.params )
-  ctx.params.sort = { _id: -1, comments: -1 };
-  ctx.params.populate = ['votes', 'author', 'community']
-
+  this.logger.debug('posts.hooks.before.all', ctx.params )
+  ctx.params = {
+    ...ctx.params,
+    populate: ctx.params?.populate?.split(',') || []
+  }
 }

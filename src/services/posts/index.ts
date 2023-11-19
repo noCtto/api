@@ -21,7 +21,7 @@ export default {
   //   'posts.created': {
   //     group: "other",
   //     handler(ctx: any) {
-  //       console.log('Post created', ctx.params);
+  //       this.logger.info('Post created', ctx.params);
   //     }
   //   },
   // },

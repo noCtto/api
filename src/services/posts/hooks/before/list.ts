@@ -5,7 +5,5 @@ export default function list(
   this: MicroService,
   ctx: Context & { params: any }
 ) {
-  console.log('posts.hooks.before.list', ctx.params )
-  ctx.params.sort = { _id: -1, comments: -1 };
-  ctx.params.populate = ['votes', 'author', 'community'];
+  this.logger.debug('posts.hooks.before.list', ctx.params )
 }
