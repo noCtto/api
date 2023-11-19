@@ -32,6 +32,7 @@ export interface MicroServiceConf {
   events: any;
   populates: any;
   secret: any;
+  logger: Object
 }
 
 export type MicroService = MicroServiceSchema;
