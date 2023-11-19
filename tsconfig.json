@@ -41,6 +41,7 @@
       "@comments/*": ["src/services/comments/*"],
       "@votes/*": ["src/services/votes/*"],
       "@communities/*": ["src/services/communities/*"],
+      "@subscribers/*": ["src/services/subscribers/*"],
       "@awards": ["src/services/awards/*"],
       "@threads/*": ["src/services/threads/*"],
       "@types/*": ["src/lib/types/*"],
