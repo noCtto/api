@@ -8,11 +8,6 @@ export default function extractUser(ctx: any): ObjectId | null {
   try {
     meta = JSON.parse(JSON.stringify(ctx.meta));
   } catch (err) {}
-  
-  try {
-    
-    params = JSON.parse(JSON.stringify(ctx.params));
-  } catch (err) {}
 
   if (meta?.user?.user?.userId) {
     // this.logger.debug('Meta user', meta.user.user.userId);
@@ -28,6 +23,10 @@ export default function extractUser(ctx: any): ObjectId | null {
     // this.logger.debug('Meta oauth', meta.oauth.user.id);
     return new ObjectId(meta.oauth.user.id);
   }
+
+  try {
+    params = JSON.parse(JSON.stringify(ctx.params));
+  } catch (err) {}
 
   if (params?.uid) {
     // this.logger.debug('Params uid', params.uid);
