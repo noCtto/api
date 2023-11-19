@@ -30,6 +30,7 @@ export type Entity = {
   subscribers?: string[];
   posts?: object[];
   uid?: Object;
+  joined?: boolean
 }
 
 export const Validator = {
@@ -96,4 +97,5 @@ export const Fields = [
   'updatedAt',
   'active',
   'posts',
+  'joined'
 ];
