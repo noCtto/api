@@ -11,13 +11,14 @@ export default {
     },
   },
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
-    const num = ctx.params.num || 1;
+    const num = ctx.params.num || 100;
 
     const votes: any = await ctx.call('votes.random', { num });
     const users: any = await ctx.call('users.random', { num });
 
     const data: any = [];
     while (data.length < num) {
+      console.log('faking vote', data.length)
       const params = {
         id: votes[data.length],
         uid: users[data.length],

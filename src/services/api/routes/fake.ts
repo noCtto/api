@@ -15,7 +15,13 @@ export default [
         _next: Function
       ) {
 
-        this.broker.call('fake.replies')
+        // this.broker.call('fake.communities')
+        // this.broker.call('fake.posts')
+        
+        // this.broker.call('fake.votes')
+        this.broker.call('fake.comments')
+        // this.broker.call('fake.subscribers')
+        // this.broker.call('fake.replies')
 
         return res.end('OK');
       },

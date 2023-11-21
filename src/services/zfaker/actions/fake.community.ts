@@ -17,7 +17,7 @@ export default {
     },
   },
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
-    const num = ctx.params.num || 1;
+    const num = ctx.params.num || 100;
 
     const users: any = await ctx.call('users.random', { num });
 

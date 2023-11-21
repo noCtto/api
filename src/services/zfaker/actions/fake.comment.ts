@@ -12,16 +12,17 @@ export default {
     },
   },
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
-    const num = ctx.params.num || 10;
+    const num = ctx.params.num || 250;
 
     const users: any = await ctx.call('users.random', { num });
-    const posts:any = await ctx.call('posts.random', { num });
+    // const _posts:any = await ctx.call('posts.random', { num });
+    const comments:any = await ctx.call('comments.random', { num });
 
     const data:any = []
     while (data.length < (num)) {  
       const comment = {
         uid: randomId(users.length, users),
-        target: randomId(posts.length, posts),
+        target: randomId(comments.length, comments),
         type: 'pid',
         text: faker.lorem.lines(),
       };

@@ -101,6 +101,24 @@ export default [
     },
   },
   {
+    path: '/sb', // Subscribers
+    whitelist: ['**'],
+    authentication: false,
+    authorization: false,
+    autoAliases: false,
+    
+    aliases: {
+      'POST /': async function (
+        this: Schema,
+        req: Req,
+        res: Res,
+        _next: Function
+      ) {
+        return WithAuth(req, res, 'subscribers.create', false)
+      },
+    },
+  },
+  {
     path: '/u', // Users
     whitelist: ['**'],
     authentication: false,
@@ -133,6 +151,22 @@ export default [
         _next: Function
       ) {
         return WithAuth(req, res, 'votes.vote')
+      },
+      'GET /': async function (
+        this: Schema,
+        req: Req,
+        res: Res,
+        _next: Function
+      ) {
+        return WithAuth(req, res, 'votes.all')
+      },
+      'GET /:id': async function (
+        this: Schema,
+        req: Req,
+        res: Res,
+        _next: Function
+      ) {
+        return WithAuth(req, res, 'votes.get')
       },
     },
   },

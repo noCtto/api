@@ -18,8 +18,8 @@ export default async function votes(
           query: {
             target: new ObjectId(item._id),
           },
-          populate: ['voted', 'votes', 'count', 'total'],
-          fields: ['_id', 'target', 'type', 'votes', 'voted', 'count', 'total', 'd'],
+          populate: ['voted', 'voters', 'result'],
+          fields: ['_id', 'voters', 'voted', 'result'],
         })
         .then(([votes]:any) => {
           if (!votes) throw votes;

@@ -1,8 +1,8 @@
-// import { faker } from '@faker-js/faker';
 import { FakeThis } from '../faker.service';
 import type { Context } from 'moleculer';
+
 export default {
-  rest: 'GET /post',
+  rest: 'POST /subscriber',
   params: {
     num: {
       type: 'number',
@@ -10,18 +10,19 @@ export default {
     },
   },
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
-    
-    const num = ctx.params.num || 150;
-    const users: any = await ctx.call('users.random', { num });
+    const num = ctx.params.num || 100;
+
     const communities: any = await ctx.call('communities.random', { num });
-    
+    const users: any = await ctx.call('users.random', { num });
+
     const data: any = [];
     while (data.length < num) {
-      const post = this.fakePost(
-        users[data.length], 
-        communities[data.length]
-      );
-      data.push(ctx.call('posts.create', post ));
+      const params = {
+        id: communities[data.length],
+        uid: users[data.length],
+      };
+
+      data.push(ctx.call('communities.join', params));
     }
     return Promise.all(data);
   },
