@@ -1,5 +1,6 @@
 import actions from '@subscribers/actions';
 import hooks from '@subscribers/hooks';
+import methods from '@subscribers/methods';
 
 import {
   Validator as validator,
@@ -13,4 +14,5 @@ export default {
   validator,
   actions,
   hooks,
+  methods
 };

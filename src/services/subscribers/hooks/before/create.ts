@@ -1,13 +1,14 @@
-// import type { Context } from 'moleculer';
-// import type { MicroService } from '@lib/microservice';
+import type { Context } from 'moleculer';
+import type { MicroService } from '@lib/microservice';
 
-// export default async function create(
-//   this: MicroService,
-//   ctx: Context & { params: any }
-// ) {
-//   const { pid, cid } = ctx.params.query;
-
-//   if (!pid && !cid) {
-//     return Promise.reject(new Error('missing params'));
-//   }
-// }
+export default async function create(
+  this: MicroService,
+  ctx: Context & { params: any }
+) {
+  this.logger.debug('subscribers.hooks.before.create', ctx.params)
+  const { target } = ctx.params;
+  const exists = await ctx.call('communities.get', { id: String(target), fields:['_id'] })
+  if (!exists) {
+    return Promise.reject(exists)
+  }
+}
