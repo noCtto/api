@@ -4,7 +4,7 @@ import { BrokerOptions } from 'moleculer';
 const brokerConfig: BrokerOptions = {
   namespace: process.env.NAMESPACE || 'microservices',
   logger: true,
-  logLevel: 'debug',
+  logLevel: 'info',
   cacher: false,
   transporter: 'TCP',
   requestTimeout: 60 * 1000,

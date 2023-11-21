@@ -1,12 +1,12 @@
-import actions from '@posts/actions';
-import methods from '@posts/methods';
-import hooks from '@posts/hooks';
-import populates from '@posts/populates';
+import actions from './actions';
+import methods from './methods';
+import hooks from './hooks';
+import populates from './populates';
 
 import {
   Validator as validator,
   Fields as fields,
-} from '@posts/entities/post.entity';
+} from './entities/post.entity';
 
 export default {
   database: 'nocheto',

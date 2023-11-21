@@ -1,12 +1,12 @@
-import actions from '@comments/actions';
-import methods from '@comments/methods';
-import hooks from '@comments/hooks';
-import populates from '@comments/populates';
+import actions from './actions';
+import methods from './methods';
+import hooks from './hooks';
+import populates from './populates';
 
 import {
   Validator as validator,
   Fields as fields,
-} from '@comments/entities/comment.entity';
+} from './entities/comment.entity';
 
 export default {
   database: 'nocheto',

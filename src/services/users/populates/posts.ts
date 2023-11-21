@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 import type { Context } from 'moleculer';
 
 export default function posts(

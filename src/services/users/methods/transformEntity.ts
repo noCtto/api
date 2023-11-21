@@ -1,4 +1,4 @@
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 
 export default async function transformEntity(
   this: MicroService,

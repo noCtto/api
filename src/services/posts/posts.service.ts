@@ -1,3 +1,3 @@
-import config from '@posts/index';
-import MicroService from '@lib/microservice';
+import config from './index';
+import MicroService from '@/lib/microservice';
 export default MicroService('posts', config);

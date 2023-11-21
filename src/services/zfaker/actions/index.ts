@@ -5,7 +5,7 @@ import comments from './fake.comment';
 import votes from './fake.vote';
 import replies from './fake.replies';
 import follow from './fake.replies';
-import health from '@utils/health';
+import health from '@/utils/health';
 import subscribers from './fake.subscriber';
 
 export default {

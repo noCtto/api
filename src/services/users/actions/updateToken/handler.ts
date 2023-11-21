@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 import type { Params } from './params'
 
 

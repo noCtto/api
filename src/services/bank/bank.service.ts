@@ -1,5 +1,5 @@
-import MicroService from '@lib/microservice';
-import type { MicroService as MicroServiceSchema } from '@lib/microservice';
+import MicroService from '@/lib/microservice';
+import type { MicroService as MicroServiceSchema } from '@/lib/microservice';
 
 // new change made
 const AwardsService = MicroService('bank', {

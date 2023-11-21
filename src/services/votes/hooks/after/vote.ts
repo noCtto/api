@@ -1,5 +1,5 @@
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 
 export default function vote(this: MicroService, _ctx: Context, response: any) {
   this.logger.debug('votes.hooks.after.vote', response);

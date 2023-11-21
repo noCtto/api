@@ -1,3 +1,3 @@
-import config from '@threads/index';
-import MicroService from '@lib/microservice';
+import config from './index';
+import MicroService from '@/lib/microservice';
 export default MicroService('threads', config);

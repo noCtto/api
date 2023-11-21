@@ -1,6 +1,6 @@
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
-import type { Post } from '@posts/entities'
+import type { MicroService } from '@/lib/microservice';
+import type { Post } from '../entities'
 
 export default function community(
   this: MicroService,

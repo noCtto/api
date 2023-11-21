@@ -1,7 +1,7 @@
-import { randomId } from '@utils/func';
+import { randomId } from '@/utils/func';
 
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 
 interface Params {
   num?: number;

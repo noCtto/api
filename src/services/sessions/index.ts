@@ -1,12 +1,12 @@
-import actions from '@sessions/actions';
-import methods from '@sessions/methods';
-import hooks from '@sessions/hooks';
-import populates from '@sessions/populates';
+import actions from './actions';
+import methods from './methods';
+import hooks from './hooks';
+import populates from './populates';
 
 import {
   Validator as validator,
   Fields as fields,
-} from '@sessions/entities/session.entity';
+} from './entities/session.entity';
 
 export default {
   database: 'account',

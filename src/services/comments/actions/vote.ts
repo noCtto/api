@@ -1,6 +1,6 @@
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
-import type { Comment} from '@comments/entities'
+import type { MicroService } from '@/lib/microservice';
+import type { Comment} from '../entities'
 
 export default {
   rest: 'POST /vote',

@@ -1,6 +1,6 @@
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
-import type { Vote} from '@votes/entities'
+import type { MicroService } from '@/lib/microservice';
+import type { Vote} from '../entities'
 
 type Params = {
   type: string,

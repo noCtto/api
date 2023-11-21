@@ -1,11 +1,11 @@
-import actions from '@subscribers/actions';
-import hooks from '@subscribers/hooks';
-import methods from '@subscribers/methods';
+import actions from './actions';
+import hooks from './hooks';
+import methods from './methods';
 
 import {
   Validator as validator,
   Fields as fields,
-} from '@subscribers/entities/subscribers.entity';
+} from './entities/subscribers.entity';
 
 export default {
   database: 'nocheto',

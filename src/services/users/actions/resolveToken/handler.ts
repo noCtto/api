@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 import type { Params } from './params'
 
 export default async function handler(this: MicroService, ctx: Context<Params>): Promise<any> {

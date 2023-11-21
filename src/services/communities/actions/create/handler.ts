@@ -1,7 +1,7 @@
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 import type {Params} from './params';
-import type { Community } from '@communities/entities';
+import type { Community } from '../../entities';
 
 import { Errors as MoleculerErrors } from 'moleculer';
 const { MoleculerClientError } = MoleculerErrors;

@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 import type { Params } from './params';
-import type { Comment }from '@comments/entities'
+import type { Comment }from '../../entities'
 
 import { Errors as MoleculerErrors } from 'moleculer';
 const { MoleculerClientError } = MoleculerErrors;

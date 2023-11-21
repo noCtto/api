@@ -1,5 +1,5 @@
 import type { Context } from 'moleculer';
-import { MicroService } from '@lib/microservice';
+import { MicroService } from '@/lib/microservice';
 import type { Params } from './params';
 
 export default async function handler(this: MicroService, ctx: Context<Params>): Promise<any> {

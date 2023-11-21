@@ -1,5 +1,5 @@
-import { isObjectId } from '@utils/func';
-import type { MicroService } from '@lib/microservice';
+import { isObjectId } from '@/utils/func';
+import type { MicroService } from '@/lib/microservice';
 import type { Context } from 'moleculer';
 
 export default async function get(

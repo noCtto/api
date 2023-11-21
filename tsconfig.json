@@ -1,6 +1,5 @@
 {
   "ts-node": {
-    // Do not forget to `npm i -D tsconfig-paths`
     "require": ["tsconfig-paths/register"]
   },
   "compilerOptions": {
@@ -20,7 +19,7 @@
     "noUnusedParameters": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "baseUrl": ".",
+    "baseUrl": "src",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "types": ["node", "jest"],
@@ -30,26 +29,11 @@
     "isolatedModules": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "~/*": ["*"],
-      "@lib/*": ["src/lib/*"],
-      "@mixins/*": ["src/mixins/*"],
-      "@utils/*": ["src/utils/*"],
-      "@public/*": ["src/public/*"],
-      "@users/*": ["src/services/users/*"],
-      "@sessions/*": ["src/services/sessions/*"],
-      "@posts/*": ["src/services/posts/*"],
-      "@comments/*": ["src/services/comments/*"],
-      "@votes/*": ["src/services/votes/*"],
-      "@communities/*": ["src/services/communities/*"],
-      "@subscribers/*": ["src/services/subscribers/*"],
-      "@awards": ["src/services/awards/*"],
-      "@threads/*": ["src/services/threads/*"],
-      "@types/*": ["src/lib/types/*"],
-      "@test/*": ["src/lib/types/*"],
-    },
+      "@/*": ["./*"]
+    }
   },
   "compileOnSave": true,
-  "include": ["./**/*"],
-  "exclude": ["node_modules/**/*", "test/**/*", ".commitlintrc.ts"],
+  "include": ["./src/**/*", "moleculer.dev.config.ts"],
+  "exclude": ["node_modules/**/*", "test/**/*", ".commitlintrc.ts", "./dist"],
   "preset": "ts-jest"
 }

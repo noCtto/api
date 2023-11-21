@@ -6,10 +6,10 @@
     "devD": "moleculer-runner --repl --hot --config moleculer.dev.config.js services/**/services/*.service.js",
     "startD": "moleculer-runner --config moleculer.config.js services/**/services/*.service.js",
     "dev": "nodemon ./src/services/**/*.service.ts",
-    "start": "moleculer-runner --config ./dist/moleculer.dev.config.js ./dist/services/*.service.js",
+    "start": "moleculer-runner --config ./dist/moleculer.dev.config.js ./dist/src/services/**/*.service.js",
     "ci": "jest --watch",
     "test": "jest --coverage --config ./jest.config.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf ./dist && tsc -p tsconfig.json",
     "lint": "eslint . --ext .js,.jsx --fix",
     "format": "prettier --ignore-path .gitignore -w .",
     "format:check": "prettier --ignore-path .gitignore --check .",
@@ -52,14 +52,15 @@
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
     "type-fest": "^3.13.0",
     "typescript": "^4.9.5",
+    "@types/gravatar": "^1.8.3",
     "zod": "^3.21.4"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
     "@sendgrid/mail": "^7.7.0",
-    "@types/gravatar": "^1.8.3",
     "aws-sdk": "^2.976.0",
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
@@ -145,17 +146,7 @@
       "dotenv/config"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/services/$1",
-      "^@config/(.*)$": "<rootDir>/src/services/$1",
-      "^@accounts/(.*)$": "<rootDir>/src/services/$1",
-      "^@lib/(.*)$": "<rootDir>/src/lib/$1",
-      "^@communities/(.*)$": "<rootDir>/src/services/communities/$1",
-      "^@comments/(.*)$": "<rootDir>/src/services/comments/$1",
-      "^@threads/(.*)$": "<rootDir>/src/services/threads/$1",
-      "^@posts/(.*)$": "<rootDir>/src/services/posts/$1",
-      "^@votes/(.*)$": "<rootDir>/src/services/votes/$1",
-      "^@mixins/(.*)$": "<rootDir>/src/mixins/$1",
-      "^@utils/(.*)$": "<rootDir>/src/utils/$1"
+      "^@/(.*)$": "<rootDir>/$1"
     },
     "coverageReporters": [
       "json",

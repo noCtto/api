@@ -2,10 +2,10 @@ import MoleculerJs from 'moleculer';
 const { MoleculerClientError } = MoleculerJs.Errors;
 
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 
 import dayjs from 'dayjs';
-import { sha256 } from '@utils/func';
+import { sha256 } from '@/utils/func';
 
 import type { Params } from './params'
 

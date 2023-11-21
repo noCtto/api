@@ -1,12 +1,12 @@
-import actions from '@threads/actions';
-import methods from '@threads/methods';
-import hooks from '@threads/hooks';
-import populates from '@threads/populates';
+import actions from './actions';
+import methods from './methods';
+import hooks from './hooks';
+import populates from './populates';
 
 import {
   Validator as validator,
   Fields as fields,
-} from '@threads/entities/thread.entity';
+} from './entities/thread.entity';
 
 export default {
   database: 'nocheto',

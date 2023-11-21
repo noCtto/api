@@ -1,8 +1,8 @@
 import MoleculerJs from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 const { MoleculerClientError } = MoleculerJs.Errors;
 import type { Context } from 'moleculer'
-import type {User} from '@users/entities'
+import type {User} from '../entities'
 
 interface Params {
   username?: string,

@@ -1,12 +1,12 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@lib/microservice';
+import type { MicroService } from '@/lib/microservice';
 import type { Params } from './params';
 
-import type { Community } from '@communities/entities';
-import type { Post } from '@posts/entities/';
-import type { Thread } from '@threads/entities';
-import type { Vote } from '@votes/entities';
+import type { Post } from '../../entities';
+import type { Community } from '../../../communities/entities';
+import type { Thread } from '../../../threads/entities';
+import type { Vote } from '../../../votes/entities';
 
 import { Errors as MoleculerErrors } from 'moleculer';
 const { MoleculerClientError } = MoleculerErrors;
