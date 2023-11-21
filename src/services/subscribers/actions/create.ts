@@ -25,6 +25,7 @@ export default {
     const { target } = ctx.params;
     const user:ObjectId = this.extractUser(ctx);
     const subscribed = await this.subscribed(ctx, target, user);
+    
     if (subscribed) return Promise.resolve({ msg: 'Already Subscribed' })
     const subscribers: Subscriber = await this._create(ctx, {
       target,
