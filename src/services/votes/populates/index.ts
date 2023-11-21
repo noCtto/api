@@ -1,7 +1,9 @@
-import count from './count';
 import voted from './voted';
+import voters from './voters';
+import result from './result';
 
 export default {
-  count,
   voted,
+  voters,
+  result,
 };

@@ -1,9 +1,8 @@
 
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
-import dayjs from 'dayjs';
 import MoleculerJs from 'moleculer';
-import type { Vote } from '@votes/entities';
+import { ObjectId } from 'mongodb';
 
 const { ValidationError } = MoleculerJs.Errors;
 
@@ -20,42 +19,34 @@ export default {
     },
   },
   async handler(this: MicroService, ctx: Context & { params: any }) {
-    this.logger.info('votes.actions.vote', ctx.params )
+    this.logger.debug('votes.actions.vote', ctx.params )
     const { id, d } = ctx.params;
 
     const uid = this.extractUser(ctx);
     if (!uid) return Promise.reject(new ValidationError('no user'));
 
-    const dateTime = dayjs().unix();
-    return this._get(ctx, { id }).then((card: Vote) => {
-      if (!card) Promise.reject(new ValidationError('error', 'number'));
-      const { voters } = card;
+    const card = await this._get(ctx, { id: String(id), populate: ['result'] })
 
-      const currentVote = voters[String(uid)] || 0;
-      const newVote = this.voteState(currentVote, d);
-      
-      return this._update(ctx, {
-        id: card._id,
-        voters: {
-          ...voters,
-          [String(uid)]: newVote,
-        },
-        updatedAt: dayjs().toDate(),
+    if (!card) return Promise.reject(new ValidationError('error', 'not found'))
+
+    
+    const voted:any = await ctx.call('voters.voted', { target: card._id, uid });
+    
+    let vote:any = null;
+    if (voted) {
+      vote = await ctx.call('voters.update', { 
+        id: new ObjectId(voted._id), 
+        d: voted.d == d ? null : d,
+        updatedAt: new Date()
       })
-        .then((json: any) =>
-          this.transformDocuments(
-            ctx,
-            {
-              populate: ['votes', 'count'],
-              fields: ['_id', 'count', 'pid', 'tid', 'cid'],
-            },
-            { ...json }
-          )
-        )
-        .then((v: any) => ({
-          ...v,
-          key: `${card._id}-${card.target}-${dateTime}-${uid}-vote`,
-        }));
-    });
+    } else {
+      vote = await ctx.call('voters.create', { target: card._id, uid, d })
+    }
+    return this._get(ctx, {id: card._id , populate:['result']}).then((data:any) => {
+      return { 
+        ...vote, 
+        result: data.result 
+      }
+    })
   },
 };

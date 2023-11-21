@@ -15,6 +15,7 @@ const params = {
   },
   target: {
     type: 'string',
+
     optional: true,
   },
 }

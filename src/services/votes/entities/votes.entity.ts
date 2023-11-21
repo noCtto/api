@@ -2,9 +2,6 @@ import { ObjectId } from 'mongodb';
 
 export type Entity = {
   _id: ObjectId;
-  voters: {
-    [key: string]: number;
-  };
   type: string;
   target: ObjectId,
   count?: number;
@@ -12,14 +9,11 @@ export type Entity = {
   d?: boolean;
   total?: number;
   createdAt: Date;
+  voters?: [Object];
+  tities?: [Object];
 }
 
 export const Validator = {
-  voters: {
-    type: 'object',
-    optional: true,
-    default: {}
-  },
   count: {
     type: 'number',
     optional: true,
@@ -60,4 +54,5 @@ export const Fields = [
   'd',
   'createdAt',
   'total',
+  'result'
 ];
