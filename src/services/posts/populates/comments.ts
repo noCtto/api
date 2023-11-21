@@ -17,7 +17,7 @@ export default async function comments(
             target: new ObjectId(item._id),
             type: 'pid',
           },
-          populate: ['replies', 'author', 'votes', 'voted', 'count', 'total'],
+          populate: ['replies', 'author', 'votes', 'count', 'total'],
         })
         .then((comments) => {
           item.comments = comments;

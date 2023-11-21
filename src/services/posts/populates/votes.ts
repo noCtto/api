@@ -17,8 +17,8 @@ export default function votes(
       ctx
         .call('votes.find', {
           query: { target: new ObjectId(item._id) },
-          populate: ['count', 'voted'],
-          fields: ['_id', 'count', 'voted', 'votes', 'd'],
+          populate: ['voters', 'result', 'voted'],
+          fields: ['_id', 'result', 'voters', 'voted'],
         })
         .then(([votes]: any) => {
           if (!votes) throw votes;

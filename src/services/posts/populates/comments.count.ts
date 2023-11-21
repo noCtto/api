@@ -11,12 +11,12 @@ export default function commentCount(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  this.logger.info('posts.populates.commentCount', ctx.params )
+  this.logger.debug('posts.populates.comments.count', ctx.params )
   return Promise.all(
     items.map((item: Post) =>
       ctx
         .call('comments.count', {
-          query: { target: new ObjectId(item._id) },
+          query: { target: new ObjectId(item._id), type: 'pid' },
         })
         .then((count: any) => {
           item.comments = {
@@ -25,7 +25,7 @@ export default function commentCount(
           return item;
         })
         .catch((err) => {
-          this.logger.error('posts.populates.commentCount.error: ', err)
+          this.logger.error('posts.populates.comments.count.error: ', err)
           item.comments = 0;
           return item;
         })

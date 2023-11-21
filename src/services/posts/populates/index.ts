@@ -11,5 +11,5 @@ export default {
   comments,
   thread,
   votes,
-  commentCount
+  'commentsCount': commentCount
 };
