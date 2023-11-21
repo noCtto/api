@@ -9,30 +9,20 @@ export default async function posts(
   _handler: any,
   ctx: Context & { params: { community: string; populate: string } }
 ) {
-  this.logger.debug('communities.populates.posts', ctx.params )
+  this.logger.debug('communities.populates.posts.count', ctx.params )
   return Promise.all(
     items.map((community: any) =>
       ctx
-        .call('posts.list', {
+        .call('posts.count', {
           ...ctx.params,
           query: {
             cid: new ObjectId(community._id),
           },
-          populate: ['votes', 'commentsCount'],
-          // fields: [
-          //   '_id',
-          //   'votes',
-          //   'author',
-          //   'title',
-          //   'text',
-          //   'body',
-          //   'image',
-          //   'comments',
-          //   'createdAt'
-          // ],
         })
         .then((posts) => {
-          community.posts = posts;
+          community.posts = {
+            total: posts
+          };
           return community;
         })
     )

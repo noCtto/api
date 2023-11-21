@@ -17,7 +17,9 @@ export default async function handler(
 
   this.logger.debug('communities.actions.create', ctx.params);
 
-  return this._create(ctx, { ...ctx.params, uid }).then((res: Community)=> {
+  const { name } = ctx.params 
+
+  return this._create(ctx, { ...ctx.params, title: name.toLowerCase().replace(' ', '_'), uid }).then((res: Community)=> {
     this.logger.debug('communities.actions.create.response', res)
     return res
   }).catch((err:any) => {

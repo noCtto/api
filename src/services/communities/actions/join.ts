@@ -1,6 +1,6 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '@lib/microservice';
-
+// import type { ObjectId } from 'mongodb'
 
 type Params = {
   id: string
@@ -23,30 +23,22 @@ export default {
     const user = this.extractUser(ctx)
     const { id } = ctx.params;
 
-    return this._get(ctx, { id, populates: ['joined'] }).then((resp:any)=>{
-      this.logger.debug('communities.actions.join.get.response', resp)
+    const community:any = await this._get(ctx, { id, populate:['join'] })
 
-      if (!resp.subscribers) {
-        resp.subscribers = {}
-      }
+    if (!community) {
+      return Promise.reject(Error('Community not found'))
+    }
 
-      if (resp.subscribers && !resp.subscribers[String(user)]) {
-        return this._update(ctx, {
-          id: String(resp._id), 
-          subscribers: {
-            ...resp.subscribers,
-            [String(user)]: new Date()
-          },
-        })
-      }
-      return resp
-    }).then((community:any) => {
+    if (community.joined) {
+      return Promise.resolve(community.joined)
+    }
 
-      const { subscribers } = community;
-      community.subscribers = Object.keys(subscribers).length
-      community.joined  = subscribers[String(user)] !== undefined
-
-      return community
+    const join = await ctx.call('subscribers.create', { 
+      target: id,
+      uid: user
     })
+
+    return join
+    
   },
 };

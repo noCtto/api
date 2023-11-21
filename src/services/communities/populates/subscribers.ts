@@ -12,23 +12,16 @@ export default {
   ) {
     return Promise.all(
       items.map((community: any) => {
-        if (!community.subscribers) return community;
-        const ObjIds = Object.keys(community.subscribers).map(
-          (id) => new ObjectId(id)
-        );
         return ctx
-          .call('users.list', {
+          .call('subscribers.list', {
             query: {
-              _id: {
-                $in: ObjIds,
-              },
+              target: new ObjectId(community._id),
             },
-            fields: ['_id', 'username', 'photoUrl'],
           })
-          .then((users) => {
-            community.subscribers = users;
+          .then((subscribers) => {
+            community.subscribers = subscribers;
             return community;
-          });
+          }).catch();
       })
     );
   },
