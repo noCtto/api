@@ -10,6 +10,9 @@ export interface Entity {
   subscribers?: { [key: string]: boolean };
   posts?: string[];
   admin?: boolean;
+  communities?: object;
+  comments?: object;
+  wallet?:object;
 }
 
 export const Validator = {
@@ -20,11 +23,6 @@ export const Validator = {
   createdAt: 'date',
   lastLogin: { type: 'date', optional: true },
   active: { type: 'boolean', default: true },
-  subscribers: {
-    type: 'object',
-    optional: true,
-    default: {},
-  },
 };
 
 export const Fields = [
@@ -38,4 +36,7 @@ export const Fields = [
   'active',
   'subscribers',
   'posts',
+  'communities',
+  'comments',
+  'wallet'
 ];

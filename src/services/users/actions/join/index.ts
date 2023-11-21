@@ -1,4 +1,4 @@
-import params from './params';
+import params  from './params';
 import handler from './handler';
 
 export default {

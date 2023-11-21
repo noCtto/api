@@ -1,0 +1,30 @@
+import { ObjectId } from 'mongodb';
+import type { Context } from 'moleculer';
+import type { MicroService } from '@/lib/microservice';
+
+export default async function subscribersCount(
+  this: MicroService,
+  _ids: any,
+  items: any,
+  _handler: any,
+  ctx: Context & { params: any }
+) {
+  this.logger.debug('users.populates.subscribers.count', ctx.params )
+  return Promise.all(
+    items.map((community: any) =>
+      ctx
+        .call('subscribers.count', {
+          ...ctx.params,
+          query: {
+            target: new ObjectId(community._id),
+          },
+        })
+        .then((subscribers) => {
+          community.subscribers = {
+            total: subscribers
+          };
+          return community;
+        })
+    )
+  );
+}

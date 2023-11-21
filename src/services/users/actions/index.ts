@@ -6,7 +6,7 @@ import resolveToken from './resolveToken';
 import forceLogout from './forceLogout';
 import resetPassword from './resetPassword';
 import whoami from './whoami';
-import follow from './follow';
+import join from './join';
 import all from './all';
 
 export default {
@@ -18,6 +18,6 @@ export default {
   forceLogout,
   resetPassword,
   whoami,
-  follow,
+  join,
   all,
 };

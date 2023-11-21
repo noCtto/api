@@ -7,14 +7,15 @@ export default async function handler(this: MicroService, ctx: Context<Params>):
   const decoded = await new Promise((resolve, reject) => {
     this.logger.debug('users.actions.resolveToken', ctx.params);
     jwt.verify(ctx.params.token, "myLittleSecret", (err: any, tokenDecoded: any) => {
+      this.logger.info('users.actions.verify.response', err, tokenDecoded )
       if (err) {
-        this.logger.error('Error resolving token', err);
+        this.logger.error('users.actions.verify.response err:', err);
         return reject(tokenDecoded);
       }
-      this.logger.error('Error resolving token');
+      this.logger.info('users.actions.verify.response.decoded', tokenDecoded);
       return resolve(tokenDecoded);
     });
   });
-  this.logger.debug('Decoded', decoded);
+  this.logger.debug('users.actions.verify.response.decoded.result', decoded);
   return decoded;
 };
