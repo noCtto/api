@@ -12,7 +12,7 @@ export default function voters(
   this.logger.debug('votes.populates.voters', ctx.params )
   return Promise.all(items.map((item: any) => {
     return ctx.call('voters.all', {
-      pageSize: 10,
+      pageSize: 3,
       page: 1,
       query: {
         target: new ObjectId(item._id),

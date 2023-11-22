@@ -19,7 +19,8 @@ export default [
         // this.broker.call('fake.posts')
         
         // this.broker.call('fake.votes')
-        this.broker.call('fake.comments')
+        this.broker.call('fake.communitySubscribers')
+        this.broker.call('fake.userSubscribers')
         // this.broker.call('fake.subscribers')
         // this.broker.call('fake.replies')
 

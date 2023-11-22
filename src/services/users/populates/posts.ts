@@ -14,20 +14,9 @@ export default function posts(
       ctx
         .call('posts.list', {
           query: { uid: new ObjectId(user._id) },
-          // fields: [
-          //   '_id',
-          //   'title',
-          //   'text',
-          //   'createdAt',
-          //   'image',
-          //   'community',
-          //   'votes',
-          //   'author',
-          //   'comments',
-          // ],
           page: ctx.params.page || 1,
           pageSize: ctx.params.pageSize || 10,
-          populate: ['votes','community', 'commentsCount'],
+          populate: ['votes','community', 'commentsCount', 'awards'],
         })
         .then((res) => {
           user.posts = res;

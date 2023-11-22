@@ -6,11 +6,12 @@ export default async function withAuth(
   action: string,
   force: boolean = true
   ) {
-    
+    console.log('Authorizing')
     res.setHeader('Content-Type', 'application/json');
     const { headers : { authorization }} = req;
 
     if (authorization) {
+      
       if (!authorization.includes('Bearer')) {
         return res.end(JSON.stringify({ error: { code: 422, msg: "Bad authorization" }}))
       }
@@ -27,7 +28,6 @@ export default async function withAuth(
     if (!authorization && force) {
       return res.end(JSON.stringify({ error: { code: 422, msg: "No authorization provided" }}))
     }
-
   return req.$ctx.call(action, { ...req.body, ...req.$params })
     .then((response:any) => res.end(JSON.stringify(response)))
     .catch((err:any)=>{

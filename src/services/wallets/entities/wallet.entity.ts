@@ -5,6 +5,7 @@ export type Entity = {
   type: string;
   target: ObjectId,
   createdAt: Date;
+  balance: number;
 }
 
 export const Validator = {
@@ -19,11 +20,9 @@ export const Validator = {
     optional: true,
     convert: true
   },
-  target: {
-    type: 'objectID',
-    ObjectID: ObjectId,
-    optional: true,
-    convert: true
+  balance: {
+    type: 'number',
+    default: 1000
   },
   createdAt: {
     type: 'date',
@@ -35,7 +34,6 @@ export const Validator = {
 export const Fields = [
   '_id',
   'uid',
-  'target',
-  'type',
   'createdAt',
+  'balance'
 ];

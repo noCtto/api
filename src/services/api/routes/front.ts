@@ -119,12 +119,29 @@ export default [
     },
   },
   {
-    path: '/u', // Users
+    path: '/aw', // Subscribers
     whitelist: ['**'],
     authentication: false,
     authorization: false,
     autoAliases: false,
     
+    aliases: {
+      'POST /': async function (
+        this: Schema,
+        req: Req,
+        res: Res,
+        _next: Function
+      ) {
+        return WithAuth(req, res, 'awards.create', false)
+      },
+    },
+  },
+  {
+    path: '/u', // Users
+    whitelist: ['**'],
+    authentication: false,
+    authorization: false,
+    autoAliases: false,
     aliases: {
       'GET /:id': async function (
         this: Schema,
@@ -133,6 +150,14 @@ export default [
         _next: Function
       ) {
         return WithAuth(req, res, 'users.get', false)
+      },
+      'POST /follow': async function (
+        this: Schema,
+        req: Req,
+        res: Res,
+        _next: Function
+      ) {
+        return WithAuth(req, res, 'users.join', false)
       },
     },
   },

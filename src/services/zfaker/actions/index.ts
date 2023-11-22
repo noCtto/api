@@ -6,7 +6,8 @@ import votes from './fake.vote';
 import replies from './fake.replies';
 import follow from './fake.replies';
 import health from '@/utils/health';
-import subscribers from './fake.subscriber';
+import communitySubscribers from './fake.community.subscriber';
+import userSubscribers from './fake.user.subscribers'
 
 export default {
   communities,
@@ -16,6 +17,7 @@ export default {
   votes,
   replies,
   follow,
-  subscribers,
+  communitySubscribers,
+  userSubscribers,
   health,
 };

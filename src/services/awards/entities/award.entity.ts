@@ -4,25 +4,27 @@ export type Entity = {
   _id: ObjectId;
   type: string;
   target: ObjectId,
+  uid: ObjectId,
   createdAt: Date;
 }
 
 export const Validator = {
   type: {
-    type: 'string',
-    optional: true,
-    enum: ['csid'],
+    type: 'objectID',
+    ObjectID: ObjectId,
+    required: true,
+    convert: true
   },
   uid: {
     type: 'objectID',
     ObjectID: ObjectId,
-    optional: true,
+    required: true,
     convert: true
   },
   target: {
     type: 'objectID',
     ObjectID: ObjectId,
-    optional: true,
+    required: true,
     convert: true
   },
   createdAt: {

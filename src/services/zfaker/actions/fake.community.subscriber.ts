@@ -24,6 +24,6 @@ export default {
 
       data.push(ctx.call('communities.join', params));
     }
-    return Promise.all(data);
+    return await Promise.all(data);
   },
 };

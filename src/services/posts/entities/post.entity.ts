@@ -15,6 +15,7 @@ export type Entity = {
   labels?: any;
   createdAt: Date;
   updatedAt?: Date;
+  awards?: any;
 }
 
 export const Validator = {
@@ -96,4 +97,5 @@ export const Fields = [
   'label',
   'cid',
   'uid',
+  'awards'
 ];

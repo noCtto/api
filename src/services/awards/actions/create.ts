@@ -21,15 +21,25 @@ export default {
     this: MicroService,
     ctx: Context<Params>
   ): Promise<any> {
-    this.logger.debug('awards.actions.create', ctx.params );
-    const { target } = ctx.params;
-    const user:ObjectId = this.extractUser(ctx);
-    const given = await this.given(ctx, target, user);
+    console.log('awards.actions.create', ctx.params );
     
-    if (given) return Promise.resolve({ msg: 'Already given' })
+    const { target, type } = ctx.params;
+
+    const user:ObjectId = this.extractUser(ctx);
+
+    const award:any = await ctx.call('awards-catalog.get', { id: type } )
+
+    const { id:wid , balance }:any = await ctx.call('wallets.balance', { user })
+
+    if (balance < award.price) return "Not enough balance!"
+
     const awards: Award = await this._create(ctx, {
       target,
-      uid: String(user)
+      uid: String(user),
+      type
+    }).then(async (resp:any)=> {
+      await ctx.call('wallets.decrease', { user, id: wid , amount: award.price })
+      return resp;
     }).catch((err:any) => {
       this.logger.error('awards.actions.create.error: ', err)
     });
