@@ -1,4 +1,5 @@
 import author from './author';
+import isAuthor from './is.author';
 import community from './community';
 import comments from './comments';
 import thread from './thread';
@@ -15,5 +16,6 @@ export default {
   votes,
   commentCount,
   awards,
-  awardsCount
+  awardsCount,
+  isAuthor,
 };

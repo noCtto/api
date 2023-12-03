@@ -1,9 +1,16 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 import type { Post } from '../entities';
 // import type { Vote } from '@/services/votes/entities';
-
+const groupTypes = (data:any) => {
+  const types:any = {}
+  data.forEach((c: any) => {
+    if (types[c.type.icon]) types[c.type.icon] += 1
+    else types[c.type.icon] = 1
+  })
+  return types;
+}
 export default function commentCount(
   this: MicroService,
   _ids: object,
@@ -21,15 +28,10 @@ export default function commentCount(
           },
           populate:['types']
         })
-        .then((count: any) => {
-          const types:any = {}
-          count.forEach((c: any) => {
-            if (types[c.type.icon]) types[c.type.icon] += 1
-            else types[c.type.icon] = 1
-          })
-
+        .then((awards: any) => {
+          const types:any = groupTypes(awards)
           item.awards = {
-            total: count.length,
+            total: awards.length,
             types,
           }
           return item;
@@ -38,6 +40,7 @@ export default function commentCount(
           this.logger.error('posts.populates.comments.count.error: ', err)
           item.awards = {
             total: 0,
+            types: {},
           };
           return item;
         })

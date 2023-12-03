@@ -1,7 +1,7 @@
 import type { Context, ServiceSchema } from 'moleculer';
-import type { DbServiceMethods } from '@/mixins/mongodb.mixin';
-import DbMixin from '@/mixins/mongodb.mixin';
-import { extractUser, health, random } from '@/utils/index';
+import type { DbServiceMethods } from '../mixins/mongodb.mixin';
+import DbMixin from '../mixins/mongodb.mixin';
+import { extractUser, health, random } from '../utils/index';
 
 export type MicroServiceMethods = DbServiceMethods & {
   extractUser(ctx: Context): Promise<any>;

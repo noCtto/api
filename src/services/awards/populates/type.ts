@@ -1,5 +1,5 @@
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default async function type(
   this: MicroService,
@@ -11,7 +11,7 @@ export default async function type(
   this.logger.debug('awards.populates.type', ctx.params)
   return Promise.all(
     items.map((item: any) => {
-      return ctx.call('awards-catalog.find', { id: item.type, fields: ['_id','icon'] } ).then(([resp]:any)=>{
+      return ctx.call('awards-catalog.get', { id: String(item.type), fields: ['_id','icon'] } ).then((resp:any)=>{
         item.type = resp;
         return item;
       })

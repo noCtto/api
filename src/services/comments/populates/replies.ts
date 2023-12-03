@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default async function replies(
   this: MicroService,
@@ -19,6 +19,7 @@ export default async function replies(
             target: new ObjectId(item._id),
           },
           populate: ['replies', 'author', 'votes', 'voted', 'count'],
+          pageSize: 10
         })
         .then((comments) => {
           if (!comments) {

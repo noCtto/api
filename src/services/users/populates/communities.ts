@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default async function handler(
   this: MicroService,
@@ -9,7 +9,7 @@ export default async function handler(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  console.log('users.populates.communities', ctx.params )
+  this.logger.debug('users.populates.communities', ctx.params )
   return Promise.all(
     items.map((user: any) => {
       return ctx
@@ -19,7 +19,6 @@ export default async function handler(
           },
         })
         .then((communities) => {
-          console.log('communities.list', communities)
           user.communities = communities;
           return communities;
         })

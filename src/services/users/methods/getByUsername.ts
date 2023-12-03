@@ -1,5 +1,5 @@
 import MoleculerJs from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 const { MoleculerClientError } = MoleculerJs.Errors;
 import type { Context } from 'moleculer'
 import type {User} from '../entities'

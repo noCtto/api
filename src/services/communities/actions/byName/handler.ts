@@ -1,7 +1,7 @@
 import { Context, Errors } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../../lib/microservice';
 import type { Params } from './params'
-import { isObjectId } from '@/utils/func';
+import { isObjectId } from '../../../../utils/func';
 import type { Community } from '../../entities'
 
 export default async function handler(

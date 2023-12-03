@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 import type { Context } from 'moleculer';
 
 export default function posts(
@@ -16,7 +16,7 @@ export default function posts(
           query: { uid: new ObjectId(user._id) },
           page: ctx.params.page || 1,
           pageSize: ctx.params.pageSize || 10,
-          populate: ['votes','community', 'commentsCount', 'awards'],
+          populate: ['votes','community', 'commentCount', 'awardsCount'],
         })
         .then((res) => {
           user.posts = res;

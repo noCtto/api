@@ -1,5 +1,5 @@
 
-import type { MicroService } from '@/lib/microservice'
+import type { MicroService } from '../../../lib/microservice'
 import type { Context } from 'moleculer'
 import { ObjectId } from 'mongodb'
 export default {

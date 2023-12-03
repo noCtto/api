@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default function validateSession(
   this: MicroService,

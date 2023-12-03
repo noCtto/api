@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import type { ActionSchema as MoleculerActionSchema, Context, Service, ServiceSchema } from 'moleculer';
 import type { Collection, Document, ObjectId } from 'mongodb';
-import type { DbServiceMethods, DbServiceSchema } from '@/mixins/mongodb.mixin';
+import type { DbServiceMethods, DbServiceSchema } from '../mixins/mongodb.mixin';
 // import type { DbServiceSchema } from '@/mixins/mongodb.mixin';
 
 import type {

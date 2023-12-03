@@ -1,8 +1,8 @@
 import {Errors} from 'moleculer';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../../lib/microservice';
 import type { Params } from './params';
-import { sha256 } from '@/utils/func';
+import { sha256 } from '../../../../utils/func';
 
 const { MoleculerClientError } = Errors;
 
@@ -24,7 +24,6 @@ export default async function handler(
   if (!users || users.length === 0) {
     return Promise.reject(new MoleculerClientError('Email/Username or password is invalid!', 422))
   }
-
   if (users[0].password != sha256(password)) {
     return Promise.reject(new MoleculerClientError('Email/Username or password is invalid!', 422))
   }

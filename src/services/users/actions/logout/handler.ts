@@ -1,4 +1,4 @@
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../../lib/microservice';
 import type { Context } from 'moleculer';
 import {Errors} from 'moleculer';
 const { MoleculerClientError } = Errors;

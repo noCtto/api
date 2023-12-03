@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ObjectId } from 'mongodb';
 import dayjs from 'dayjs';
-import { randomId } from '@/utils/func';
+import { randomId } from '../../../utils/func';
 import { FakeThis } from '../faker.service';
 import type { Context } from 'moleculer';
 

@@ -97,5 +97,6 @@ export const Fields = [
   'label',
   'cid',
   'uid',
-  'awards'
+  'awards',
+  'isAuthor'
 ];

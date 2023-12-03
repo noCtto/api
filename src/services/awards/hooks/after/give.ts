@@ -1,5 +1,5 @@
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../../lib/microservice';
 
 export default function give(this: MicroService, _ctx: Context, response: any) {
   this.logger.debug('awards.hooks.after,give', _ctx.params );

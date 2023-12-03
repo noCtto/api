@@ -17,6 +17,7 @@ export default {
     type: "string"
   },
   cid: {
-    type: "string"
+    type: "string",
+    convert: true
   }
 }

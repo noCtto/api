@@ -1,9 +1,9 @@
 import path from 'path';
 import fs from 'fs';
-import { sha256 } from '@/utils/func';
+import { sha256 } from '../../../utils/func';
 
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 const uploadDir = './public/';
 

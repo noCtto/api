@@ -1,6 +1,6 @@
 import grvtr from 'gravatar';
 
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default function gravatar(this: MicroService, _ids: any, items: any) {
   return Promise.all(

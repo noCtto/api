@@ -97,5 +97,6 @@ export const Fields = [
   'updatedAt',
   'active',
   'posts',
-  'joined'
+  'joined',
+  'template'
 ];

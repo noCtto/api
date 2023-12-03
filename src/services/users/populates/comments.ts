@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default async function handler(
   this: MicroService,
@@ -9,7 +9,7 @@ export default async function handler(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  console.log('users.populates.comments', ctx.params )
+  this.logger.debug('users.populates.comments', ctx.params )
   return Promise.all(
     items.map((user: any) => {
       return ctx
@@ -17,9 +17,9 @@ export default async function handler(
           query: {
             uid: new ObjectId(user._id),
           },
+          pageSize: 10,
         })
         .then((comments) => {
-          console.log('comments.list', comments)
           user.comments = comments;
           return comments;
         })

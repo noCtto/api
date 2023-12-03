@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default async function awards(
   this: MicroService,
@@ -18,7 +18,7 @@ export default async function awards(
             target: new ObjectId(item._id),
           },
           populate: ['types'],
-          pageSize: 3,
+          pageSize: 138,
           page: 1,
         })
         .then((awards) => {

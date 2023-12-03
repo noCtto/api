@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
-import type { MicroService } from '@/lib/microservice';
+import type { MicroService } from '../../../lib/microservice';
 
 export default async function commentsCount(
   this: MicroService,
@@ -9,7 +9,7 @@ export default async function commentsCount(
   _handler: any,
   ctx: Context & { params: any}
 ) {
-  console.log('users.populates.comments.count', ctx.params )
+  this.logger.debug('users.populates.comments.count', ctx.params )
   return Promise.all(
     items.map((user: any) =>
       ctx
@@ -20,8 +20,6 @@ export default async function commentsCount(
           },
         })
         .then((comments) => {
-          console.log('comments.count', comments)
-          
           user.comments = {
             total: comments
           };
