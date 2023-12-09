@@ -1,9 +1,9 @@
 import create from './create';
 import all from './all';
-import joined from './joined';
+import moderating from './moderating';
 
 export default {
   create,
   all,
-  joined
+  moderating
 };

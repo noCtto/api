@@ -25,10 +25,21 @@ export const Validator = {
     optional: true,
     convert: true
   },
+  level: {
+    type: 'number',
+    convert: true,
+    default: 1,
+  },
   createdAt: {
     type: 'date',
     optional: true,
     default: () => new Date(),
+  },
+  createdBy: {
+    type: 'objectID',
+    ObjectID: ObjectId,
+    optional: true,
+    convert: true
   },
 };
 
@@ -38,4 +49,7 @@ export const Fields = [
   'target',
   'type',
   'createdAt',
+  'level',
+  'createdBy',
+  'community'
 ];

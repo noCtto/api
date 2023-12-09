@@ -1,5 +1,5 @@
-import type { Entity } from './subscribers.entity'
-import {Validator, Fields} from './subscribers.entity'
+import type { Entity } from './moderator.entity'
+import {Validator, Fields} from './moderator.entity'
 
 export type Subscriber = Entity;
 

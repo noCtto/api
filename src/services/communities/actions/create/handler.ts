@@ -1,7 +1,6 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '../../../../lib/microservice';
 import type {Params} from './params';
-import type { Community } from '../../entities';
 
 import { Errors as MoleculerErrors } from 'moleculer';
 const { MoleculerClientError } = MoleculerErrors;
@@ -19,11 +18,20 @@ export default async function handler(
 
   const { name } = ctx.params 
 
-  return this._create(ctx, { ...ctx.params, title: name.toLowerCase().replace(' ', '_'), uid }).then((res: Community)=> {
-    this.logger.debug('communities.actions.create.response', res)
-    return res
-  }).catch((err:any) => {
+  try {
+
+    const community = await this._create(ctx, { ...ctx.params, title: name.toLowerCase().replace(' ', '_'), uid })
+    this.logger.debug('communities.actions.create.response', community)
+    await ctx.call('moderators.create', {
+      target: community._id,
+      uid: uid
+    })
+    return community
+
+  } catch (err) {
+
     this.logger.error('communities.actions.create.error', err)
     return Promise.reject(new MoleculerClientError('Something went wrong', 422, 'communities'))
-  });
+
+  }
 };

@@ -26,10 +26,10 @@ export default {
     this: MicroService,
     ctx: Context<Params>
   ): Promise<any> {
-    this.logger.debug('moderators.actions.joined', ctx.params );
+    this.logger.debug('moderators.actions.exists', ctx.params );
     const { target } = ctx.params;
     const user:ObjectId = this.extractUser(ctx);
-    const joined = await this.joined(ctx, target, user);
-    return Promise.resolve(joined)
+    const exists = await this.exists(ctx, target, user);
+    return Promise.resolve(exists)
   },
 };

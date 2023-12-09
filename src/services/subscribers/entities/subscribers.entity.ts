@@ -38,4 +38,5 @@ export const Fields = [
   'target',
   'type',
   'createdAt',
+  'user'
 ];

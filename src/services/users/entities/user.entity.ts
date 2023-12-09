@@ -13,6 +13,7 @@ export interface Entity {
   communities?: object;
   comments?: object;
   wallet?:object;
+  moderating?:object;
 }
 
 export const Validator = {
@@ -38,5 +39,6 @@ export const Fields = [
   'posts',
   'communities',
   'comments',
-  'wallet'
+  'wallet',
+  'moderating'
 ];

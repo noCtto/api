@@ -29,8 +29,10 @@ export type Entity = {
   creator?: string;
   subscribers?: string[];
   posts?: object[];
-  uid?: Object;
-  joined?: boolean
+  uid?: ObjectId;
+  joined?: boolean,
+  owner?: boolean,
+  moderators?: Array<any>,
 }
 
 export const Validator = {
@@ -71,7 +73,7 @@ export const Validator = {
   uid: {
     type: 'objectID',
     ObjectID: ObjectId,
-    optional: true,
+    optional: false,
     convert: true,
    },
    createdAt: {
@@ -98,5 +100,8 @@ export const Fields = [
   'active',
   'posts',
   'joined',
-  'template'
+  'template',
+  'uid',
+  'owner',
+  'moderators'
 ];

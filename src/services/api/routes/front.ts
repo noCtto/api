@@ -65,6 +65,9 @@ export default [
       'POST /join': async function (this: Schema,req: Req, res: Res ) {
         return WithAuth(req, res, 'communities.join')
       },
+      'POST /:id/moderate': async function (this: Schema,req: Req, res: Res ) {
+        return WithAuth(req, res, 'communities.moderate')
+      },
       'POST /leave': async function (this: Schema,req: Req, res: Res ) {
         return WithAuth(req, res, 'communities.leave')
       },

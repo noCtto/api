@@ -9,19 +9,19 @@ export default async function handler(
   _handler: any,
   ctx: Context & { params: any }
 ) {
+  this.logger.debug('users.populates.moderating', ctx.params )
   return Promise.all(
     items.map((user: any) => {
       return ctx
-        .call('subscribers.list', {
+        .call('moderators.list', {
           query: {
-            target: new ObjectId(user._id),
+            uid: new ObjectId(user._id),
           },
-          populate: ['user'],
+          populate: 'community',
+        }).then((moderating:any) => {
+          user.moderating = moderating;
+          return moderating;
         })
-        .then((subscribers) => {
-          user.subscribers = subscribers;
-          return user;
-        }).catch();
     })
   );
 };

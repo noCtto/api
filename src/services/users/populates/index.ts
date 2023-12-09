@@ -9,6 +9,7 @@ import communitiesCount from './communities.count';
 import comments from './comments';
 import commentsCount from './comments.count';
 import wallet from './wallet'
+import moderating from './moderating'
 
 export default {
   gravatar,
@@ -21,5 +22,6 @@ export default {
   communitiesCount,
   comments,
   commentsCount,
-  wallet
+  wallet,
+  moderating
 };

@@ -30,6 +30,7 @@ export default {
     const { page, pageSize }:any = ctx.params;
 
     const offset = page > 1 ? ((page - 1) * pageSize) : 0
+
     return this._list( ctx, { ...ctx.params, sort: { createdAt : -1 }, offset });
   },
 };
