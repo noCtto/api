@@ -23,6 +23,14 @@ export default [
     },
   },
   {
+    path: "/api/openapi",
+    aliases: {
+       "GET /openapi.json": "openapi.generateDocs", // swagger scheme
+       "GET /ui": "openapi.ui", // ui
+       "GET /assets/:file": "openapi.assets", // js/css files
+    }
+  },
+  {
     path: '/p', // Posts
     whitelist: ['**'],
     authentication: false,
@@ -47,6 +55,7 @@ export default [
     },
   },
   {
+    name: 'communities',
     path: '/cs', // Communities
     whitelist: ['**'],
     authentication: false,

@@ -11,7 +11,7 @@ export default {
   },
   async handler(this: FakeThis, ctx: Context & { params: any }): Promise<any> {
     
-    const num = ctx.params.num || 150;
+    const num = ctx.params.num || 1;
     const users: any = await ctx.call('users.random', { num });
     const communities: any = await ctx.call('communities.random', { num });
     
@@ -21,7 +21,9 @@ export default {
         users[data.length], 
         communities[data.length]
       );
-      data.push(ctx.call('posts.create', post ));
+      console.log('Post', post)
+      data.push(post);
+      // data.push(ctx.call('posts.create', post ));
     }
     return Promise.all(data);
   },

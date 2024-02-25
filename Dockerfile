@@ -8,9 +8,6 @@ RUN yarn install --production
 
 COPY ./dist /app/
 
-EXPOSE ${PORT}
+EXPOSE 3000
 
-
-
-
-# CMD ["./node_modules/moleculer/bin/moleculer-runner.js", "--env", "--config", "moleculer.config.js", "/app/servicesservice.js"]
+CMD ["npm", "start"]
