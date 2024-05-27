@@ -6,7 +6,7 @@ const brokerConfig: BrokerOptions = {
   logger: true,
   logLevel: 'info',
   cacher: false,
-  transporter: 'TCP',
+  transporter: "nats://nats:4222",
   requestTimeout: 60 * 1000,
   maxCallLevel: 0,
   heartbeatInterval: 5,

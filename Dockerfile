@@ -6,8 +6,8 @@ COPY package.json ./
 
 RUN yarn install --production
 
-COPY ./dist /app/
+COPY ./dist /app/dist
 
-EXPOSE 3000
+EXPOSE 42069
 
 CMD ["npm", "start"]

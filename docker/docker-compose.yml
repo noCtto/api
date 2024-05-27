@@ -1,37 +1,25 @@
 services:
   
   gateway:
-    image: wrdz-api
-    command: ['ls']
+    image: micros
+    env_file:
+      - ../.env
     environment:
-      - SERVICE=gateway
-    volumes:
-      - '../.env:/app/dist/.env'
-  # users:
-  #   image: wrdz-api
-  #   command: ['yarn', 'start']
-  #   environment:
-  #     - SERVICE=users
+      - SERVICE=api
+    ports:
+      - 42069:42069
+      
+  users:
+    image: micros
+    env_file:
+      - ../.env
+    environment:
+      - SERVICE=users
 
-  #   volumes:
-  #     - '../.env:/app/dist/.env'
+  nats:
+    hostname: nats
+    image: nats
+    ports:
+      - 4222:4222
 
-  # mongo:
-  #   image: mongo
-  #   environment:
-  #     - MONGO_INITDB_ROOT_PASSWORD=rootroot
-  #     - MONGO_INITDB_ROOT_USERNAME=root
-  #     - MONGO_INITDB_DATABASE=admin
-  #   ports:
-  #     - 27017:27017
-  #   volumes:
-  #     - /Users/rfcku/Sites/nocheto/data/db:/data/db
-  # nats:
-  #   image: nats
-  #   ports:
-  #     - 4222:4222
-  # redis:
-  #   image: redis:alpine
-  #   ports:
-  #     - 6379:6379
 version: '3'
