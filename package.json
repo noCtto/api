@@ -26,7 +26,6 @@
   "devDependencies": {
     "@babel/preset-env": "^7.24.6",
     "@babel/preset-typescript": "^7.24.6",
-    "@typegoose/typegoose": "^10.5.0",
     "@types/compression": "^1.7.5",
     "@types/faker": "^6.6.9",
     "@types/gravatar": "^1.8.6",
@@ -68,7 +67,7 @@
     "dayjs": "^1.11.11",
     "dotenv": "^10.0.0",
     "gravatar": "^1.8.2",
-    "jsonwebtoken": ">=9.0.0",
+    "jsonwebtoken": "^9.0.2",
     "md5": "^2.3.0",
     "mime": "^3.0.0",
     "moleculer": "^0.14.33",
