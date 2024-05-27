@@ -59,9 +59,6 @@ dependencies:
   moleculer-db-adapter-mongo:
     specifier: ^0.4.17
     version: 0.4.17(moleculer@0.14.21)
-  moleculer-db-adapter-sequelize:
-    specifier: ^0.2.11
-    version: 0.2.11(moleculer@0.14.21)(sequelize@5.22.5)
   moleculer-io:
     specifier: ^2.1.0
     version: 2.1.0(moleculer@0.14.21)
@@ -2594,10 +2591,6 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /any-promise@1.3.0:
-    resolution: {integrity: sha512-7UvmKalWRt1wgjL1RrGxoSJW/0QZFIegpeGvZG9kjp8vrRu55XTHbwnqq2GpXm9uLbcuhxm3IqX9OB4MZR1b2A==}
-    dev: false
-
   /anymatch@3.1.3:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
@@ -3281,13 +3274,6 @@ packages:
     engines: {node: '>=0.8'}
     dev: true
 
-  /cls-bluebird@2.1.0:
-    resolution: {integrity: sha512-XVb0RPmHQyy35Tz9z34gvtUcBKUK8A/1xkGCyeFc9B0C7Zr5SysgFaswRVdwI5NEMcO+3JKlIDGIOgERSn9NdA==}
-    dependencies:
-      is-bluebird: 1.0.2
-      shimmer: 1.2.1
-    dev: false
-
   /clui@0.3.6:
     resolution: {integrity: sha512-Z4UbgZILlIAjkEkZiDOa2aoYjohKx7fa6DxIh6cE9A6WNWZ61iXfQc6CmdC9SKdS5nO0P0UyQ+WfoXfB65e3HQ==}
     dependencies:
@@ -3944,10 +3930,6 @@ packages:
   /dotenv@10.0.0:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
     engines: {node: '>=10'}
-    dev: false
-
-  /dottie@2.0.4:
-    resolution: {integrity: sha512-iz64WUOmp/ECQhWMJjTWFzJN/wQ7RJ5v/a6A2OiCwjaGCpNo66WGIjlSf+IULO9DQd0b4cFawLOTbiKSrpKodw==}
     dev: false
 
   /ecc-jsbn@0.1.2:
@@ -5251,11 +5233,6 @@ packages:
     hasBin: true
     dev: true
 
-  /inflection@1.12.0:
-    resolution: {integrity: sha512-lRy4DxuIFWXlJU7ed8UiTJOSTqStqYdEb4CEbtXfNbkdj3nH1L+reUWiE10VWcJS2yR7tge8Z74pJjtBjNwj0w==}
-    engines: {'0': node >= 0.4.0}
-    dev: false
-
   /inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
     dependencies:
@@ -5329,11 +5306,6 @@ packages:
     dependencies:
       binary-extensions: 2.2.0
     dev: true
-
-  /is-bluebird@1.0.2:
-    resolution: {integrity: sha512-PDRu1vVip5dGQg5tfn2qVCCyxbBYu5MhYUJwSfL/RoGBI97n1fxvilVazxzptZW0gcmsMH17H4EVZZI5E/RSeA==}
-    engines: {node: '>=0.10.0'}
-    dev: false
 
   /is-boolean-object@1.1.2:
     resolution: {integrity: sha512-gDYaKHJmnj4aWxyj6YHyXVpdQawtVLHU5cb+eztPGczf6cjuTdwve5ZIEfgXqH4e57An1D1AKf8CZ3kYrQRqYA==}
@@ -6998,18 +6970,6 @@ packages:
       - snappy
     dev: false
 
-  /moleculer-db-adapter-sequelize@0.2.11(moleculer@0.14.21)(sequelize@5.22.5):
-    resolution: {integrity: sha512-EkUoMzjn5CqNmuMNJI2zAb2cTTs/GTmAQJw8CMl2P8Y6pn5Q6Yq0WwvNH4GYJIN+DNeWPfJ1zlE1In/haBQ5FQ==}
-    engines: {node: '>= 8.x.x'}
-    peerDependencies:
-      moleculer: ^0.12.0 || ^0.13.0 || ^0.14.0
-      sequelize: ^5.9.4
-    dependencies:
-      bluebird: 3.7.2
-      moleculer: 0.14.21
-      sequelize: 5.22.5
-    dev: false
-
   /moleculer-db@0.8.15(moleculer@0.14.21):
     resolution: {integrity: sha512-OYc0yts6jPdemzZ/lvIZENDL1MhboRDGTZe8d/Vj8r9bEE7M0rFC3ZDei+F2Qremb8xvUUBixWJeVC+tpjsfOA==}
     engines: {node: '>= 8.x.x'}
@@ -8249,12 +8209,6 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
-  /retry-as-promised@3.2.0:
-    resolution: {integrity: sha512-CybGs60B7oYU/qSQ6kuaFmRd9sTZ6oXSc0toqePvV74Ac6/IFZSI1ReFQmtCN+uvW1Mtqdwpvt/LGOiCBAY2Mg==}
-    dependencies:
-      any-promise: 1.3.0
-    dev: false
-
   /reusify@1.0.4:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
@@ -8330,6 +8284,7 @@ packages:
   /semver@6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
     hasBin: true
+    dev: true
 
   /semver@7.0.0:
     resolution: {integrity: sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==}
@@ -8361,35 +8316,6 @@ packages:
       on-finished: 2.4.1
       range-parser: 1.2.1
       statuses: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /sequelize-pool@2.3.0:
-    resolution: {integrity: sha512-Ibz08vnXvkZ8LJTiUOxRcj1Ckdn7qafNZ2t59jYHMX1VIebTAOYefWdRYFt6z6+hy52WGthAHAoLc9hvk3onqA==}
-    engines: {node: '>= 6.0.0'}
-    dev: false
-
-  /sequelize@5.22.5:
-    resolution: {integrity: sha512-ySIHof18sJbeVG4zjEvsDL490cd9S14/IhkCrZR/g0C/FPlZq1AzEJVeSAo++9/sgJH2eERltAIGqYQNgVqX/A==}
-    engines: {node: '>=6.0.0'}
-    deprecated: 'Please update to v6 or higher! A migration guide can be found here: https://sequelize.org/v6/manual/upgrade-to-v6.html'
-    dependencies:
-      bluebird: 3.7.2
-      cls-bluebird: 2.1.0
-      debug: 4.3.4
-      dottie: 2.0.4
-      inflection: 1.12.0
-      lodash: 4.17.21
-      moment: 2.29.4
-      moment-timezone: 0.5.33
-      retry-as-promised: 3.2.0
-      semver: 6.3.0
-      sequelize-pool: 2.3.0
-      toposort-class: 1.0.1
-      uuid: 8.3.2
-      validator: 13.9.0
-      wkx: 0.4.8
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -8444,10 +8370,6 @@ packages:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
     dev: true
-
-  /shimmer@1.2.1:
-    resolution: {integrity: sha512-sQTKC1Re/rM6XyFM6fIAGHRPVGvyXfgzIDvzoq608vM+jeyVD0Tu1E6Np0Kc2zAIFWIj963V2800iF/9LPieQw==}
-    dev: false
 
   /side-channel@1.0.4:
     resolution: {integrity: sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==}
@@ -8918,10 +8840,6 @@ packages:
     engines: {node: '>=0.6'}
     dev: false
 
-  /toposort-class@1.0.1:
-    resolution: {integrity: sha512-OsLcGGbYF3rMjPUf8oKktyvCiUxSbqMMS39m33MAjLTC1DVIH6x3WSt63/M77ihI09+Sdfk1AXvfhCEeUmC7mg==}
-    dev: false
-
   /touch@3.1.0:
     resolution: {integrity: sha512-WBx8Uy5TLtOSRtIq+M03/sKDrXCLHxwDcquSP2c43Le03/9serjQBIztjRz6FkJez9D/hleyAXTBGLwwZUw9lA==}
     hasBin: true
@@ -9276,11 +9194,6 @@ packages:
     hasBin: true
     dev: false
 
-  /uuid@8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
-    hasBin: true
-    dev: false
-
   /v8-compile-cache-lib@3.0.1:
     resolution: {integrity: sha512-wa7YjyUGfNZngI/vtK0UHAN+lgDCxBPCylVXGp0zu59Fz5aiGtNXaq3DhIov063MorB+VfufLh3JlF2KdTK3xg==}
     dev: true
@@ -9318,11 +9231,6 @@ packages:
       spdx-correct: 3.2.0
       spdx-expression-parse: 3.0.1
     dev: true
-
-  /validator@13.9.0:
-    resolution: {integrity: sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==}
-    engines: {node: '>= 0.10'}
-    dev: false
 
   /vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
@@ -9486,12 +9394,6 @@ packages:
     dependencies:
       isexe: 2.0.0
     dev: true
-
-  /wkx@0.4.8:
-    resolution: {integrity: sha512-ikPXMM9IR/gy/LwiOSqWlSL3X/J5uk9EO2hHNRXS41eTLXaUFEVw9fn/593jW/tE5tedNg8YjT5HkCa4FqQZyQ==}
-    dependencies:
-      '@types/node': 18.14.6
-    dev: false
 
   /word-wrap@1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}

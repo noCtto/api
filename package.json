@@ -78,7 +78,6 @@
     "moleculer-auto-openapi": "^1.1.6",
     "moleculer-db": "^0.8.15",
     "moleculer-db-adapter-mongo": "^0.4.17",
-    "moleculer-db-adapter-sequelize": "^0.2.11",
     "moleculer-io": "^2.1.0",
     "moleculer-mail": "^1.2.5",
     "moleculer-prometheus": "^0.2.5",
