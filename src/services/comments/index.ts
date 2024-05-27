@@ -9,7 +9,7 @@ import {
 } from './entities/comment.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'comments',
   fields,
   validator,

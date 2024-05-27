@@ -5,7 +5,7 @@ import {
 } from './entities/award.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'awardsCatalog',
   fields,
   validator,

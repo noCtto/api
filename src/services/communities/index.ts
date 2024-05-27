@@ -9,7 +9,7 @@ import {
 } from './entities/community';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'communities',
   fields,
   validator,

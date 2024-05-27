@@ -9,7 +9,7 @@ import {
 } from './entities/subscribers.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'subscribers',
   fields,
   populates,

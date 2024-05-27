@@ -10,7 +10,7 @@ import {
 } from './entities/thread.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'threads',
   fields,
   validator,

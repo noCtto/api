@@ -8,7 +8,7 @@ import {
 } from './entities/voters.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'voters',
   fields,
   validator,

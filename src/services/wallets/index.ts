@@ -8,7 +8,7 @@ import {
 } from './entities/wallet.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'wallets',
   fields,
   validator,

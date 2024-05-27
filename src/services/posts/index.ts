@@ -9,7 +9,7 @@ import {
 } from './entities/post.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'posts',
   fields,
   validator,

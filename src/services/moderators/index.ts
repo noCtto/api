@@ -9,7 +9,7 @@ import {
 } from './entities/moderator.entity';
 
 export default {
-  database: 'nocheto',
+  database: process.env.DB_NAME,
   collection: 'moderators',
   fields,
   validator,
