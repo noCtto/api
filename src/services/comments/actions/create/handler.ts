@@ -12,25 +12,11 @@ export default async function handler(this: MicroService, ctx: Context<Params>) 
   const uid: ObjectId = this.extractUser(ctx);
   if (!uid) return Promise.reject(new MoleculerClientError('User not found', 404));
 
-  const comment: Comment = await this._create(
+  const comment: Comment = await this._create(ctx, { ...ctx.params, uid });
+  this.new(ctx, ctx.params.target, uid.toString());
+  return this.transformDocuments(
     ctx,
-    { ...ctx.params, uid }
-    ).then( async (comment: Comment) => {
-      
-      await ctx.call('votes.create', {
-        type: 'cid',
-        target: comment._id,
-        uid,
-      });
-      
-      return comment;
-
-  }).then((json: Comment) =>
-    this.transformDocuments(
-      ctx,
-      { populate: ['votes', 'author', 'replies'] },
-      json
-    )
+    { populate: ['votes', 'author', 'replies'] },
+    comment
   );
-  return comment;
 };

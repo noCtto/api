@@ -1,6 +1,5 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '../../../lib/microservice';
-import type { Award } from '../entities'
 import { ObjectId } from 'mongodb';
 
 type Params = {
@@ -12,6 +11,7 @@ const params = {
   target: {
     type: 'string',
     required: true,
+    convert: true,
   },
 }
 
@@ -25,24 +25,22 @@ export default {
     
     const { target, type } = ctx.params;
 
-    const user:ObjectId = this.extractUser(ctx);
+    const uid:ObjectId = this.extractUser(ctx);
 
-    const award:any = await ctx.call('awards-catalog.get', { id: type } )
+    if (!this.afford(ctx, { uid: uid, award: type })) {
+      return "Not enough balance!";
+    }
 
-    const { id:wid , balance }:any = await ctx.call('wallets.balance', { user })
-
-    if (balance < award.price) return "Not enough balance!"
-
-    const awards: Award = await this._create(ctx, {
-      target,
-      uid: String(user),
-      type
-    }).then(async (resp:any)=> {
-      await ctx.call('wallets.decrease', { user, id: wid , amount: award.price })
-      return resp;
-    }).catch((err:any) => {
-      this.logger.error('awards.actions.create.error: ', err)
+    return this.buy(ctx, { uid, award: type }).then((_recipt:any) => {
+      return this._cretate(ctx, {
+        target,
+        uid,
+        type
+      }).then(async (resp:any) => {
+        return resp;
+      }).catch((err:any) => {
+        this.logger.error('awards.actions.create.error: ', err)
+      })
     });
-    return awards;
   },
 };

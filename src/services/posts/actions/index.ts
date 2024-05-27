@@ -1,15 +1,17 @@
-import all from './all';
+import all from '../../../utils/action.all';
 import create from './create';
-import push from './push';
 import upload from './upload';
 import trending from './trending';
 import vote from './vote';
+import remove from './remove';
+import update from './update';
 
 export default {
   all,
   create,
-  push,
   upload,
   trending,
   vote,
+  remove,
+  update
 };

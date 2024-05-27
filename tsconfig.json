@@ -34,6 +34,6 @@
   },
   "compileOnSave": true,
   "include": ["./src/**/*", "moleculer.dev.config.ts"],
-  "exclude": ["node_modules/**/*", "test/**/*", ".commitlintrc.ts", "./dist"],
+  "exclude": ["node_modules/**/*", "__test__/**/*", ".commitlintrc.ts", "./dist"],
   "preset": "ts-jest"
 }

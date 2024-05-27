@@ -8,7 +8,8 @@ export type Params = {
 export default {
   target: {
     type: 'string',
-    required: true
+    required: true,
+    convert: true,
   },
   type: {
     type: 'string',

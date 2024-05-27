@@ -1,37 +1,46 @@
 import { ObjectId } from 'mongodb';
-export default function extractUser(ctx: any): ObjectId | null {
 
-  let meta, params = null;
+import type { MicroService } from 'lib/microservice'
 
-  if (!ctx.params && !ctx.meta) return null
+export default function extractUser(this: MicroService, ctx:any): ObjectId | null {
+
+  if (!ctx) return null;
+
+  let {meta, params} = ctx;
+
+  if (!params && !meta) return null
   
   try {
-    meta = JSON.parse(JSON.stringify(ctx.meta));
-  } catch (err) {}
+    meta = JSON.parse(JSON.stringify(meta));
+  } catch (err) {
+    this.logger.error('Error parsing meta', err);
+    return null;
+  }
 
+  let userId = null;
   if (meta?.user?.user?.userId) {
     // this.logger.debug('Meta user', meta.user.user.userId);
-    return new ObjectId(meta.user.user.userId);
+    userId = meta.user.user.userId;
   }
-  
   if (meta?.user?.id) {
     // this.logger.debug('Meta user', meta.user.user.userId);
-    return new ObjectId(meta.user.id);
+    userId = meta.user.id;
   }
-
   if (meta?.oauth?.user?.id) {
     // this.logger.debug('Meta oauth', meta.oauth.user.id);
-    return new ObjectId(meta.oauth.user.id);
+    userId = meta.oauth.user.id;
   }
-
-  try {
-    params = JSON.parse(JSON.stringify(ctx.params));
-  } catch (err) {}
-
+  
   if (params?.uid) {
-    // this.logger.debug('Params uid', params.uid);
-    return new ObjectId(params.uid);
-  }
+    userId = params.uid;
+  }  
 
-  return null;
+  if (userId) {
+    try {
+      userId = new ObjectId(userId);
+    } catch (err) {
+      this.logger.error('Error parsing userId', err);
+    }
+  };
+  return userId;
 }

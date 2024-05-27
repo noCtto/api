@@ -8,6 +8,7 @@ const jestConfig: JestConfigWithTsJest = {
   moduleNameMapper: {
     "@/(.*)$": "<rootDir>/$1",
   },
+  modulePathIgnorePatterns: ["k6s"]
 }
 
 export default jestConfig

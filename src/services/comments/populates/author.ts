@@ -11,17 +11,12 @@ export default async function author(
   this.logger.debug('comments.populates.author', ctx.params)
   return Promise.all(
     items.map((item: any) =>
-      ctx
-        .call('users.get', {
-          id: item.uid.toString(),
-          populate: ['gravatar'],
-          fields: ['username', 'imageUrl', '_id'],
-        })
-        .then((user) => {
+      this.author(ctx, item.author.toString())
+        .then((user:any) => {
           item.author = user;
           return item;
         })
-        .catch((err) => {
+        .catch((err:any) => {
           this.logger.error('comments.populates.author.error: ', err);
         })
     )

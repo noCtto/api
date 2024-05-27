@@ -1,7 +1,7 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '../../../lib/microservice';
 // import type { ObjectId } from 'mongodb'
-import { MoleculerClientError } from '@/utils/error';
+import { MoleculerClientError } from '../../../utils/error';
 
 type Params = {
   id: string,

@@ -22,6 +22,7 @@ export default {
     const { id, d } = ctx.params;
     const post: Post = await this._get(ctx, { id });
     if (!post) return Promise.reject(new Error('no post'));
-    return ctx.call('votes.vote', { target: post, d });
+    await this.votePost(ctx, post, d);
+    return this._get(ctx, { id });
   },
 };

@@ -1,7 +1,8 @@
-import actions from './actions';
 import methods from './methods';
 import hooks from './hooks';
 import populates from './populates';
+import type { MicroService } from '../../lib/microservice';
+import all from '../../utils/action.all';
 
 import {
   Validator as validator,
@@ -13,8 +14,16 @@ export default {
   collection: 'threads',
   fields,
   validator,
-  actions,
+  actions: { all },
   methods,
   hooks,
   populates,
+  events: {
+    'new.post': {
+      group: "other",
+      handler(this: MicroService, ctx: any) {
+         this.logger.info('THREADS: Post created event!', ctx.params);
+      }
+    },
+  },
 };

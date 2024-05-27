@@ -1,5 +1,4 @@
 import actions from './actions';
-import hooks from './hooks';
 import methods from './methods';
 import populates from './populates';
 
@@ -14,7 +13,7 @@ export default {
   fields,
   validator,
   actions,
-  hooks,
+  hooks: {},
   methods,
   populates
 };

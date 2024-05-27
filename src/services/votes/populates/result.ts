@@ -11,7 +11,7 @@ export default function voted(
 ) {
   this.logger.debug('votes.populates.count', ctx.params )
   return Promise.all(items.map((item: any) => {
-    return ctx.call('voters.find', {
+    return ctx.call('votes.find', {
       query: {
         target: new ObjectId(item._id),
       }

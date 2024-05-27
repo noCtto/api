@@ -16,5 +16,5 @@ export default {
   actions,
   methods,
   hooks,
-  populates,
+  populates
 };

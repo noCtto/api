@@ -11,15 +11,8 @@ export default async function comments(
 ) {
   return Promise.all(
     items.map((item: any) => {
-      return ctx
-        .call('comments.list', {
-          query: {
-            target: new ObjectId(item._id),
-            type: 'pid',
-          },
-          populate: ['replies', 'author', 'votes', 'count', 'total'],
-        })
-        .then((comments) => {
+      return this.comments(ctx, { id: new ObjectId(item._id), page: 1, limit: 10})
+        .then((comments:any) => {
           item.comments = comments;
           return item;
         });

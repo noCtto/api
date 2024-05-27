@@ -17,12 +17,4 @@ export default {
   methods,
   hooks,
   populates,
-  // events: {
-  //   'posts.created': {
-  //     group: "other",
-  //     handler(ctx: any) {
-  //       this.logger.info('Post created', ctx.params);
-  //     }
-  //   },
-  // },
 };

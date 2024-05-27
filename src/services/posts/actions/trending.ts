@@ -1,7 +1,5 @@
 import type { Context } from 'moleculer';
 import type { MicroService } from '../../../lib/microservice';
-import type { Vote } from '../../votes/entities'
-import type { Post } from '../entities'
 
 export default {
   params: {
@@ -15,30 +13,9 @@ export default {
     ctx: Context & { params: any }
   ): Promise<Object[]> {
     this.logger.debug('posts.actions.trending', ctx.params )
-
     const { page, limit } = ctx.params;
-    
-    const trending: [Vote] = await ctx.call('votes.trending', { page, limit });
-    
-    const posts: [Post] = await ctx.call('posts.find', {
-      query: { vid: { $in: trending } },
-      fields: [
-        '_id',
-        'tid',
-        'uid',
-        'title',
-        'text',
-        'createdAt',
-        'updatedAt',
-        'vid',
-        'body',
-        'comments',
-        'votes',
-        'author',
-      ],
-      populate: ['votes', 'author', 'comments', 'votes'],
-    });
-    this.logger.debug('posts.actions.trending', posts );
-    return posts;
+    const trending: any = await this.trending(ctx, page, limit);
+    if (!trending) return Promise.reject(new Error('no trending posts'));
+    return this._list(ctx, { id: { $in: trending }, page, limit, sort: { createdAt: -1 }, populate: ['votes', 'author', 'comments', 'votes'] });
   },
 };

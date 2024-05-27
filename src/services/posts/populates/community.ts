@@ -12,24 +12,12 @@ export default function community(
   this.logger.debug('posts.populates.community', _ids, items, _handler, ctx.params);
   return Promise.all(
     items.map((item: Post) =>
-      ctx
-        .call('communities.get', {
-          id: item.cid.toString(),
-          fields: [
-            '_id',
-            'name',
-            'slug',
-            'description',
-            'image',
-            'icon',
-            'banner',
-          ],
-        })
+      this.community(ctx, { _id: item.cid })
         .then((data: any) => {
           item.community = data;
           return item;
         })
-        .catch((err) => {
+        .catch((err:any) => {
           console.error('posts.populates.community', err)
           item.community = {}
           return item

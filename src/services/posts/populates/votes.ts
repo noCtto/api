@@ -14,18 +14,13 @@ export default function votes(
   this.logger.debug('posts.populates.votes', ctx.params )
   return Promise.all(
     items.map((item: Post) =>
-      ctx
-        .call('votes.find', {
-          query: { target: new ObjectId(item._id) },
-          populate: ['voters', 'result', 'voted'],
-          fields: ['_id', 'result', 'voters', 'voted'],
-        })
+      this.votes(ctx, { post: new ObjectId(item._id) })
         .then(([votes]: any) => {
           if (!votes) throw votes;
           item.votes = votes;
           return item;
         })
-        .catch((err) => {
+        .catch((err:any) => {
           this.logger.error('posts.populates.votes.error: ', err)
           item.votes = {};
           return item;

@@ -9,19 +9,10 @@ export default async function awards(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  console.log('posts.populates.awards', ctx.params )
   return Promise.all(
     items.map((item: any) => {
-      return ctx
-        .call('awards.list', {
-          query: {
-            target: new ObjectId(item._id),
-          },
-          populate: ['types'],
-          pageSize: 138,
-          page: 1,
-        })
-        .then((awards) => {
+      return this.awards(ctx, { post: new ObjectId(item._id) })
+        .then((awards:any) => {
           item.awards = awards;
           return item;
         });

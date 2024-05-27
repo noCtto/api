@@ -10,11 +10,7 @@ export default function thread(
 ) {
   return Promise.all(
     items.map((item: any) =>
-      ctx
-        .call('threads.get', {
-          id: item.tid.toString(),
-          populate: ['comments'],
-        })
+      this.thread(ctx, { _id: item.tid })
         .then((data: any) => {
           const o = item;
           o.thread = data;
