@@ -75,7 +75,6 @@
     "moleculer-db": "^0.8.25",
     "moleculer-db-adapter-mongo": "^0.4.19",
     "moleculer-io": "^2.2.0",
-    "moleculer-mail": "^1.2.6",
     "moleculer-prometheus": "^0.2.5",
     "moleculer-web": "^0.10.7",
     "moment-timezone": "^0.5.45",
