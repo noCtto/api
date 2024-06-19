@@ -5,50 +5,44 @@ import type { MicroService } from '../../../lib/microservice';
 import { Errors as MoleculerErrors } from 'moleculer';
 const { MoleculerClientError } = MoleculerErrors;
 
-
 type Params = {
-  id: string,
-  userTarget: string,
+  id: string
 }
 
 const params = {
   id: {
     type: 'string',
     required: true
-  },
-  userTarget: {
-    type: 'string',
-    required: true,
-  },
+  }
 }
 
 export default {
-  rest: 'POST /moderate',
+  rest: 'POST /subscribe',
   params,
   async handler(
     this: MicroService,
     ctx: Context & { params: Params }
   ) {
-        
     try{
 
+      const user = this.extractUser(ctx)
       const { id } = ctx.params;
-      const user = this.extractUser(ctx);
-
-      if (!user) {
-        return Promise.reject(new MoleculerClientError('User not found',404,'communities'))
-      }
-
-      const community:any = await this._get(ctx, { id })
+  
+      const community:any = await this._get(ctx, { id, populate:['join'] })
+  
       if (!community) {
         return Promise.reject(new MoleculerClientError('Community not found',404,'communities'))
       }
+  
+      if (community.joined) {
+        return Promise.resolve({ success: community.joined })
+      }
+  
+      await this.broadcast(ctx, 'subscribed', { target: id, uid: user })
+      return Promise.resolve({ success: true })
 
-      await this.moderate(ctx, id, user)
-
-    } catch(err) {
-      return Promise.reject(new MoleculerClientError('Error moderating community',500,'communities'))
+    } catch (err) {
+      return Promise.reject(new MoleculerClientError('Error subscribing to community',500,'communities'))
     }
-    
   },
 };

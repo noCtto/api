@@ -1,14 +1,12 @@
 
 import type { MicroService } from '../../../lib/microservice'
 import type { Context } from 'moleculer'
+import { externalResource  } from '@/utils/paginate.resource'
 
 export default {
-  async new(this: MicroService, ctx:Context, target: string, uid: string ){
-    this.logger.debug('comments.methods.new', ctx.params )
-    this.broadcast('comments.new', { target, uid })
-  },
+  externalResource,
   async voters(this: MicroService, _ctx:Context, target: string){
-    return this.adapter.db.collection('voters').find({ type: 'cid', target }).toArray()
+    return this.externalResource('voters', { target, type: 'cid' })
   },
   async author(this: MicroService, _ctx:Context, target: string){
     return this.adapter.db.collection('users').findOne({ _id: target })

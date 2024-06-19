@@ -1,7 +1,9 @@
 import type { MicroService } from '../../../lib/microservice'
 import type { Context } from 'moleculer'
+import { externalResource } from '@/utils/paginate.resource';
 
 export default {
+  externalResource,
   async voted(this: MicroService, _ctx:Context, target: string, uid: string) {
     const voted = await this.adapter.db.collection('voters').findOne({ target, uid });
     if (voted) {
@@ -20,7 +22,7 @@ export default {
     return vote;
   },
   async voters(this: MicroService, _ctx: Context, target: string) {
-    return this.adapter.db.collection('voters').find({ target }).toArray();
+    return this.externalResource('voters', { target });
   },
   async trending(this: MicroService, ctx: Context) {
     const votes = await this.adapter.db.collection('voters').aggregate([
@@ -35,5 +37,20 @@ export default {
       },
     ]).toArray();
     return this._list(ctx, { query: {$in: votes.map((m:any) => m._id) }, page: 1, limit: 10});
+  },
+  async result(this: MicroService, _ctx: Context, target: string) {
+    const votes = await this.adapter.db.collection('voters').find({ target }).toArray();
+    let { positive, negative } = votes.reduce(
+      (acc:any, vote:any) => {
+        if (vote.d) {
+          acc.positive += 1;
+        } else {
+          acc.negative += 1;
+        }
+        return acc;
+      },
+      { positive: 0, negative: 0 }
+    );
+    return positive - negative;
   }
 };

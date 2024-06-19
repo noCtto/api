@@ -13,17 +13,7 @@ export default async function replies(
     items.map((item: any) =>
       this.replies(ctx, item._id.toString())
         .then((comments:any) => {
-          if (!comments) {
-            item.replies = {
-              page: 0,
-              pageSize: 1,
-              rows: [],
-              total: 0,
-              totalPages: 0,
-            };
-          } else {
-            item.replies = comments;
-          }
+          item.replies = comments;
           return item;
         })
     )

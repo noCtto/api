@@ -11,15 +11,12 @@ export default function voted(
   const user = this.extractUser(ctx);
   console.log('communities.populates.joined', ctx.params )
   if (!user) return items.map((item:any) => item.joined = false)
-  
+
   return Promise.all(
     items.map((item: any) => {
-      return ctx.call('subscribers.joined', {
-        uid: String(user),
-        target: String(item._id)
-      }).then((subscribed:any) => {
-        item.joined = subscribed
-      }).catch((err) => {
+      return this.subscribed(ctx, item._id, user).then((subscribed:any) => {
+        item.joined = subscribed ? true : false
+      }).catch((err:any) => {
         console.error('communities.populates.joined error:', err)
       })
     })

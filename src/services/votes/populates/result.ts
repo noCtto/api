@@ -9,34 +9,12 @@ export default function voted(
   _handler: any,
   ctx: Context & { params: any }
 ) {
-  this.logger.debug('votes.populates.count', ctx.params )
   return Promise.all(items.map((item: any) => {
-    return ctx.call('votes.find', {
-      query: {
-        target: new ObjectId(item._id),
-      }
-    }).then((votes:any) => {
-      let positive = 0;
-      let negative = 0;
-
-      votes.forEach((vote:any) => {
-
-        if (vote.d == true) {
-          positive += 1
-        }
-
-        if (vote.d == false) {
-          negative += 1
-        }
-
-      });
-
-      item.result = positive - negative
-      return item
-
-
-    }).catch((err)=> {
-      console.log('THIS ERROR', err)
+    return this.result(ctx, { target: item._id }).then((result:any) => {
+      item.result = result;
+      return result;
+    }).catch((err:any)=> {
+      console.error('THIS RESULT ERROR', err)
     })
   }))
 }

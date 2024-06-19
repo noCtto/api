@@ -1,8 +1,11 @@
-import { Context, Errors } from 'moleculer';
+import { Context } from 'moleculer';
 import type { MicroService } from '../../../../lib/microservice';
 import type { Params } from './params'
 import { isObjectId } from '../../../../utils/func';
 import type { Community } from '../../entities'
+
+import { Errors as MoleculerErrors } from 'moleculer';
+const { MoleculerClientError } = MoleculerErrors;
 
 export default async function handler(
   this: MicroService,
@@ -44,7 +47,7 @@ export default async function handler(
       return community;
     }).catch((err: any) => {
       this.logger.error('communities.actions.byName.error:', err)
-      return Promise.reject(new Errors.MoleculerError(err.message, 500, 'ERR_FATAL', { err }));
+      return Promise.reject(new MoleculerClientError(err.message, 500, 'ERR_FATAL', { err }));
 
     });
 };

@@ -14,12 +14,10 @@ export default function voted(
   if (!user) return items.map((item:any) => item.voted = false)
 
   return Promise.all(items.map((item: any) => {
-    return ctx.call('voters.voted', { 
-      target: item._id, 
-      uid: String(user) 
-    }).then((voted:any) => {
-      item.voted = voted
-      return item
+    return this.voted(ctx, { target: item._id, uid: user })
+      .then((voted:any) => {
+        item.voted = voted ? true : false;
+        return item
     })
   }))
 }

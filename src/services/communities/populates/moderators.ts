@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import type { Context } from 'moleculer';
 import type { MicroService } from '../../../lib/microservice';
 
@@ -7,19 +6,12 @@ export default async function handler(
   _ids: any,
   items: any,
   _handler: any,
-  ctx: Context & { params: { community: string; populate: string } }
+  ctx: Context & { params: { community: string; page:number, limit: number } }
 ) {
-  console.log('communities.populates.moderators', ctx.params);
   return Promise.all(
     items.map((community: any) => {
-      return ctx
-        .call('moderators.list', {
-          query: {
-            target: new ObjectId(community._id),
-          },
-        })
-        .then((moderators) => {
-          console.log('This is the moderators', moderators)
+      return this.moderators(ctx, community._id, ctx.params.page || 1, ctx.params.limit || 10)
+        .then((moderators:any) => {
           community.moderators = moderators;
           return community;
         });

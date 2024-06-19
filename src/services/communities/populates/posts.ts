@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+
 import type { Context } from 'moleculer';
 import type { MicroService } from '../../../lib/microservice';
 
@@ -7,31 +7,13 @@ export default async function posts(
   _ids: any,
   items: any,
   _handler: any,
-  ctx: Context & { params: { community: string; populate: string } }
+  ctx: Context & { params: { community: string; page: number, limit: number } }
 ) {
   this.logger.debug('communities.populates.posts', ctx.params )
   return Promise.all(
     items.map((community: any) =>
-      ctx
-        .call('posts.list', {
-          ...ctx.params,
-          query: {
-            cid: new ObjectId(community._id),
-          },
-          populate: ['votes', 'commentCount', 'author'],
-          // fields: [
-          //   '_id',
-          //   'votes',
-          //   'author',
-          //   'title',
-          //   'text',
-          //   'body',
-          //   'image',
-          //   'comments',
-          //   'createdAt'
-          // ],
-        })
-        .then((posts) => {
+      this.posts(ctx, community._id, ctx.params.page || 1, ctx.params.limit || 10)
+        .then((posts:any) => {
           community.posts = posts;
           return community;
         })

@@ -11,16 +11,11 @@ export default function voters(
 ) {
   this.logger.debug('votes.populates.voters', ctx.params )
   return Promise.all(items.map((item: any) => {
-    return ctx.call('voters.all', {
-      pageSize: 3,
-      page: 1,
-      query: {
-        target: new ObjectId(item._id),
-      }
-    }).then((resp:any) => {
+    return this.voters(ctx, { target: item._id })
+    .then((resp:any) => {
       item.voters = resp;  
       return item
-    }).catch((err)=> {
+    }).catch((err:any)=> {
       this.logger.error('votes.populates.voters err:', err)
     })
   }))

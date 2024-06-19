@@ -1,6 +1,5 @@
 import actions from './actions';
 import methods from './methods';
-import hooks from './hooks';
 import populates from './populates';
 import type { MicroService } from '../../lib/microservice';
 
@@ -16,7 +15,7 @@ export default {
   validator,
   actions,
   methods,
-  hooks,
+  hooks:{},
   populates,
   events: {
     'new.post': {
